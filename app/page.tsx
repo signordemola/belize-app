@@ -1,10 +1,12 @@
-import HeroBanner from "@/components/home-page/hero-banner";
+import HeroBanner from "@/components/home-page/hero";
 
 export default function Home() {
   return (
     <>
-      <div className="h-40"></div>
       <HeroBanner />
+      <section className="h-[90dvh] bg-amber-600"></section>
+      <section className="h-[90dvh] bg-pink-600"></section>
+      <section className="h-[90dvh] bg-green-600"></section>
     </>
   );
 }
