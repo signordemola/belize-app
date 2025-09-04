@@ -37,13 +37,13 @@ export default function RootLayout({
       <body
         className={`${plexSans.variable} ${plexSerif.variable} antialiased`}
       >
-        {/* <PreloaderProvider>
+        <PreloaderProvider>
           <Header />
           {children}
-        </PreloaderProvider> */}
+        </PreloaderProvider>
 
-        <Header />
-        {children}
+        {/* <Header />
+        {children} */}
       </body>
     </html>
   );
