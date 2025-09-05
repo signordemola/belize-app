@@ -60,7 +60,7 @@ const Header = () => {
               <Link href={`/sign-in`}>Sign In</Link>
             </Button>
             <Link href={`/sign-up`}>
-              <CustomButton text="New Account" />
+              <CustomButton text="Open an Account" />
             </Link>
           </div>
 

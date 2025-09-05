@@ -1,3 +1,4 @@
+import { navItems } from "@/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -5,13 +6,6 @@ import React from "react";
 const DesktopNavbar = () => {
   const pathname = usePathname();
 
-  const navItems = [
-    { href: "/", label: "Home" },
-    { href: "/services", label: "Services" },
-    { href: "/wealth", label: "Wealth Management" },
-    { href: "/about", label: "About Belize" },
-    { href: "/careers", label: "Careers" },
-  ];
   return (
     <nav
       className=" bg-foreground/70 flex items-center justify-between px-6 py-3"
@@ -48,14 +42,12 @@ const DesktopNavbar = () => {
 
       <div className="pr-8">
         <ul className="flex items-center gap-4 text-white">
-          {navItems.map((item, index) => (
+          {navItems?.map((item, index) => (
             <li key={index}>
               <Link
                 href={item.href}
                 className={`px-4 py-3 font-semibold transition-colors duration-300 ${
-                  pathname === item.href
-                    ? "bg-red-600"
-                    : "hover:underline"
+                  pathname === item.href ? "bg-red-600" : "hover:underline"
                 }`}
               >
                 {item.label}

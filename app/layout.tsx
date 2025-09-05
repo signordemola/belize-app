@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header";
 import PreloaderProvider from "@/components/preloader/preloader-provider";
 
 const plexSans = IBM_Plex_Sans({
@@ -38,12 +37,8 @@ export default function RootLayout({
         className={`${plexSans.variable} ${plexSerif.variable} antialiased`}
       >
         <PreloaderProvider>
-          <Header />
           {children}
         </PreloaderProvider>
-
-        {/* <Header />
-        {children} */}
       </body>
     </html>
   );

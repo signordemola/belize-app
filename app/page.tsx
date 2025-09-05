@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import CommunityImpactSection from "@/components/home-page/community-impact-section";
 import FinancialSolutionsSection from "@/components/home-page/financial-solutions-section";
 import HeroBannerSection from "@/components/home-page/hero-section";
@@ -7,6 +8,7 @@ import TestimonialsSection from "@/components/home-page/testimonials-section";
 export default function Home() {
   return (
     <>
+      <Header />
       <HeroBannerSection />
       <FinancialSolutionsSection />
       <InnovationSection />

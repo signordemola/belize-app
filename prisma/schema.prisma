@@ -1,0 +1,291 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REVERSED
+  PROCESSING
+}
+
+enum TransactionType {
+  TRANSFER_INTERNAL
+  TRANSFER_FINTRUST
+  TRANSFER_US_BANK
+  TRANSFER_INTERNATIONAL
+  BILL_PAYMENT
+  MOBILE_DEPOSIT
+  DEPOSIT
+  WITHDRAWAL
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  FIXED_DEPOSIT
+  PRESTIGE
+  BUSINESS
+  INVESTMENT
+}
+
+enum CheckDepositStatus {
+  PENDING
+  CLEARED
+  REJECTED
+  REVERSED
+}
+
+enum ExternalAccountType {
+  ACH
+  WIRE
+  SWIFT
+  OTHER
+}
+
+enum UserRoleEnum {
+  CUSTOMER
+  ADMIN
+}
+
+enum BeneficiaryType {
+  BANK_ACCOUNT
+  UTILITY
+}
+
+model User {
+  id                String          @id @default(uuid())
+  email             String          @unique
+  firstName         String
+  lastName          String
+  userId            String          @unique
+  imageUrl          String
+  password          String
+  phoneNumber       String
+  dateOfBirth       DateTime        @map("date_of_birth")
+  address           String
+  city              String
+  state             String
+  zipCode           String
+  country           String?
+  selectedAcctType  AccountType     @default(CHECKING)
+  emailVerified     Boolean         @default(false)
+  isActive          Boolean         @default(false)
+  isAdmin           Boolean         @default(false)
+  role              UserRoleEnum    @default(CUSTOMER)
+  isSubscribed      Boolean         @default(false)
+  twoFactorEnabled  Boolean         @default(false)
+  transactionPin    String?        
+  isTransferBlocked Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  accounts          Account[]
+  transactions      Transaction[]
+  bills             Bill[]
+  cards             Card[]
+  mobileDeposits    MobileDeposit[]
+  statements        Statement[]
+  sessions          Session[]
+  notifications     Notification[]
+  auditLogs         AuditLog[]
+  beneficiaries     Beneficiary[]
+  @@index([email])
+}
+
+model Account {
+  id                String          @id @default(uuid())
+  userId            String
+  type              AccountType
+  balance           Float
+  accountNumber     String          @unique
+  routingNumber     String
+  status            String          
+  interestRate      Float?          
+  openedAt          DateTime
+  closedAt          DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  user              User            @relation(fields: [userId], references: [id])
+  transactions      Transaction[]
+  bills             Bill[]
+  cards             Card[]
+  mobileDeposits    MobileDeposit[]
+  statements        Statement[]
+  @@index([accountNumber])
+  @@index([userId])
+}
+
+model Beneficiary {
+  id                String          @id @default(uuid())
+  userId            String
+  name              String
+  type              BeneficiaryType
+  accountNumber     String?         
+  utilityId         String?         
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  user              User            @relation(fields: [userId], references: [id])
+  @@index([userId])
+}
+
+model Transaction {
+  id                String          @id @default(uuid())
+  accountId         String
+  userId            String
+  amount            Float
+  type              TransactionType
+  description       String
+  reference         String?         
+  status            TransactionStatus
+  date              DateTime
+  recipientAccount  String?
+  recipientBank     String?
+  swiftCode         String?
+  pinVerified       Boolean         @default(false) 
+  category          String?
+  isFraudSuspected  Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  account           Account         @relation(fields: [accountId], references: [id])
+  user              User            @relation(fields: [userId], references: [id])
+  bill              Bill?           @relation(fields: [billId], references: [id])
+  billId            String?
+  @@index([accountId])
+  @@index([userId])
+  @@index([reference])
+  @@index([date])
+  @@index([accountId, date])
+}
+
+model Bill {
+  id                String          @id @default(uuid())
+  accountId         String
+  userId            String
+  provider          String
+  accountNumber     String
+  amount            Float
+  dueDate           DateTime
+  status            String          
+  paymentDate       DateTime?
+  confirmationNo    String?         @unique
+  isRecurring       Boolean         @default(false)
+  recurringFreq     String?         
+  recurringEndDate  DateTime?       
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  account           Account         @relation(fields: [accountId], references: [id])
+  user              User            @relation(fields: [userId], references: [id])
+  transactions      Transaction[]
+  @@index([accountId])
+  @@index([userId])
+  @@index([confirmationNo])
+  @@index([dueDate])
+}
+
+model Card {
+  id                String          @id @default(uuid())
+  accountId         String
+  userId            String
+  type              String          
+  cardNumber        String          @unique
+  expiryDate        DateTime
+  cvv               String          
+  status            String          
+  creditLimit       Float?
+  availableCredit   Float?
+  rewardsPoints     Float?
+  pinHash           String?         
+  dailyLimit        Float?
+  token             String?         @unique
+  merchantCategoryLimits Json?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  account           Account         @relation(fields: [accountId], references: [id])
+  user              User            @relation(fields: [userId], references: [id])
+  @@index([cardNumber])
+  @@index([accountId])
+  @@index([userId])
+  @@index([token])
+}
+
+model MobileDeposit {
+  id                String          @id @default(uuid())
+  accountId         String
+  userId            String
+  amount            Float
+  frontImage        String
+  backImage         String
+  status            CheckDepositStatus
+  checkNumber       String?
+  depositDate       DateTime
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  account           Account         @relation(fields: [accountId], references: [id])
+  user              User            @relation(fields: [userId], references: [id])
+  @@index([accountId])
+  @@index([userId])
+  @@index([depositDate])
+}
+
+model Statement {
+  id                String          @id @default(uuid())
+  accountId         String
+  userId            String
+  period            String          
+  fileUrl           String
+  generatedAt       DateTime
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  account           Account         @relation(fields: [accountId], references: [id])
+  user              User            @relation(fields: [userId], references: [id])
+  @@index([accountId])
+  @@index([userId])
+  @@index([period])
+}
+
+model Session {
+  id                String          @id @default(uuid())
+  userId            String
+  token             String          @unique
+  createdAt         DateTime        @default(now())
+  expiresAt         DateTime
+  lastUsedAt        DateTime?
+  deviceInfo        String?
+  user              User            @relation(fields: [userId], references: [id])
+  @@index([userId])
+  @@index([token])
+}
+
+model Notification {
+  id                String          @id @default(uuid())
+  userId            String
+  type              String          
+  message           String
+  read              Boolean         @default(false)
+  priority          String          
+  createdAt         DateTime        @default(now())
+  user              User            @relation(fields: [userId], references: [id])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id                String          @id @default(uuid())
+  userId            String?
+  action            String          
+  entityType        String?
+  entityId          String?
+  details           Json?
+  ipAddress         String?
+  createdAt         DateTime        @default(now())
+  user              User?           @relation(fields: [userId], references: [id])
+  @@index([userId])
+  @@index([createdAt])
+}

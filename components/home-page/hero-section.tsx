@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface CarouselSlide {
   id: string;
@@ -112,14 +113,14 @@ export default function HeroBannerSection() {
                   deposit balance of at least $25,000.
                 </p>
 
-                <a
+                <Link
                   href={slide.content.ctaLink}
-                  className="themeBtn inline-flex items-center"
+                  className="themeBtn inline-flex items-center gap-2"
                 >
                   {slide.content.ctaText}
                   <ArrowRight className="buttonArrow w-5 h-5" />
                   <span></span>
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -192,14 +193,14 @@ export default function HeroBannerSection() {
               </p>
             )}
 
-            <a
+            <Link
               href={slide.content.ctaLink}
-              className="themeBtn inline-flex items-center mb-12"
+              className="themeBtn inline-flex items-center mb-12 gap-2"
             >
               {slide.content.ctaText}
               <ArrowRight className="buttonArrow w-5 h-5" />
               <span></span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
