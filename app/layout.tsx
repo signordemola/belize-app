@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import PreloaderProvider from "@/components/preloader/preloader-provider";
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
 
 const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -37,10 +37,12 @@ export default function RootLayout({
       <body
         className={`${plexSans.variable} ${plexSerif.variable} antialiased`}
       >
-        <PreloaderProvider>
+        {/* <PreloaderProvider>
           <Toaster />
           {children}
-        </PreloaderProvider>
+        </PreloaderProvider> */}
+        <Toaster />
+        {children}
       </body>
     </html>
   );

@@ -78,6 +78,7 @@ export const signUp = async (
         imageUrl: secure_url,
         selectedAcctType: accountType,
         otpSecret: hashedOTP,
+        isActive: true,
       },
     });
 

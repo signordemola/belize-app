@@ -75,6 +75,7 @@ model User {
   state             String
   zipCode           String
   country           String?
+  username          String?
   selectedAcctType  AccountType     @default(CHECKING)
   emailVerified     Boolean         @default(false)
   isActive          Boolean         @default(false)
