@@ -83,6 +83,7 @@ model User {
   isSubscribed      Boolean         @default(false)
   twoFactorEnabled  Boolean         @default(false)
   transactionPin    String?        
+  otpSecret         String?
   isTransferBlocked Boolean         @default(false)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt

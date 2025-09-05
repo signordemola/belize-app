@@ -2,6 +2,8 @@
 
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import { prisma } from "@/lib/db";
+import { sendOtpEmail } from "@/lib/email";
+import { generateOtp } from "@/lib/otp";
 import { hashPassword } from "@/lib/password";
 import { SignUpSchema } from "@/schemas";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -56,8 +58,10 @@ export const signUp = async (
     const secure_url = await uploadImageToCloudinary(file);
 
     const hashedPassword = await hashPassword(password);
+    const otp = generateOtp();
+    const hashedOTP = await hashPassword(otp);
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         firstName,
         lastName,
@@ -73,12 +77,23 @@ export const signUp = async (
         country: "USA",
         imageUrl: secure_url,
         selectedAcctType: accountType,
+        otpSecret: hashedOTP,
       },
     });
 
+    try {
+      await sendOtpEmail(email, otp);
+    } catch (error) {
+      await prisma.user.delete({ where: { id: user.id } });
+      console.log(error);
+      return { error: "Failed to send OTP email. Please try again." };
+    }
+
+    const redirectUrl = `/verify-otp?email=${encodeURIComponent(email)}`;
+
     return {
-      success: true,
-      redirect: `/sign-in`,
+      success: `Account created successfully! We've sent your login OTP to ${email}. Please check your email before signing in.`,
+      redirect: redirectUrl,
     };
   } catch (error) {
     console.error("Registration error:", error);

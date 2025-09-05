@@ -27,10 +27,12 @@ import { Upload, X, User } from "lucide-react";
 import Image from "next/image";
 import { signUp } from "@/actions/sign-up";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { toast } from "sonner";
 
 const SignUpForm = () => {
   const router = useRouter();
   const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const [showPassword, setShowPassword] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -106,8 +108,14 @@ const SignUpForm = () => {
         if (result?.error) {
           setError(result.error);
         } else {
+          if (result?.success) {
+            setSuccess(result.success);
+            toast.success(result.success);
+          }
           if (result?.redirect) {
-            router.push(result.redirect);
+            setTimeout(() => {
+              router.push(result.redirect);
+            }, 6000);
           }
         }
       });
@@ -543,6 +551,10 @@ const SignUpForm = () => {
 
             {error && (
               <p className="text-sm text-destructive font-medium">{error}</p>
+            )}
+
+            {success && (
+              <p className="text-sm text-green-600 font-medium">{success}</p>
             )}
 
             <Button

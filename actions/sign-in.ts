@@ -2,8 +2,6 @@
 import * as z from "zod";
 import { verifyPassword } from "@/lib/password";
 import { prisma } from "@/lib/db";
-import { UserRoleEnum } from "@prisma/client";
-import { createUserSession } from "@/lib/session";
 import { SignInSchema } from "@/schemas";
 
 export const signIn = async (values: z.infer<typeof SignInSchema>) => {
@@ -32,24 +30,11 @@ export const signIn = async (values: z.infer<typeof SignInSchema>) => {
       return { error: "Incorrect password!" };
     }
 
-    if (!user.isActive) {
-      return { error: "Your account is not active. Please contact support!" };
-    }
+    const redirectUrl = `/verify-otp?email=${encodeURIComponent(user.email)}${
+      rememberMe ? `&rememberMe=${rememberMe}` : ""
+    }`;
 
-    await createUserSession({ userId: user.id, role: user.role }, rememberMe);
-
-    let redirectPath: string;
-    switch (user.role) {
-      case UserRoleEnum.ADMIN:
-        redirectPath = "/admin-panel";
-        break;
-      case UserRoleEnum.CUSTOMER:
-      default:
-        redirectPath = "/dashboard";
-        break;
-    }
-
-    return { success: true, redirect: redirectPath };
+    return { success: true, redirect: redirectUrl };
   } catch (error) {
     console.error("Sign in error:", error);
     return { error: "Something went wrong!" };

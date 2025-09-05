@@ -99,6 +99,12 @@ export const SignInSchema = z.object({
   rememberMe: z.boolean().optional(),
 });
 
+export const VerifyOTPSchema = z.object({
+  otp: z.string().min(6, {
+    message: "Your one-time password must be 6 characters.",
+  }),
+});
+
 export const SessionSchema = z.object({
   userId: z.string(),
   role: z.enum(

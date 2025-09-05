@@ -5,7 +5,7 @@ export async function middleware(request: NextRequest) {
   const session = request.cookies.get("session-id")?.value;
   const currentPath = request.nextUrl.pathname.replace(/\/$/, "");
 
-  const publicRoutes = ["/sign-in", "/sign-up"];
+  const publicRoutes = ["/sign-in", "/sign-up", "/verify-otp"];
   const protectedRoutes = ["/admin-panel", "/dashboard"];
 
   const isPublicRoute = publicRoutes.includes(currentPath);
