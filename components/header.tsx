@@ -30,7 +30,7 @@ const Header = () => {
           >
             {/* <Image
             src="/images/logo.png"
-            alt="FinTrust Credit Union Logo"
+            alt="Belize Bank Inc. Logo"
             width={30}
             height={30}
             className="rounded-full"
@@ -119,7 +119,7 @@ const Header = () => {
                 className="rounded-full"
               />
               <span className="text-primary-600 text-xl font-bold uppercase -ml-1 font-sans">
-                Fintrustcu
+                Belizebankinc
               </span>
             </Link>
             <button

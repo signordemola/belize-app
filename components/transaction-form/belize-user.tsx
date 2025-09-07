@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { transferToFinTrustUser } from "@/actions/transfer";
+import { transferToBelizeUser } from "@/actions/transfer";
 
 interface FormData {
   fromAccount: string;
@@ -112,7 +112,7 @@ export const BelizeUerForm = ({ userAccount }: BelizeUerFormProps) => {
 
     const values = form.getValues();
     startTransition(() => {
-      transferToFinTrustUser({
+      transferToBelizeUser({
         fromAccountId: values.fromAccount,
         recipientEmail: values.recipientEmail,
         amount: parseFloat(values.amount),
@@ -195,7 +195,7 @@ export const BelizeUerForm = ({ userAccount }: BelizeUerFormProps) => {
                   <p className="font-medium text-gray-900 mb-1">
                     Contact Support
                   </p>
-                  <p>📧 support@fintrustcu.com</p>
+                  <p>📧 support@belizebank.com</p>
                   <p>🕒 Monday - Friday: 8AM - 8PM EST</p>
                 </div>
                 <Button

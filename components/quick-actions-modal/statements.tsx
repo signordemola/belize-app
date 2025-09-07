@@ -21,8 +21,8 @@ const StatementsModal = ({ isOpen, onClose }: StatementsModalProps) => {
             <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
               <p className="text-sm text-yellow-800">
                 Statements are available from March 2024 onwards. For older
-                statements, please contact our support team at 1-800-FINTRUST or
-                email support@fintrustcu.com
+                statements, please contact our support team at 1-800-BELIZE or
+                email support@belizebank.com
               </p>
             </div>
             <form className="space-y-6">

@@ -8,7 +8,7 @@ const TestimonialsSection = () => {
           </h2>
           <p className="text-xl text-primary-900">
             Hear from members who have transformed their financial lives with
-            FinTrust Credit Union
+            Belize Bank Inc.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -22,7 +22,7 @@ const TestimonialsSection = () => {
               </div>
             </div>
             <p className="text-primary-800 italic">
-              FinTrust Credit Union helped me grow my business with their
+              Belize Bank Inc. helped me grow my business with their
               personalized approach to commercial banking.
             </p>
             <div className="mt-6 flex">

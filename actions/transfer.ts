@@ -103,7 +103,7 @@ export const transferBetweenAccounts = async ({
           status: "COMPLETED",
           date: currentDate,
           recipientAccount: toAccount.accountNumber,
-          recipientBank: "FinTrust",
+          recipientBank: "Belize Bank Inc.",
           pinVerified: true,
           category: "Transfer",
           isFraudSuspected: false,
@@ -147,7 +147,7 @@ export const transferBetweenAccounts = async ({
   }
 };
 
-export const transferToFinTrustUser = async ({
+export const transferToBelizeUser = async ({
   fromAccountId,
   recipientEmail,
   amount,
@@ -268,15 +268,15 @@ export const transferToFinTrustUser = async ({
           userId: user.id,
           accountId: fromAccountId,
           amount,
-          type: "TRANSFER_FINTRUST",
-          description: `Transfer to FinTrust user ${recipientEmail}: ${
-            reference || "FinTrust transfer"
+          type: "TRANSFER_BELIZE",
+          description: `Transfer to Belize user ${recipientEmail}: ${
+            reference || "Belize transfer"
           }`,
           reference: reference || null,
           status: "COMPLETED",
           date: currentDate,
           recipientAccount: recipientAccount.accountNumber,
-          recipientBank: "FinTrust",
+          recipientBank: "Belize Bank Inc.",
           pinVerified: true,
           category: "Transfer",
           isFraudSuspected: false,
@@ -291,7 +291,7 @@ export const transferToFinTrustUser = async ({
           amount,
           type: "DEPOSIT",
           description: `Transfer from ${fromAccount.type} account: ${
-            reference || "FinTrust transfer"
+            reference || "Belize transfer"
           }`,
           reference: reference || null,
           status: "COMPLETED",

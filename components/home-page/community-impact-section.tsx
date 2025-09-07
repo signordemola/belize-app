@@ -11,7 +11,7 @@ const CommunityImpactSection = () => {
               Making a Difference in Our Community
             </h2>
             <p className="text-xl mb-8 text-white/90">
-              At Fintrust Credit Union, we believe in giving back. Our
+              At Belize Bank Inc., we believe in giving back. Our
               commitment to community development goes beyond banking -
               {" we're"}
               building a better future together.

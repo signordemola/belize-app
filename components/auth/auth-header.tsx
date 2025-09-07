@@ -19,7 +19,7 @@ const AuthHeader = () => {
         <Link href="/" className="flex items-center">
           {/* <Image
             src="/images/logo.png"
-            alt="FinTrust Credit Union Logo"
+            alt="Belize Bank Inc. Logo"
             width={30}
             height={30}
             className="rounded-full"
