@@ -47,7 +47,7 @@ const DesktopNavbar = () => {
               <Link
                 href={item.href}
                 className={`px-4 py-3 font-semibold transition-colors duration-300 ${
-                  pathname === item.href ? "bg-red-600" : "hover:underline"
+                  pathname === item.href ? "bg-danger-800" : "hover:underline"
                 }`}
               >
                 {item.label}

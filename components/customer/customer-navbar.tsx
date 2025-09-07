@@ -91,7 +91,7 @@ const CustomerNavBar = ({
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 bg-gray-50 border-b z-50 transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 transition-all duration-200 ${
         scrolled ? "shadow-md" : ""
       }`}
     >
@@ -107,7 +107,7 @@ const CustomerNavBar = ({
                   height={30}
                   className="rounded-full"
                 /> */}
-                <span className="text-red-600 text-xl font-bold uppercase -ml-1 font-sans">
+                <span className="text-primary-600 text-xl font-bold uppercase -ml-1 font-sans">
                   Belize Bank Inc.
                 </span>
               </Link>
@@ -218,7 +218,7 @@ const CustomerNavBar = ({
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center space-x-3 px-4 py-8 text-gray-800 bg-white hover:bg-red-50 border-red-600"
+                  className="flex items-center space-x-3 px-4 py-8 text-gray-700 bg-primary-50 hover:bg-primary-100"
                 >
                   <Image
                     src={imageUrl || "/images/default-avatar.png"}
@@ -259,10 +259,10 @@ const CustomerNavBar = ({
                   <Landmark className="w-5 h-5 mr-2 text-gray-500" />
                   Account Management
                 </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer rounded-lg">
-                  <LogOut className="w-5 h-5 mr-2 text-red-500" />
+                <DropdownMenuItem className="flex items-center px-4 py-2 text-sm text-primary-600 hover:bg-red-50 cursor-pointer rounded-lg">
+                  <LogOut className="w-5 h-5 mr-2 text-primary-600" />
                   <button
-                    className="hover:text-red-700 cursor-pointer"
+                    className="hover:text-primary-600 cursor-pointer"
                     onClick={handleLogout}
                   >
                     Sign Out

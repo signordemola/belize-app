@@ -47,7 +47,12 @@ import {
 } from "../ui/select";
 import { Edit, Loader2, PlusCircle, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { addBeneficiary, deleteBeneficiary, editBeneficiary, updateUsername } from "@/actions/account.manage";
+import {
+  addBeneficiary,
+  deleteBeneficiary,
+  editBeneficiary,
+  updateUsername,
+} from "@/actions/account.manage";
 
 interface Beneficiary {
   id: string;
@@ -178,7 +183,9 @@ const AccountManagementModal: React.FC<AccountManagementModalProps> = ({
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Account Management</DialogTitle>
+          <DialogTitle className="text-xl pb-4 text-primary-600">
+            Account Management
+          </DialogTitle>
           <DialogDescription>
             Manage your username and saved bill pay details.
           </DialogDescription>
@@ -222,8 +229,10 @@ const AccountManagementModal: React.FC<AccountManagementModalProps> = ({
                 >
                   {isUsernamePending ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  ) : (
+                  ) : username ? (
                     "Update Username"
+                  ) : (
+                    "Set Username"
                   )}
                 </Button>
               </form>
@@ -494,7 +503,7 @@ const AccountManagementModal: React.FC<AccountManagementModalProps> = ({
                               handleDeleteBeneficiary(beneficiary.id)
                             }
                           >
-                            <Trash2 className="h-4 w-4 text-red-500" />
+                            <Trash2 className="h-4 w-4 text-primary-600" />
                           </Button>
                         </>
                       )}

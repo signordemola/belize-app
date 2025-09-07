@@ -26,14 +26,11 @@ import { Input } from "../ui/input";
 import { Upload, X, User } from "lucide-react";
 import Image from "next/image";
 import { signUp } from "@/actions/sign-up";
-import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { toast } from "sonner";
 
 const SignUpForm = () => {
   const router = useRouter();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [showPassword, setShowPassword] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -42,18 +39,16 @@ const SignUpForm = () => {
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
+      email: "",
       firstName: "",
       lastName: "",
-      userId: "",
-      email: "",
       phoneNumber: "",
-      password: "",
-      confirmPassword: "",
+      ssn: "",
       dateOfBirth: "",
-      address: "",
-      city: "",
+      fullAddress: "",
       state: "",
       zipCode: "",
+      country: "",
       accountType: "CHECKING",
     },
   });
@@ -110,12 +105,11 @@ const SignUpForm = () => {
         } else {
           if (result?.success) {
             setSuccess(result.success);
-            toast.success(result.success);
           }
           if (result?.redirect) {
             setTimeout(() => {
               router.push(result.redirect);
-            }, 6000);
+            }, 5000);
           }
         }
       });
@@ -124,12 +118,12 @@ const SignUpForm = () => {
 
   return (
     <div className="flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-8 text-foreground">
-      <div className="w-full max-w-4xl rounded-sm border bg-white p-16 shadow-md">
+      <div className="w-full max-w-4xl rounded-sm border border-primary-600/30 bg-white p-16 shadow-md">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {/* Profile Image Upload */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold">Profile Picture</h3>
+              <h3 className="text-xl font-semibold text-primary-900">Profile Picture</h3>
 
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative">
@@ -182,28 +176,9 @@ const SignUpForm = () => {
 
             {/* Account Credentials */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold">Account Credentials</h3>
+              <h3 className="text-xl font-semibold text-primary-900">Account Credentials</h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="userId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>User ID</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="johndoe123"
-                          disabled={isPending}
-                          {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
                 <FormField
                   control={form.control}
                   name="email"
@@ -223,53 +198,16 @@ const SignUpForm = () => {
                     </FormItem>
                   )}
                 />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <div className="relative bg-white">
-                          <Input
-                            {...field}
-                            id="password"
-                            type={showPassword ? "text" : "password"}
-                            placeholder="••••••••"
-                            disabled={isPending}
-                            className="rounded-none py-5 bg-white autofill:!bg-white"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setShowPassword((prev) => !prev)}
-                            className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground cursor-pointer"
-                          >
-                            {showPassword ? (
-                              <IoEyeOffOutline size={20} />
-                            ) : (
-                              <IoEyeOutline size={20} />
-                            )}
-                          </button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
 
                 <FormField
                   control={form.control}
-                  name="confirmPassword"
+                  name="phoneNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Confirm Password</FormLabel>
+                      <FormLabel>Phone Number</FormLabel>
                       <FormControl>
                         <Input
-                          type="password"
-                          placeholder="••••••••"
+                          placeholder="(555) 123-4567"
                           disabled={isPending}
                           {...field}
                           className="rounded-none py-5 bg-white autofill:!bg-white"
@@ -284,7 +222,7 @@ const SignUpForm = () => {
 
             {/* Personal Information */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold">Personal Information</h3>
+              <h3 className="text-xl font-semibold text-primary-900">Personal Information</h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <FormField
@@ -329,13 +267,14 @@ const SignUpForm = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
-                  name="phoneNumber"
+                  name="ssn"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
+                      <FormLabel>Social Security Number (SSN)</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="(555) 123-4567"
+                          type="text"
+                          placeholder="123-45-6789"
                           disabled={isPending}
                           {...field}
                           className="rounded-none py-5 bg-white autofill:!bg-white"
@@ -369,18 +308,18 @@ const SignUpForm = () => {
 
             {/* Contact Information */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold">Contact Information</h3>
+              <h3 className="text-xl font-semibold text-primary-900">Contact Information</h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
-                  name="address"
+                  name="fullAddress"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Street Address</FormLabel>
+                      <FormLabel>Street and City</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="123 Main St"
+                          placeholder="123 Main St, Springfield"
                           disabled={isPending}
                           {...field}
                           className="rounded-none py-5 bg-white autofill:!bg-white"
@@ -391,27 +330,6 @@ const SignUpForm = () => {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="city"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>City</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Any town"
-                          disabled={isPending}
-                          {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
                   name="zipCode"
@@ -430,13 +348,34 @@ const SignUpForm = () => {
                     </FormItem>
                   )}
                 />
+              </div>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
                   name="state"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>State</FormLabel>
+                      <FormLabel>State / Province / Region</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="California, Ontario, etc."
+                          disabled={isPending}
+                          {...field}
+                          className="rounded-none py-5 bg-white autofill:!bg-white"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Country</FormLabel>
                       <FormControl>
                         <Select
                           disabled={isPending}
@@ -444,62 +383,19 @@ const SignUpForm = () => {
                           value={field.value}
                         >
                           <SelectTrigger className="rounded-none py-5 bg-white autofill:!bg-white w-full">
-                            <SelectValue placeholder="Select a state" />
+                            <SelectValue placeholder="Select a country" />
                           </SelectTrigger>
                           <SelectContent className="max-h-60 overflow-y-auto">
-                            <SelectItem value="AL">Alabama</SelectItem>
-                            <SelectItem value="AK">Alaska</SelectItem>
-                            <SelectItem value="AZ">Arizona</SelectItem>
-                            <SelectItem value="AR">Arkansas</SelectItem>
-                            <SelectItem value="CA">California</SelectItem>
-                            <SelectItem value="CO">Colorado</SelectItem>
-                            <SelectItem value="CT">Connecticut</SelectItem>
-                            <SelectItem value="DE">Delaware</SelectItem>
-                            <SelectItem value="DC">
-                              District of Columbia
-                            </SelectItem>
-                            <SelectItem value="FL">Florida</SelectItem>
-                            <SelectItem value="GA">Georgia</SelectItem>
-                            <SelectItem value="HI">Hawaii</SelectItem>
-                            <SelectItem value="ID">Idaho</SelectItem>
-                            <SelectItem value="IL">Illinois</SelectItem>
-                            <SelectItem value="IN">Indiana</SelectItem>
-                            <SelectItem value="IA">Iowa</SelectItem>
-                            <SelectItem value="KS">Kansas</SelectItem>
-                            <SelectItem value="KY">Kentucky</SelectItem>
-                            <SelectItem value="LA">Louisiana</SelectItem>
-                            <SelectItem value="ME">Maine</SelectItem>
-                            <SelectItem value="MD">Maryland</SelectItem>
-                            <SelectItem value="MA">Massachusetts</SelectItem>
-                            <SelectItem value="MI">Michigan</SelectItem>
-                            <SelectItem value="MN">Minnesota</SelectItem>
-                            <SelectItem value="MS">Mississippi</SelectItem>
-                            <SelectItem value="MO">Missouri</SelectItem>
-                            <SelectItem value="MT">Montana</SelectItem>
-                            <SelectItem value="NE">Nebraska</SelectItem>
-                            <SelectItem value="NV">Nevada</SelectItem>
-                            <SelectItem value="NH">New Hampshire</SelectItem>
-                            <SelectItem value="NJ">New Jersey</SelectItem>
-                            <SelectItem value="NM">New Mexico</SelectItem>
-                            <SelectItem value="NY">New York</SelectItem>
-                            <SelectItem value="NC">North Carolina</SelectItem>
-                            <SelectItem value="ND">North Dakota</SelectItem>
-                            <SelectItem value="OH">Ohio</SelectItem>
-                            <SelectItem value="OK">Oklahoma</SelectItem>
-                            <SelectItem value="OR">Oregon</SelectItem>
-                            <SelectItem value="PA">Pennsylvania</SelectItem>
-                            <SelectItem value="RI">Rhode Island</SelectItem>
-                            <SelectItem value="SC">South Carolina</SelectItem>
-                            <SelectItem value="SD">South Dakota</SelectItem>
-                            <SelectItem value="TN">Tennessee</SelectItem>
-                            <SelectItem value="TX">Texas</SelectItem>
-                            <SelectItem value="UT">Utah</SelectItem>
-                            <SelectItem value="VT">Vermont</SelectItem>
-                            <SelectItem value="VA">Virginia</SelectItem>
-                            <SelectItem value="WA">Washington</SelectItem>
-                            <SelectItem value="WV">West Virginia</SelectItem>
-                            <SelectItem value="WI">Wisconsin</SelectItem>
-                            <SelectItem value="WY">Wyoming</SelectItem>
+                            <SelectItem value="US">United States</SelectItem>
+                            <SelectItem value="CA">Canada</SelectItem>
+                            <SelectItem value="UK">United Kingdom</SelectItem>
+                            <SelectItem value="FR">France</SelectItem>
+                            <SelectItem value="DE">Germany</SelectItem>
+                            <SelectItem value="IT">Italy</SelectItem>
+                            <SelectItem value="JP">Japan</SelectItem>
+                            <SelectItem value="AU">Australia</SelectItem>
+                            <SelectItem value="IN">India</SelectItem>
+                            <SelectItem value="CN">China</SelectItem>
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -514,7 +410,7 @@ const SignUpForm = () => {
 
             {/* Account Type */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold">Account Type</h3>
+              <h3 className="text-xl font-semibold text-primary-900">Account Type</h3>
 
               <FormField
                 control={form.control}
@@ -560,7 +456,7 @@ const SignUpForm = () => {
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full bg-red-600 py-6 rounded-none text-lg hover:bg-red-800 focus:bg-red-800 cursor-pointer"
+              className="w-full bg-primary-600 py-6 rounded-none text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
             >
               {isPending ? (
                 <svg

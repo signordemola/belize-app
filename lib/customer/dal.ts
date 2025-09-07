@@ -76,7 +76,7 @@ export const getRecentTransactions = cache(async () => {
           ? "📱"
           : txn.type === TransactionType.TRANSFER_US_BANK ||
             txn.type === TransactionType.TRANSFER_INTERNATIONAL ||
-            txn.type === TransactionType.TRANSFER_FINTRUST ||
+            txn.type === TransactionType.TRANSFER_BELIZE ||
             txn.type === TransactionType.TRANSFER_INTERNAL
           ? "↔️"
           : "💳",
@@ -87,52 +87,14 @@ export const getRecentTransactions = cache(async () => {
   }
 });
 
-export const getAllAccounts = async () => {
-  const session = await getUserSession();
-  if (!session) return [];
-
-  try {
-    const accounts = await prisma.account.findMany({
-      where: { userId: session.userId },
-      select: {
-        id: true,
-        balance: true,
-        accountNumber: true,
-        routingNumber: true,
-        type: true,
-        status: true,
-        user: {
-          select: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-      },
-    });
-
-    return accounts.map((account) => ({
-      id: account.id,
-      balance: account.balance,
-      accountNumber: account.accountNumber,
-      routingNumber: account.routingNumber,
-      holder: `${account.user.firstName} ${account.user.lastName}`,
-      type: account.type,
-      status: account.status,
-    }));
-  } catch (error: unknown) {
-    console.error("Error fetching accounts:", error);
-    return [];
-  }
-};
-
-export const getAllAccountDetails = cache(async () => {
+export const getUserAccount = cache(async () => {
   const session = await getUserSession();
   if (!session) return null;
 
   const userId = session.userId;
 
   try {
-    const accounts = await prisma.account.findMany({
+    const account = await prisma.account.findUnique({
       where: { userId, status: "ACTIVE" },
       select: {
         id: true,
@@ -150,7 +112,9 @@ export const getAllAccountDetails = cache(async () => {
       },
     });
 
-    return accounts.map((account) => ({
+    if (!account) return null;
+
+    return {
       id: account.id,
       balance: account.balance,
       accountNumber: account.accountNumber,
@@ -158,7 +122,7 @@ export const getAllAccountDetails = cache(async () => {
       holder: `${account.user.firstName} ${account.user.lastName}`,
       type: account.type,
       status: account.status,
-    }));
+    };
   } catch (error: unknown) {
     console.log(error);
     return null;
@@ -267,7 +231,7 @@ export const getMonthlySummary = cache(async () => {
           txn.type === TransactionType.WITHDRAWAL ||
           txn.type === TransactionType.TRANSFER_US_BANK ||
           txn.type === TransactionType.TRANSFER_INTERNATIONAL ||
-          txn.type === TransactionType.TRANSFER_FINTRUST
+          txn.type === TransactionType.TRANSFER_BELIZE
       )
       .reduce((sum, txn) => sum + txn.amount, 0);
     const outgoingCount = transactions.filter(
@@ -276,7 +240,7 @@ export const getMonthlySummary = cache(async () => {
         txn.type === TransactionType.WITHDRAWAL ||
         txn.type === TransactionType.TRANSFER_US_BANK ||
         txn.type === TransactionType.TRANSFER_INTERNATIONAL ||
-        txn.type === TransactionType.TRANSFER_FINTRUST
+        txn.type === TransactionType.TRANSFER_BELIZE
     ).length;
 
     return {

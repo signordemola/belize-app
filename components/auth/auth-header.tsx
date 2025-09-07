@@ -24,7 +24,7 @@ const AuthHeader = () => {
             height={30}
             className="rounded-full"
           /> */}
-          <span className="text-text-white text-xl font-bold uppercase -ml-1 font-sans">
+          <span className="text-primary-600 text-xl font-bold uppercase -ml-1 font-sans">
             BelizeBank
           </span>
         </Link>
@@ -33,7 +33,7 @@ const AuthHeader = () => {
           <div className="flex items-center gap-4 text-white">
             <Button
               variant="outline"
-              className="text-red-600 border-red-600 hover:bg-red-600 hover:text-white rounded-none px-6 py-2 cursor-pointer"
+              className="text-primary-600 border-primary-600 hover:bg-primary-600 hover:text-white rounded-none px-6 py-2 cursor-pointer"
             >
               <Link href={`contact`}>Contact Us</Link>
             </Button>
@@ -52,7 +52,7 @@ const AuthHeader = () => {
 
         {/* Hamburger button for mobile */}
         <button
-          className="md:hidden text-red-600 cursor-pointer"
+          className="md:hidden text-primary-600 cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle mobile menu"
         >
@@ -92,7 +92,7 @@ const AuthHeader = () => {
       {/* Mobile Menu */}
       <div
         className={`
-            md:hidden absolute top-20 right-1 w-1/2 py-6 bg-red-600 text-white shadow-lg z-[999]
+            md:hidden absolute top-20 right-1 w-1/2 py-6 bg-primary-600 text-white shadow-lg z-[999]
             transform transition-all duration-500 ease-in-out
             ${
               isMenuOpen
@@ -104,7 +104,7 @@ const AuthHeader = () => {
         <div className="px-6 py-4 flex flex-col space-y-4">
           <Button
             variant="outline"
-            className="text-red-600 border-red-600 hover:bg-gray-100 hover:text-red-900 rounded-none px-6 py-2"
+            className="text-primary-600 border-red-600 hover:bg-gray-100 hover:text-primary-900 rounded-none px-6 py-2"
           >
             <Link href="contact">Contact Us</Link>
           </Button>
@@ -112,14 +112,14 @@ const AuthHeader = () => {
           {pathname === "/sign-in" ? (
             <Button
               variant="outline"
-              className="text-red-600 border-red-600 hover:bg-gray-100 hover:text-red-900 rounded-none px-6 py-2 w-full"
+              className="text-primary-600 border-red-600 hover:bg-gray-100 hover:text-primary-900 rounded-none px-6 py-2 w-full"
             >
               <Link href="/sign-up">Open an Account</Link>
             </Button>
           ) : (
             <Button
               variant="outline"
-              className="text-red-600 border-red-600 hover:bg-gray-100 hover:text-red-900 rounded-none px-6 py-2 w-full"
+              className="text-primary-600 border-red-600 hover:bg-gray-100 hover:text-primary-900 rounded-none px-6 py-2 w-full"
             >
               <Link href="/sign-in">Sign In</Link>
             </Button>

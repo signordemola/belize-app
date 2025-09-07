@@ -78,7 +78,7 @@ const OtpForm = () => {
   return (
     <div className="flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
       <div className="w-full max-w-xl rounded-sm border bg-white p-16 shadow-md">
-        <h2 className="mt-6 text-3xl font-serif font-bold">
+        <h2 className="mt-6 text-3xl font-serif font-bold text-primary-900">
           Verify Your Account
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -151,7 +151,7 @@ const OtpForm = () => {
               <Button
                 type="submit"
                 disabled={isPending || isResendPending}
-                className="w-full bg-red-600 py-6 rounded-none text-lg hover:bg-red-800 focus:bg-red-800 cursor-pointer"
+                className="w-full bg-primary-600 py-6 rounded-none text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
               >
                 {isPending ? (
                   <svg

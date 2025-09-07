@@ -87,7 +87,7 @@ export default function HeroBannerSection() {
       return (
         <div className="bg-white h-full flex relative">
           {/* Red accent line */}
-          <div className="absolute top-0 left-0 w-16 h-1 bg-red-600"></div>
+          <div className="absolute top-0 left-0 w-16 h-1 bg-danger-600"></div>
 
           <div className="container mx-auto flex h-full">
             {/* Left side - Content */}
@@ -95,14 +95,14 @@ export default function HeroBannerSection() {
               <div className="max-w-lg">
                 <h2 className="text-4xl font-bold text-gray-900 mb-8 leading-tight">
                   <span className="block">
-                    earn <span className="text-red-600">4.25%</span> interest
-                    rate
+                    earn <span className="text-primary-600">4.25%</span>{" "}
+                    interest rate
                   </span>
                   <span className="block">
-                    (<span className="text-red-600">4.28%</span> blended
+                    (<span className="text-primary-600">4.28%</span> blended
                   </span>
                   <span className="block">
-                    APY<sup className="text-red-600">*</sup>) for 6 months.
+                    APY<sup className="text-primary-600">*</sup>) for 6 months.
                   </span>
                 </h2>
 
@@ -179,7 +179,7 @@ export default function HeroBannerSection() {
         }}
       >
         {/* Red accent line */}
-        <div className="absolute top-0 left-0 w-16 h-1 bg-red-600"></div>
+        <div className="absolute top-0 left-0 w-16 h-1 bg-danger-600"></div>
 
         <div className="container mx-auto px-8 lg:px-16">
           <div className="max-w-2xl text-white">
@@ -305,8 +305,8 @@ export default function HeroBannerSection() {
             onClick={() => goToSlide(index)}
             className={`flex-1 border-b-[1px] lg:border-r-[1px] lg:border-b-0 border-white px-8 py-10 cursor-pointer text-sm font-medium transition-all duration-200 relative ${
               currentSlide === index
-                ? "text-white bg-gray-600"
-                : "text-gray-700 bg-gray-400 hover:bg-gray-500 hover:text-white"
+                ? "text-white bg-primary-600 text-lg"
+                : "text-gray-700 bg-primary-600/40 hover:bg-primary-600 hover:text-white"
             }`}
             aria-label={slide.label}
             role="tab"
@@ -315,7 +315,7 @@ export default function HeroBannerSection() {
           >
             <span className="relative z-10">{slide.label}</span>
             {currentSlide === index && (
-              <div className="absolute -bottom-1 left-0 w-full h-1 bg-red-600"></div>
+              <div className="absolute -bottom-1 left-0 w-full h-1 bg-danger-800"></div>
             )}
           </button>
         ))}

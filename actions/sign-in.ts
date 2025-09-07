@@ -14,25 +14,26 @@ export const signIn = async (values: z.infer<typeof SignInSchema>) => {
     };
   }
 
-  const { userId, password, rememberMe } = data;
+  const { accountNumber, password, rememberMe } = data;
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { userId },
+    const account = await prisma.account.findUnique({
+      where: { accountNumber },
+      include: { user: true },
     });
 
-    if (!user) {
-      return { error: "User ID does not exist!" };
+    if (!account || !account.user) {
+      return { error: "Invalid account number or password!" };
     }
 
-    const isValid = await verifyPassword(password, user.password);
+    const isValid = await verifyPassword(password, account.user.hashedPass);
     if (!isValid) {
-      return { error: "Incorrect password!" };
+      return { error: "Invalid account number or password!" };
     }
 
-    const redirectUrl = `/verify-otp?email=${encodeURIComponent(user.email)}${
-      rememberMe ? `&rememberMe=${rememberMe}` : ""
-    }`;
+    const redirectUrl = `/verify-otp?email=${encodeURIComponent(
+      account.user.email
+    )}${rememberMe ? `&rememberMe=${rememberMe}` : ""}`;
 
     return { success: true, redirect: redirectUrl };
   } catch (error) {

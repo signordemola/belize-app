@@ -2,7 +2,7 @@
 CREATE TYPE "public"."TransactionStatus" AS ENUM ('PENDING', 'COMPLETED', 'FAILED', 'CANCELLED', 'REVERSED', 'PROCESSING');
 
 -- CreateEnum
-CREATE TYPE "public"."TransactionType" AS ENUM ('TRANSFER_INTERNAL', 'TRANSFER_FINTRUST', 'TRANSFER_US_BANK', 'TRANSFER_INTERNATIONAL', 'BILL_PAYMENT', 'MOBILE_DEPOSIT', 'DEPOSIT', 'WITHDRAWAL');
+CREATE TYPE "public"."TransactionType" AS ENUM ('TRANSFER_INTERNAL', 'TRANSFER_BELIZE', 'TRANSFER_US_BANK', 'TRANSFER_INTERNATIONAL', 'BILL_PAYMENT', 'MOBILE_DEPOSIT', 'DEPOSIT', 'WITHDRAWAL');
 
 -- CreateEnum
 CREATE TYPE "public"."AccountType" AS ENUM ('CHECKING', 'SAVINGS', 'FIXED_DEPOSIT', 'PRESTIGE', 'BUSINESS', 'INVESTMENT');
@@ -23,23 +23,28 @@ CREATE TYPE "public"."BeneficiaryType" AS ENUM ('BANK_ACCOUNT', 'UTILITY');
 CREATE TABLE "public"."User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "phoneNumber" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "phoneNumber" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "hashedPass" TEXT NOT NULL,
+    "encryptedPass" TEXT NOT NULL,
+    "encryptedSSN" TEXT NOT NULL,
+    "iv" TEXT NOT NULL,
+    "tag" TEXT NOT NULL,
     "date_of_birth" TIMESTAMP(3) NOT NULL,
     "address" TEXT NOT NULL,
-    "cityState" TEXT NOT NULL,
+    "fullAddress" TEXT NOT NULL,
     "zipCode" TEXT NOT NULL,
     "country" TEXT NOT NULL,
     "username" TEXT,
+    "selectedAcctType" "public"."AccountType" NOT NULL DEFAULT 'CHECKING',
     "emailVerified" BOOLEAN NOT NULL DEFAULT false,
     "isActive" BOOLEAN NOT NULL DEFAULT false,
     "isAdmin" BOOLEAN NOT NULL DEFAULT false,
     "role" "public"."UserRoleEnum" NOT NULL DEFAULT 'CUSTOMER',
-    "isSubscribed" BOOLEAN NOT NULL DEFAULT false,
-    "twoFactorEnabled" BOOLEAN NOT NULL DEFAULT false,
     "transactionPin" TEXT,
+    "otpSecret" TEXT,
     "isTransferBlocked" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -59,7 +64,7 @@ CREATE TABLE "public"."Account" (
     "interestRate" DOUBLE PRECISION,
     "openedAt" TIMESTAMP(3) NOT NULL,
     "closedAt" TIMESTAMP(3),
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
@@ -222,7 +227,13 @@ CREATE TABLE "public"."AuditLog" (
 CREATE UNIQUE INDEX "User_email_key" ON "public"."User"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_phoneNumber_key" ON "public"."User"("phoneNumber");
+
+-- CreateIndex
 CREATE INDEX "User_email_idx" ON "public"."User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Account_userId_key" ON "public"."Account"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_accountNumber_key" ON "public"."Account"("accountNumber");

@@ -1,10 +1,18 @@
 "use server";
 
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
+import {
+  generateUniqueAccountNumber,
+  generateAccountData,
+} from "@/lib/customer/create-account";
 import { prisma } from "@/lib/db";
 import { sendOtpEmail } from "@/lib/email";
 import { generateOtp } from "@/lib/otp";
-import { hashPassword } from "@/lib/password";
+import {
+  encryptPassword,
+  generatePassword,
+  hashPassword,
+} from "@/lib/password";
 import { SignUpSchema } from "@/schemas";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import z from "zod";
@@ -15,8 +23,6 @@ export const signUp = async (
 ) => {
   const { error, success, data } = SignUpSchema.safeParse(values);
 
-  console.log("File size:", file?.size);
-
   if (!success) {
     return {
       error: "Validation failed!",
@@ -25,70 +31,107 @@ export const signUp = async (
   }
 
   const {
+    email,
     firstName,
     lastName,
-    email,
-    userId,
-    password,
     phoneNumber,
+    ssn,
     dateOfBirth,
-    address,
-    city,
+    fullAddress,
     state,
     zipCode,
+    country,
     accountType,
   } = data;
 
   try {
     const existingUser = await prisma.user.findFirst({
       where: {
-        OR: [{ email }, { userId }],
+        OR: [{ email }, { phoneNumber }],
       },
     });
 
     if (existingUser) {
-      if (existingUser.userId === userId) {
-        return { error: `User ID ${userId} is already taken!` };
-      }
       if (existingUser.email === email) {
         return { error: `User with email ${email} already exists!` };
       }
+      if (existingUser.phoneNumber === phoneNumber) {
+        return {
+          error: `User with phone number ${phoneNumber} already exist!`,
+        };
+      }
     }
 
-    const secure_url = await uploadImageToCloudinary(file);
+    const [secure_url, accountNumber] = await Promise.all([
+      uploadImageToCloudinary(file),
+      generateUniqueAccountNumber(accountType),
+    ]);
 
+    const password = generatePassword();
     const hashedPassword = await hashPassword(password);
+    const encryptedPassword = encryptPassword(password);
     const otp = generateOtp();
     const hashedOTP = await hashPassword(otp);
+    const accountData = generateAccountData(accountType, accountNumber);
 
-    const user = await prisma.user.create({
-      data: {
-        firstName,
-        lastName,
-        email,
-        userId,
-        password: hashedPassword,
-        phoneNumber,
-        dateOfBirth: new Date(dateOfBirth),
-        address,
-        city,
-        state,
-        zipCode,
-        country: "USA",
-        imageUrl: secure_url,
-        selectedAcctType: accountType,
-        otpSecret: hashedOTP,
-        isActive: true,
+    console.log("Generated password: ", password);
+    console.log("Generated account number :", accountNumber);
+
+    const result = await prisma.$transaction(
+      async (tx) => {
+        const user = await tx.user.create({
+          data: {
+            firstName,
+            lastName,
+            email,
+            hashedPass: hashedPassword,
+            encryptedPass: encryptedPassword.encrypted,
+            ssn,
+            phoneNumber,
+            dateOfBirth: new Date(dateOfBirth),
+            fullAddress,
+            zipCode,
+            state,
+            country,
+            imageUrl: secure_url,
+            selectedAcctType: accountType,
+            otpSecret: hashedOTP,
+            isActive: true,
+            iv: encryptedPassword.iv,
+            tag: encryptedPassword.tag,
+            account: {
+              create: accountData,
+            },
+          },
+          include: {
+            account: true,
+          },
+        });
+
+        return { user };
       },
-    });
+      { timeout: 20000 }
+    );
 
     try {
       await sendOtpEmail(email, otp);
-    } catch (error) {
-      await prisma.user.delete({ where: { id: user.id } });
-      console.log(error);
-      return { error: "Failed to send OTP email. Please try again." };
+    } catch (emailError) {
+      console.error("Email send error:", emailError);
+
+      try {
+        await prisma.user.delete({
+          where: { id: result.user.id },
+        });
+      } catch (cleanupError) {
+        console.error("Cleanup error:", cleanupError);
+      }
+
+      return {
+        error: `Failed to send OTP to ${email}. Please try again later!`,
+      };
     }
+
+    console.log("Registered user: ", result.user);
 
     const redirectUrl = `/verify-otp?email=${encodeURIComponent(email)}`;
 
@@ -99,14 +142,12 @@ export const signUp = async (
   } catch (error) {
     console.error("Registration error:", error);
 
-    // Handle Prisma errors
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
         return { error: "A user with this email already exists." };
       }
     }
 
-    // Handle other errors
     if (error instanceof Error) {
       console.log(error);
       return { error: "An unexpected error occurred. Please try again later!" };

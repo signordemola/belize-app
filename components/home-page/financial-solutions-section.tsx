@@ -3,10 +3,10 @@ const FinancialSolutionsSection = () => {
     <section id="financial-solutions" className="pt-8 pb-16">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-red-600 mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold text-primary-600 mb-4">
             Comprehensive Financial Solutions
           </h2>
-          <p className="text-lg text-red-700">
+          <p className="text-lg text-primary-600">
             Discover our range of services designed to support your financial
             journey at every step
           </p>
@@ -14,16 +14,16 @@ const FinancialSolutionsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Card 1: Personal Banking */}
           <div className="relative group">
-            <div className="absolute inset-0 bg-red-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-primary-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             <div className="relative rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-3 bg-red-200 rounded-xl w-fit mb-6">
+              <div className="p-3 bg-primary-100 rounded-xl w-fit mb-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   aria-hidden="true"
                   data-slot="icon"
-                  className="h-8 w-8 text-red-600"
+                  className="h-8 w-8 text-primary-600"
                 >
                   <path d="M11.584 2.376a.75.75 0 0 1 .832 0l9 6a.75.75 0 1 1-.832 1.248L12 3.901 3.416 9.624a.75.75 0 0 1-.832-1.248l9-6Z"></path>
                   <path
@@ -34,21 +34,21 @@ const FinancialSolutionsSection = () => {
                   <path d="M12 7.875a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z"></path>
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-red-800 mb-4">
+              <h3 className="text-xl font-bold text-primary-800 mb-4">
                 Personal Banking
               </h3>
-              <p className="text-red-900 mb-6">
+              <p className="text-primary-900 mb-6">
                 Smart solutions for your everyday banking needs
               </p>
               <ul className="space-y-3">
-                <li className="flex items-center text-red-900">
+                <li className="flex items-center text-primary-900">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                     data-slot="icon"
-                    className="h-5 w-5 mr-2 text-red-600"
+                    className="h-5 w-5 mr-2 text-primary-600"
                   >
                     <path
                       fillRule="evenodd"
@@ -58,14 +58,14 @@ const FinancialSolutionsSection = () => {
                   </svg>
                   Free Checking
                 </li>
-                <li className="flex items-center text-red-900">
+                <li className="flex items-center text-primary-900">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                     data-slot="icon"
-                    className="h-5 w-5 mr-2 text-red-600"
+                    className="h-5 w-5 mr-2 text-primary-600"
                   >
                     <path
                       fillRule="evenodd"
@@ -75,14 +75,14 @@ const FinancialSolutionsSection = () => {
                   </svg>
                   High-Yield Savings
                 </li>
-                <li className="flex items-center text-red-900">
+                <li className="flex items-center text-primary-900">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                     data-slot="icon"
-                    className="h-5 w-5 mr-2 text-red-600"
+                    className="h-5 w-5 mr-2 text-primary-600"
                   >
                     <path
                       fillRule="evenodd"
@@ -98,35 +98,35 @@ const FinancialSolutionsSection = () => {
 
           {/* Card 2: Business Solutions */}
           <div className="relative group">
-            <div className="absolute inset-0 bg-red-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-primary-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             <div className="relative rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-3 bg-red-200 rounded-xl w-fit mb-6">
+              <div className="p-3 bg-primary-100 rounded-xl w-fit mb-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   aria-hidden="true"
                   data-slot="icon"
-                  className="h-8 w-8 text-red-600"
+                  className="h-8 w-8 text-primary-600"
                 >
                   <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75ZM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 0 1-1.875-1.875V8.625ZM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 0 1 3 19.875v-6.75Z"></path>
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-red-800 mb-4">
+              <h3 className="text-xl font-bold text-primary-800 mb-4">
                 Business Solutions
               </h3>
-              <p className="text-red-900 mb-6">
+              <p className="text-primary-900 mb-6">
                 Empowering businesses to reach their full potential
               </p>
               <ul className="space-y-3">
-                <li className="flex items-center text-red-900">
+                <li className="flex items-center text-primary-900">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                     data-slot="icon"
-                    className="h-5 w-5 mr-2 text-red-600"
+                    className="h-5 w-5 mr-2 text-primary-600"
                   >
                     <path
                       fillRule="evenodd"
@@ -136,14 +136,14 @@ const FinancialSolutionsSection = () => {
                   </svg>
                   Business Checking
                 </li>
-                <li className="flex items-center text-red-900">
+                <li className="flex items-center text-primary-900">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                     data-slot="icon"
-                    className="h-5 w-5 mr-2 text-red-600"
+                    className="h-5 w-5 mr-2 text-primary-600"
                   >
                     <path
                       fillRule="evenodd"
@@ -153,14 +153,14 @@ const FinancialSolutionsSection = () => {
                   </svg>
                   Merchant Services
                 </li>
-                <li className="flex items-center text-red-900">
+                <li className="flex items-center text-primary-900">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                     data-slot="icon"
-                    className="h-5 w-5 mr-2 text-red-600"
+                    className="h-5 w-5 mr-2 text-primary-600"
                   >
                     <path
                       fillRule="evenodd"
@@ -176,16 +176,16 @@ const FinancialSolutionsSection = () => {
 
           {/* Card 3: Wealth Management */}
           <div className="relative group">
-            <div className="absolute inset-0 bg-red-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-primary-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             <div className="relative rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-3 bg-red-200 rounded-xl w-fit mb-6">
+              <div className="p-3 bg-primary-100 rounded-xl w-fit mb-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   aria-hidden="true"
                   data-slot="icon"
-                  className="h-8 w-8 text-red-600"
+                  className="h-8 w-8 text-primary-600"
                 >
                   <path
                     fillRule="evenodd"
@@ -194,21 +194,21 @@ const FinancialSolutionsSection = () => {
                   ></path>
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-red-800 mb-4">
+              <h3 className="text-xl font-bold text-primary-800 mb-4">
                 Wealth Management
               </h3>
-              <p className="text-red-900 mb-6">
+              <p className="text-primary-900 mb-6">
                 Expert guidance for your financial future
               </p>
               <ul className="space-y-3">
-                <li className="flex items-center text-red-900">
+                <li className="flex items-center text-primary-900">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                     data-slot="icon"
-                    className="h-5 w-5 mr-2 text-red-600"
+                    className="h-5 w-5 mr-2 text-primary-600"
                   >
                     <path
                       fillRule="evenodd"
@@ -218,14 +218,14 @@ const FinancialSolutionsSection = () => {
                   </svg>
                   Investment Planning
                 </li>
-                <li className="flex items-center text-red-900">
+                <li className="flex items-center text-primary-900">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                     data-slot="icon"
-                    className="h-5 w-5 mr-2 text-red-600"
+                    className="h-5 w-5 mr-2 text-primary-600"
                   >
                     <path
                       fillRule="evenodd"
@@ -235,14 +235,14 @@ const FinancialSolutionsSection = () => {
                   </svg>
                   Retirement Solutions
                 </li>
-                <li className="flex items-center text-red-900">
+                <li className="flex items-center text-primary-900">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                     data-slot="icon"
-                    className="h-5 w-5 mr-2 text-red-600"
+                    className="h-5 w-5 mr-2 text-primary-600"
                   >
                     <path
                       fillRule="evenodd"

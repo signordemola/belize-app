@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const CommunityImpactSection = () => {
   return (
-    <section id="community-impact" className="py-24 text-white bg-red-600">
+    <section id="community-impact" className="py-24 text-white bg-primary-600">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -18,18 +18,16 @@ const CommunityImpactSection = () => {
             </p>
             <div className="grid grid-cols-2 gap-6 mb-8">
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <div className="text-3xl font-bold text-red-900 mb-2">
+                <div className="text-3xl font-bold text-primary-900 mb-2">
                   $5M+
                 </div>
-                <div className="text-red-900">
-                  Community Investment
-                </div>
+                <div className="text-primary-900">Community Investment</div>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <div className="text-3xl font-bold text-red-900 mb-2">
+                <div className="text-3xl font-bold text-primary-900 mb-2">
                   10K+
                 </div>
-                <div className="text-red-900">Volunteer Hours</div>
+                <div className="text-primary-900">Volunteer Hours</div>
               </div>
             </div>
             <Link

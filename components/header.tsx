@@ -35,7 +35,7 @@ const Header = () => {
             height={30}
             className="rounded-full"
           /> */}
-            <span className="text-text-white text-xl font-bold uppercase -ml-1 font-sans">
+            <span className="text-primary-600 text-xl font-bold uppercase -ml-1 font-sans">
               BelizeBank
             </span>
           </Link>
@@ -43,19 +43,19 @@ const Header = () => {
           <div className="hidden md:flex space-x-8 items-center">
             <Link
               href="/locations"
-              className="text-text-white hover:text-primary-500 transition-colors duration-200"
+              className="text-primary-600 hover:text-primary-500 transition-colors duration-200"
             >
               Locations
             </Link>
             <Link
               href="/contact"
-              className="text-text-white hover:text-primary-500 transition-colors duration-200"
+              className="text-primary-600 hover:text-primary-500 transition-colors duration-200"
             >
               Contact Us
             </Link>
             <Button
               variant="outline"
-              className="text-red-600 border-red-600 hover:bg-red-600 hover:text-white rounded-none px-6 py-2 cursor-pointer"
+              className="text-primary-600 border-primary-600 hover:bg-primary-800 hover:text-white rounded-none px-6 py-2 cursor-pointer"
             >
               <Link href={`/sign-in`}>Sign In</Link>
             </Button>
@@ -67,7 +67,7 @@ const Header = () => {
           <div className="md:hidden">
             <button
               onClick={toggleMobileMenu}
-              className="text-text-white cursor-pointer focus:outline-none"
+              className="text-primary-600 cursor-pointer focus:outline-none"
             >
               <svg
                 className="w-8 h-8"
@@ -118,13 +118,13 @@ const Header = () => {
                 height={30}
                 className="rounded-full"
               />
-              <span className="text-text-white text-xl font-bold uppercase -ml-1 font-sans">
+              <span className="text-primary-600 text-xl font-bold uppercase -ml-1 font-sans">
                 Fintrustcu
               </span>
             </Link>
             <button
               onClick={closeMobileMenu}
-              className="text-text-white cursor-pointer focus:outline-none"
+              className="text-primary-600 cursor-pointer focus:outline-none"
             >
               <svg
                 className="w-8 h-8"
@@ -147,28 +147,28 @@ const Header = () => {
           <div className="flex flex-col items-center justify-center space-y-8 pt-20 pb-8 h-full overflow-y-auto">
             <Link
               href="/"
-              className="text-text-white text-2xl hover:text-primary-500"
+              className="text-primary-600 text-2xl hover:text-primary-500"
               onClick={closeMobileMenu}
             >
               Home
             </Link>
             <Link
               href="/about"
-              className="text-text-white text-2xl hover:text-primary-500"
+              className="text-primary-600 text-2xl hover:text-primary-500"
               onClick={closeMobileMenu}
             >
               About Us
             </Link>
             <Link
               href="/services"
-              className="text-text-white text-2xl hover:text-primary-500"
+              className="text-primary-600 text-2xl hover:text-primary-500"
               onClick={closeMobileMenu}
             >
               Services
             </Link>
             <Link
               href="/contact"
-              className="text-text-white text-2xl hover:text-primary-500"
+              className="text-primary-600 text-2xl hover:text-primary-500"
               onClick={closeMobileMenu}
             >
               Contact
@@ -181,7 +181,7 @@ const Header = () => {
               <Link href={`/sign-in`}>Sign In</Link>
             </Button>
             <Button
-              className="w-48 bg-primary-600 text-text-white px-6 py-3 rounded-full hover:bg-primary-900 text-lg"
+              className="w-48 bg-primary-600 text-primary-600 px-6 py-3 rounded-full hover:bg-primary-900 text-lg"
               onClick={closeMobileMenu}
             >
               <Link href={`/sign-up`}>New Account</Link>

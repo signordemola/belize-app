@@ -14,88 +14,59 @@ const eighteenYearsAgo = new Date(
   new Date().setFullYear(new Date().getFullYear() - 18)
 );
 
-export const SignUpSchema = z
-  .object({
-    email: z.email({ message: "Please enter a valid email address." }),
-    firstName: z
-      .string()
-      .min(2, { message: "First name is required." })
-      .max(100, { message: "First name cannot exceed 100 characters." }),
-    lastName: z
-      .string()
-      .min(2, { message: "Last name is required." })
-      .max(100, { message: "Last name cannot exceed 100 characters." }),
-    userId: z
-      .string()
-      .min(6, { message: "User ID must be at least 6 characters long." })
-      .max(50, { message: "User ID cannot exceed 50 characters." }),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters long." })
-      .max(50, { message: "Password cannot exceed 50 characters." })
-      .regex(/[A-Z]/, {
-        message: "Password must contain at least one uppercase letter.",
-      })
-      .regex(/[a-z]/, {
-        message: "Password must contain at least one lowercase letter.",
-      })
-      .regex(/[0-9]/, { message: "Password must contain at least one number." })
-      .regex(/[^A-Za-z0-9]/, {
-        message: "Password must contain at least one special character.",
-      }),
-    confirmPassword: z.string(),
-    phoneNumber: z
-      .string()
-      .regex(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, {
-        message: "Please enter a valid phone number (e.g., 555-123-4567).",
-      }),
-    dateOfBirth: z
-      .string()
-      .min(1, { message: "Date of birth is required." })
-      .refine(
-        (dob) => {
-          const selectedDate = new Date(dob);
-          return selectedDate <= eighteenYearsAgo;
-        },
-        {
-          message: "You must be at least 18 years old to create an account.",
-        }
-      ),
-    address: z
-      .string()
-      .min(1, { message: "Street address is required." })
-      .max(255, { message: "Street address cannot exceed 255 characters." }),
-    city: z
-      .string()
-      .min(1, { message: "City is required." })
-      .max(100, { message: "City cannot exceed 100 characters." }),
-
-    state: z
-      .string()
-      .min(1, { message: "State is required." })
-      .max(100, { message: "State cannot exceed 100 characters." }),
-    zipCode: z.string().regex(/^\d{5}(?:[-\s]\d{4})?$/, {
-      message: "Please enter a valid Zip Code (e.g., 12345 or 12345-6789).",
+export const SignUpSchema = z.object({
+  email: z.email({ message: "Please enter a valid email address." }),
+  firstName: z
+    .string()
+    .min(2, { message: "First name is required." })
+    .max(100, { message: "First name cannot exceed 100 characters." }),
+  lastName: z
+    .string()
+    .min(2, { message: "Last name is required." })
+    .max(100, { message: "Last name cannot exceed 100 characters." }),
+  phoneNumber: z
+    .string()
+    .regex(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, {
+      message: "Please enter a valid phone number (e.g., 555-123-4567).",
     }),
-    accountType: AccountTypeEnum,
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match.",
-    path: ["confirmPassword"],
-  });
+  ssn: z.string().regex(/^\d{3}-\d{2}-\d{4}$/, {
+    message: "Please enter a valid SSN (e.g., 123-45-6789).",
+  }),
+  dateOfBirth: z
+    .string()
+    .min(1, { message: "Date of birth is required." })
+    .refine(
+      (dob) => {
+        const selectedDate = new Date(dob);
+        return selectedDate <= eighteenYearsAgo;
+      },
+      {
+        message: "You must be at least 18 years old to create an account.",
+      }
+    ),
+  fullAddress: z
+    .string()
+    .min(1, { message: "Street and city are required." })
+    .max(255, { message: "Street and city cannot exceed 255 characters." }),
+  state: z
+    .string()
+    .min(1, { message: "State is required." })
+    .max(100, { message: "State cannot exceed 100 characters." }),
+  zipCode: z.string().regex(/^\d{5}(?:[-\s]\d{4})?$/, {
+    message: "Please enter a valid Zip Code (e.g., 12345 or 12345-6789).",
+  }),
+  country: z
+    .string()
+    .min(2, { message: "Country is required." })
+    .max(100, { message: "Country cannot exceed 100 characters." }),
+  accountType: AccountTypeEnum,
+});
 
 export const SignInSchema = z.object({
-  userId: z
-    .string()
-    .min(3, {
-      message: "User ID must be at least 3 characters.",
-    })
-    .max(20, {
-      message: "User ID must be at most 20 characters.",
-    }),
-  password: z.string().min(1, {
-    message: "Password is required.",
+  accountNumber: z.string().regex(/^\d{10}$/, {
+    message: "Account number must be exactly 10 digits, no spaces or dashes",
   }),
+  password: z.string().min(1, { message: "Password is required." }),
   rememberMe: z.boolean().optional(),
 });
 

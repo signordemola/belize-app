@@ -1,6 +1,6 @@
 const TestimonialsSection = () => {
   return (
-    <section id="testimonials" className="py-24 text-red-800 bg-gray-50">
+    <section id="testimonials" className="py-24 text-primary-800 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold mb-4">
@@ -15,13 +15,13 @@ const TestimonialsSection = () => {
           <div className="bg-card border rounded-2xl p-8 shadow-lg">
             <div className="flex items-center space-x-4 mb-6">
               <div>
-                <h3 className="text-lg font-bold text-red-800">
+                <h3 className="text-lg font-bold text-primary-800">
                   Sarah Johnson
                 </h3>
                 <p className="text-muted-red-800">Small Business Owner</p>
               </div>
             </div>
-            <p className="text-red-800 italic">
+            <p className="text-primary-800 italic">
               FinTrust Credit Union helped me grow my business with their
               personalized approach to commercial banking.
             </p>
@@ -32,7 +32,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -46,7 +46,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -60,7 +60,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -74,7 +74,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -88,7 +88,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -101,13 +101,13 @@ const TestimonialsSection = () => {
           <div className="bg-card border rounded-2xl p-8 shadow-lg">
             <div className="flex items-center space-x-4 mb-6">
               <div>
-                <h3 className="text-lg font-bold text-red-800">
+                <h3 className="text-lg font-bold text-primary-800">
                   Michael Chen
                 </h3>
                 <p className="text-muted-red-800">First-Time Homebuyer</p>
               </div>
             </div>
-            <p className="text-red-800 italic">
+            <p className="text-primary-800 italic">
               The mortgage team made my dream of homeownership a reality with
               their expert guidance.
             </p>
@@ -118,7 +118,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -132,7 +132,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -146,7 +146,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -160,7 +160,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -174,7 +174,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -186,15 +186,14 @@ const TestimonialsSection = () => {
           </div>
           <div className="bg-card border rounded-2xl p-8 shadow-lg">
             <div className="flex items-center space-x-4 mb-6">
-              
               <div>
-                <h3 className="text-lg font-bold text-red-800">
+                <h3 className="text-lg font-bold text-primary-800">
                   Emily Rodriguez
                 </h3>
                 <p className="text-muted-red-800">Student</p>
               </div>
             </div>
-            <p className="text-red-800 italic">
+            <p className="text-primary-800 italic">
               Their student banking solutions and financial education resources
               helped me start my financial journey.
             </p>
@@ -205,7 +204,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -219,7 +218,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -233,7 +232,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -247,7 +246,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
@@ -261,7 +260,7 @@ const TestimonialsSection = () => {
                 fill="currentColor"
                 aria-hidden="true"
                 data-slot="icon"
-                className="h-5 w-5 text-red-600"
+                className="h-5 w-5 text-primary-600"
               >
                 <path
                   fillRule="evenodd"
