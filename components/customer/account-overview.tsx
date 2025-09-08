@@ -149,7 +149,7 @@ const AccountOverview: FC<AccountOverviewProps> = ({
               Account Information
             </h3>
 
-            <div className="flex flex-col md:flex-row items-start">
+            <div className="flex flex-col md:flex-row items-start gap-4">
               <div className="flex-1">
                 <div className="space-y-4">
                   <div>
@@ -188,7 +188,7 @@ const AccountOverview: FC<AccountOverviewProps> = ({
                     src={imageUrl}
                     alt="Account Illustration"
                     fill
-                    className="rounded-full object-cover object-center"
+                    className="rounded-full object-cover"
                   />
                 </div>
               </div>
