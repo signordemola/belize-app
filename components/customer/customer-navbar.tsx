@@ -47,7 +47,7 @@ interface CustomerNavBarProps {
 }
 
 const navItems = [
-  { icon: "🏠", title: "Dashboard", url: "#header" },
+  { icon: "🏠", title: "Dashboard", url: "/dashboard" },
   { icon: "↔️", title: "Transfers", url: "#transfer-section" },
   { icon: "⚡", title: "Quick Actions", url: "#quick-actions" },
 ];

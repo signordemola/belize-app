@@ -46,7 +46,10 @@ export const verifyOTP = async (
     }
 
     if (user.role === UserRoleEnum.CUSTOMER && !user.isActive) {
-      return { error: "Your account is inactive. Please contact support!" };
+      return {
+        error: "Your account is inactive. Please contact support!",
+        redirect: "/sign-in",
+      };
     }
 
     const isValid = await verifyPassword(otp, user.otpSecret);

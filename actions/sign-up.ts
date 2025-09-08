@@ -74,9 +74,6 @@ export const signUp = async (
     const hashedOTP = await hashPassword(otp);
     const accountData = generateAccountData(accountType, accountNumber);
 
-    console.log("Generated password: ", password);
-    console.log("Generated account number :", accountNumber);
-
     const result = await prisma.$transaction(
       async (tx) => {
         const user = await tx.user.create({
@@ -96,7 +93,7 @@ export const signUp = async (
             imageUrl: secure_url,
             selectedAcctType: accountType,
             otpSecret: hashedOTP,
-            isActive: true,
+            isActive: false,
             iv: encryptedPassword.iv,
             tag: encryptedPassword.tag,
             account: {
@@ -110,7 +107,7 @@ export const signUp = async (
 
         return { user };
       },
-      { timeout: 20000 }
+      { timeout: 10000 }
     );
 
     try {
@@ -130,8 +127,6 @@ export const signUp = async (
         error: `Failed to send OTP to ${email}. Please try again later!`,
       };
     }
-
-    console.log("Registered user: ", result.user);
 
     const redirectUrl = `/verify-otp?email=${encodeURIComponent(email)}`;
 
