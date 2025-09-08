@@ -61,10 +61,15 @@ export function encryptPassword(password: string): {
 }
 
 export function decryptPassword(
-  encrypted: string,
-  ivHex: string,
-  tagHex: string
+  encrypted?: string | null,
+  ivHex?: string | null,
+  tagHex?: string | null
 ): string {
+  if (!encrypted || !ivHex || !tagHex) {
+    console.warn("decryptPassword called with missing values");
+    return "N/A";
+  }
+
   const iv = Buffer.from(ivHex, "hex");
   const decipher = crypto.createDecipheriv(ALGORITHM, SECRET_KEY, iv);
   decipher.setAuthTag(Buffer.from(tagHex, "hex"));

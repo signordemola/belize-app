@@ -23,12 +23,12 @@ export const signIn = async (values: z.infer<typeof SignInSchema>) => {
     });
 
     if (!account || !account.user) {
-      return { error: "Invalid account number or password!" };
+      return { error: "Invalid credentials!" };
     }
 
     const isValid = await verifyPassword(password, account.user.hashedPass);
     if (!isValid) {
-      return { error: "Invalid account number or password!" };
+      return { error: "Invalid credentials!" };
     }
 
     const redirectUrl = `/verify-otp?email=${encodeURIComponent(

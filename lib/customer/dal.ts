@@ -4,7 +4,38 @@ import { cache } from "react";
 import { getUserSession } from "../session";
 import { prisma } from "../db";
 import { endOfMonth, startOfMonth } from "date-fns";
-import { TransactionStatus, TransactionType } from "@prisma/client";
+import {
+  TransactionStatus,
+  TransactionType,
+  UserRoleEnum,
+} from "@prisma/client";
+
+export const verifyActiveCustomer = async (): Promise<boolean> => {
+  try {
+    const session = await getUserSession();
+    if (!session) return false;
+
+    const userId = session.userId;
+
+    if (session.role !== UserRoleEnum.CUSTOMER) {
+      return false;
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, isActive: true, role: true },
+    });
+
+    if (!user || user.role !== UserRoleEnum.CUSTOMER || !user.isActive) {
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error verifying active customer:", error);
+    return false;
+  }
+};
 
 export const getUserProfile = cache(async () => {
   const session = await getUserSession();
@@ -14,7 +45,7 @@ export const getUserProfile = cache(async () => {
 
   try {
     const profile = await prisma.user.findUnique({
-      where: { id: userId, isActive: true },
+      where: { id: userId },
       select: {
         email: true,
         firstName: true,
@@ -169,7 +200,7 @@ export const getUserBeneficiaries = cache(async () => {
 
   try {
     const beneficiaries = await prisma.user.findUnique({
-      where: { id: userId, isActive: true },
+      where: { id: userId },
       select: {
         beneficiaries: {
           select: {

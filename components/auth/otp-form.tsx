@@ -46,6 +46,7 @@ const OtpForm = () => {
 
   const onSubmit = async (values: z.infer<typeof VerifyOTPSchema>) => {
     setError("");
+    setSuccess("");
 
     startTransition(() => {
       verifyOTP(values, email, rememberMe).then((result) => {

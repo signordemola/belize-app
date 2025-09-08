@@ -259,14 +259,11 @@ const CustomerNavBar = ({
                   <Landmark className="w-5 h-5 mr-2 text-gray-500" />
                   Account Management
                 </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center px-4 py-2 text-sm text-primary-600 hover:bg-red-50 cursor-pointer rounded-lg">
-                  <LogOut className="w-5 h-5 mr-2 text-primary-600" />
-                  <button
-                    className="hover:text-primary-600 cursor-pointer"
-                    onClick={handleLogout}
-                  >
+                <DropdownMenuItem className="flex items-center px-4 py-2 text-sm hover:bg-red-50 cursor-pointer rounded-lg">
+                  <Button variant={`destructive`} onClick={handleLogout}>
+                    <LogOut className="w-5 h-5 mr-1 text-white" />
                     Sign Out
-                  </button>
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

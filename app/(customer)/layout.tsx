@@ -1,3 +1,11 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard | Your Financial Family Since 1973",
+  description:
+    "Customer Dashboard - Manage your accounts, view transactions, and access personalized financial tools with Belize Bank Inc.",
+};
+
 export default function CustomerLayout({
   children,
 }: {

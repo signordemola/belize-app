@@ -27,7 +27,7 @@ export default function Error({
 
   return (
     <div className="flex items-center justify-center min-h-[85dvh] w-full flex-col text-center space-y-4">
-      <h2 className="text-2xl font-semibold text-primary-600">
+      <h2 className="text-2xl font-semibold text-danger-600">
         Something went wrong!
       </h2>
 

@@ -1,4 +1,3 @@
-import { getUserSession } from "@/lib/session";
 import React from "react";
 
 // components
@@ -10,19 +9,24 @@ import {
   getRecentTransactions,
   getUserBeneficiaries,
   getUserProfile,
+  verifyActiveCustomer,
 } from "@/lib/customer/dal";
-import { AccountType } from "@prisma/client";
 import CustomerHeader from "@/components/customer/customer-header";
 import MonthlySummary from "@/components/customer/monthly-sumarry";
 import AccountOverview from "@/components/customer/account-overview";
-import { userAgent } from "next/server";
 import TransferSection from "@/components/customer/transfer-section";
 import QuickActions from "@/components/customer/quick-actions";
 import RecentTransactions from "@/components/customer/recent-transactions";
+import DeactivatedScreen from "@/components/deactivated-screen";
 
 const DashboardPage = async () => {
-  const session = await getUserSession();
-  if (!session) return null;
+  const isActiveCustomer = await verifyActiveCustomer();
+
+  console.log("Active Customer:", isActiveCustomer);
+
+  if (!isActiveCustomer) {
+    return <DeactivatedScreen />;
+  }
 
   const [
     profile,
@@ -30,7 +34,7 @@ const DashboardPage = async () => {
     beneficiariesResult,
     userAccount,
     monthlySummary,
-     recentTransactions,
+    recentTransactions,
   ] = await Promise.all([
     getUserProfile(),
     getNotifications(),
@@ -43,8 +47,6 @@ const DashboardPage = async () => {
   if (!profile) return null;
 
   const pending = 0.0;
-
-  console.log("Account details:", userAccount);
 
   const hasPin = !!profile.transactionPin;
 

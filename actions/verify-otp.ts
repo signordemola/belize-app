@@ -34,7 +34,7 @@ export const verifyOTP = async (
   try {
     const user = await prisma.user.findUnique({
       where: { email: email.toLocaleLowerCase().trim() },
-      select: { id: true, role: true, otpSecret: true },
+      select: { id: true, role: true, otpSecret: true, isActive: true },
     });
 
     if (!user) {
@@ -43,6 +43,10 @@ export const verifyOTP = async (
 
     if (!user.otpSecret) {
       return { error: "No OTP found. Please request a new one." };
+    }
+
+    if (user.role === UserRoleEnum.CUSTOMER && !user.isActive) {
+      return { error: "Your account is inactive. Please contact support!" };
     }
 
     const isValid = await verifyPassword(otp, user.otpSecret);
