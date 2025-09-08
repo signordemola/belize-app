@@ -4,6 +4,7 @@ import { formatAccountNumber } from "@/lib/utils";
 import { FC } from "react";
 import { toast } from "sonner";
 import { AccountType } from "@prisma/client";
+import Image from "next/image";
 
 interface Account {
   id: string;
@@ -17,9 +18,13 @@ interface Account {
 
 interface AccountOverviewProps {
   userAccount: Account | null;
+  imageUrl: string;
 }
 
-const AccountOverview: FC<AccountOverviewProps> = ({ userAccount }) => {
+const AccountOverview: FC<AccountOverviewProps> = ({
+  userAccount,
+  imageUrl,
+}) => {
   const copyText = (text: string) => {
     navigator.clipboard
       .writeText(text)
@@ -70,7 +75,7 @@ const AccountOverview: FC<AccountOverviewProps> = ({ userAccount }) => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-gradient-to-r from-primary-50 to-primary-100 rounded-md p-6">
               <p className="text-sm font-medium text-primary-600 mb-1">
@@ -140,35 +145,51 @@ const AccountOverview: FC<AccountOverviewProps> = ({ userAccount }) => {
             </div>
           </div>
           <div className="bg-gradient-to-r from-primary-50 to-primary-100/50 rounded-md p-6">
-            <h3 className="text-lg font-medium text-primary-600 mb-4">
+            <h3 className="text-lg font-medium text-primary-600 mb-6">
               Account Information
             </h3>
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm text-gray-900">Account Holder</p>
-                <p className="text-base font-medium text-gray-900">
-                  {account.holder}
-                </p>
+
+            <div className="flex flex-col md:flex-row items-start">
+              <div className="flex-1">
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm text-gray-900">Account Holder</p>
+                    <p className="text-base font-medium text-gray-900">
+                      {account.holder}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-900">Account Type</p>
+                    <p className="text-base font-medium text-gray-900">
+                      {getAccountDisplayName(account.type)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-900">Account Status</p>
+                    <div className="flex items-center mt-1">
+                      <div
+                        className={`w-2 h-2 rounded-full mr-2 ${
+                          account.status === "ACTIVE"
+                            ? "bg-green-500"
+                            : "bg-gradient-to-r from-primary-50 to-primary-100/500"
+                        }`}
+                      ></div>
+                      <p className="text-base font-medium text-gray-900">
+                        {account.status}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-gray-900">Account Type</p>
-                <p className="text-base font-medium text-gray-900">
-                  {getAccountDisplayName(account.type)}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-900">Account Status</p>
-                <div className="flex items-center mt-1">
-                  <div
-                    className={`w-2 h-2 rounded-full mr-2 ${
-                      account.status === "ACTIVE"
-                        ? "bg-green-500"
-                        : "bg-gradient-to-r from-primary-50 to-primary-100/500"
-                    }`}
-                  ></div>
-                  <p className="text-base font-medium text-gray-900">
-                    {account.status}
-                  </p>
+
+              <div className="flex-1 flex justify-center">
+                <div className="w-48 h-48 relative">
+                  <Image
+                    src={imageUrl}
+                    alt="Account Illustration"
+                    fill
+                    className="rounded-full object-cover object-center"
+                  />
                 </div>
               </div>
             </div>

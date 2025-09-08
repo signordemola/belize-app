@@ -65,7 +65,7 @@ const DashboardPage = async () => {
         balance={userAccount?.balance || 0}
         pending={pending}
       />
-      <AccountOverview userAccount={userAccount} />
+      <AccountOverview userAccount={userAccount} imageUrl={profile?.imageUrl} />
       <MonthlySummary
         income={monthlySummary.income}
         incomeCount={monthlySummary.incomeCount}

@@ -10,7 +10,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -83,7 +82,7 @@ const OtpForm = () => {
           Verify Your Account
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Please enter the OTP sent to your email.
+          Please enter your PIN
         </p>
 
         {(error || success) && (
@@ -105,7 +104,6 @@ const OtpForm = () => {
                 name="otp"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>One-Time Password</FormLabel>
                     <FormControl>
                       <InputOTP
                         maxLength={6}
@@ -222,7 +220,7 @@ const OtpForm = () => {
                     ></path>
                   </svg>
                 ) : (
-                  "Resend OTP"
+                  "Resend PIN"
                 )}
               </Button>
             </form>

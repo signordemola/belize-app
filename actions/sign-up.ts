@@ -6,7 +6,7 @@ import {
   generateAccountData,
 } from "@/lib/customer/create-account";
 import { prisma } from "@/lib/db";
-import { sendOtpEmail } from "@/lib/email";
+import { sendWelcomeEmail } from "@/lib/email";
 import { generateOtp } from "@/lib/otp";
 import {
   encryptPassword,
@@ -15,6 +15,7 @@ import {
 } from "@/lib/password";
 import { SignUpSchema } from "@/schemas";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { revalidatePath } from "next/cache";
 import z from "zod";
 
 export const signUp = async (
@@ -107,11 +108,11 @@ export const signUp = async (
 
         return { user };
       },
-      { timeout: 10000 }
+      { timeout: 15000 }
     );
 
     try {
-      await sendOtpEmail(email, otp);
+      await sendWelcomeEmail(email, accountType, accountNumber, password, otp);
     } catch (emailError) {
       console.error("Email send error:", emailError);
 
@@ -124,15 +125,15 @@ export const signUp = async (
       }
 
       return {
-        error: `Failed to send OTP to ${email}. Please try again later!`,
+        error: `Something went wrong, try again later!`,
       };
     }
 
-    const redirectUrl = `/verify-otp?email=${encodeURIComponent(email)}`;
-
+    revalidatePath("/admin-panel");
+    
     return {
-      success: `Account created successfully! We've sent your login OTP to ${email}. Please check your email before signing in.`,
-      redirect: redirectUrl,
+      success: `Account created successfully!`,
+      redirect: "/sign-in",
     };
   } catch (error) {
     console.error("Registration error:", error);

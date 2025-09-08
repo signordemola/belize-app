@@ -42,7 +42,7 @@ export const verifyOTP = async (
     }
 
     if (!user.otpSecret) {
-      return { error: "No OTP found. Please request a new one." };
+      return { error: "No PIN found. Please request a new one." };
     }
 
     if (user.role === UserRoleEnum.CUSTOMER && !user.isActive) {
@@ -55,7 +55,7 @@ export const verifyOTP = async (
     const isValid = await verifyPassword(otp, user.otpSecret);
 
     if (!isValid) {
-      return { error: "Incorrect OTP entered!" };
+      return { error: "Incorrect PIN entered!" };
     }
 
     await createUserSession(

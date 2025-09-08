@@ -49,6 +49,7 @@ export const getUserProfile = cache(async () => {
       select: {
         email: true,
         firstName: true,
+        lastName: true,
         username: true,
         transactionPin: true,
         imageUrl: true,

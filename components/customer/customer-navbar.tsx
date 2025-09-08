@@ -32,6 +32,7 @@ interface CustomerNavBarProps {
   profile: {
     email: string;
     firstName: string;
+    lastName: string;
     username: string | null;
     imageUrl: string | null;
   };
@@ -53,7 +54,7 @@ const navItems = [
 ];
 
 const CustomerNavBar = ({
-  profile: { email, firstName, username, imageUrl },
+  profile: { email, firstName, lastName, username, imageUrl },
   hasPin,
   initialNotifications,
   userBeneficiaries,
@@ -222,20 +223,21 @@ const CustomerNavBar = ({
                 >
                   <Image
                     src={imageUrl || "/images/default-avatar.png"}
-                    alt={firstName.slice(0, 2)}
+                    alt={`${firstName} ${lastName}`}
                     width={1000}
                     height={1000}
                     className="rounded-full object-cover h-12 w-12"
                   />
                   <div className="hidden md:block text-left">
                     <p className="text-sm font-medium capitalize">
-                      {username || "new customer"}
+                      {username || `${firstName} ${lastName}`}
                     </p>
-                    <p className="text-xs text-gray-500">Personal Account</p>
+                    <p className="text-xs text-gray-500">Customer Portal</p>
                   </div>
                   <ChevronDown className="hidden md:block w-5 h-5 text-gray-400" />
                 </Button>
               </DropdownMenuTrigger>
+
               <DropdownMenuContent
                 className="w-64 rounded-md shadow-md"
                 align="end"

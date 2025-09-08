@@ -1,8 +1,9 @@
 import { prisma } from "../db";
 import { UserRoleEnum } from "@prisma/client";
 import { getUserSession } from "../session";
+import { cache } from "react";
 
-export const getAllUsers = async () => {
+export const getAllUsers = cache(async () => {
   try {
     const allUsers = await prisma.user.findMany({
       orderBy: { createdAt: "desc" },
@@ -45,7 +46,7 @@ export const getAllUsers = async () => {
     console.log("Failed to fetch all users:", error);
     return [];
   }
-};
+});
 
 export const verifyAdmin = async () => {
   try {
