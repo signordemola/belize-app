@@ -18,8 +18,8 @@ export const resendOTP = async (email: string) => {
     await sendOtpEmail(email, otp);
   } catch (error) {
     console.log(error);
-    return { error: "Failed to send OTP email. Please try again later!" };
+    return { error: "Failed to send PIN to email. Please try again later!" };
   }
 
-  return { success: "OTP resent successfully!" };
+  return { success: "PIN resent successfully!" };
 };

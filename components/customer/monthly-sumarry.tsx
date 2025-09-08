@@ -68,7 +68,7 @@ const MonthlySummary = ({
           <div className="flex items-center space-x-4 mb-4">
             <div className="w-12 h-12 rounded-md bg-red-50 flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
               <svg
-                className="w-6 h-6 text-primary-600"
+                className="w-6 h-6 text-danger-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -82,7 +82,7 @@ const MonthlySummary = ({
               </svg>
             </div>
             <div>
-              <p className="text-sm font-medium text-primary-600">
+              <p className="text-sm font-medium text-danger-600">
                 Monthly Outgoing
               </p>
               <p className="text-2xl font-semibold text-gray-900 mt-1">

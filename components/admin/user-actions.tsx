@@ -16,12 +16,14 @@ import ActivateUserDialog from "./action-dialogs/activate-user";
 import { BlockTransferDialog } from "./action-dialogs/block-transfer";
 import { PopulateDataDialog } from "./action-dialogs/populate-data";
 import { ResetDataDialog } from "./action-dialogs/reset-data";
+import AddBalanceDialog from "./action-dialogs/add-balance";
 
 const UserActions = ({ user }: { user: BasicUserData }) => {
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
   const [editUserDialog, setEditUserDialog] = useState(false);
   const [activeDialogOpen, setActiveDialogOpen] = useState(false);
   const [blockDialogOpen, setBLockDialogOpen] = useState(false);
+  const [addBalanceDialogOpen, setAddBalanceDialogOpen] = useState(false);
   const [populateDialogOpen, setPopulateDialogOpen] = useState(false);
   const [resetDialogOpen, setResetDialogOpen] = useState(false);
   return (
@@ -44,6 +46,9 @@ const UserActions = ({ user }: { user: BasicUserData }) => {
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setBLockDialogOpen(true)}>
             {user.isTransferBlocked ? "Unblock" : "Block"} Transfer
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setAddBalanceDialogOpen(true)}>
+            Add Balance
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setPopulateDialogOpen(true)}>
             Populate Data
@@ -78,6 +83,13 @@ const UserActions = ({ user }: { user: BasicUserData }) => {
         isBlocked={user.isTransferBlocked}
         open={blockDialogOpen}
         onOpenChange={setBLockDialogOpen}
+      />
+
+      <AddBalanceDialog
+        userId={user.id}
+        fullName={`${user.firstName} ${user.lastName}`}
+        open={addBalanceDialogOpen}
+        onOpenChange={setAddBalanceDialogOpen}
       />
 
       <PopulateDataDialog

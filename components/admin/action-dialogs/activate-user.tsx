@@ -25,7 +25,6 @@ const ActivateUserDialog = ({
   const [isPending, startTransition] = useTransition();
 
   const handleConfirm = () => {
-    console.log("clicked");
     startTransition(() => {
       runUserScript(userId, "activateUser").then((data) => {
         if (data?.error) {

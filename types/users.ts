@@ -6,6 +6,7 @@ export type BasicUserData = {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  ssn: string;
   dateOfBirth: Date;
   fullAddress: string;
   state: string;

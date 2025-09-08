@@ -14,6 +14,7 @@ export const getAllUsers = cache(async () => {
         firstName: true,
         lastName: true,
         phoneNumber: true,
+        ssn: true,
         dateOfBirth: true,
         fullAddress: true,
         state: true,

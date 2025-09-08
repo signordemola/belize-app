@@ -71,7 +71,7 @@ export function UserDetailDialog({
                 label="Password"
                 value={
                   <div className="flex items-center gap-2">
-                    <span>{loading ? "Decrypting..." : password}</span>
+                    <span>{loading ? "decrypting..." : password}</span>
                     <Button
                       type="button"
                       variant="ghost"
@@ -87,12 +87,11 @@ export function UserDetailDialog({
                   </div>
                 }
               />
+              <DetailItem label="SSN" value={user.ssn} />
               <DetailItem label="Address" value={user.fullAddress} />
               <DetailItem label="Zip Code" value={user.zipCode} />
-              <DetailItem
-                label="State & Country"
-                value={`${user.state} - ${user.country}`}
-              />
+              <DetailItem label="State" value={user.state} />
+              <DetailItem label="Country" value={user.country} />
               <DetailItem
                 label="Date of Birth"
                 value={user.dateOfBirth.toLocaleDateString()}

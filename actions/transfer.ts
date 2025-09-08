@@ -3,149 +3,7 @@
 import { prisma } from "@/lib/db";
 import { verifyPassword } from "@/lib/password";
 import { getUserSession } from "@/lib/session";
-
-export const transferBetweenAccounts = async ({
-  fromAccountId,
-  toAccountId,
-  amount,
-  reference,
-  pin,
-}: {
-  fromAccountId: string;
-  toAccountId: string;
-  amount: number;
-  reference: string;
-  pin: string;
-}) => {
-  const session = await getUserSession();
-  if (!session) return { error: "No active session." };
-
-  const amountRegex = /^\d+(\.\d{1,2})?$/;
-  const referenceRegex = /^[a-zA-Z0-9\s]{0,50}$/;
-  const pinRegex = /^\d{4}$/;
-
-  if (!pinRegex.test(pin)) {
-    return { error: "PIN must be exactly 4 digits." };
-  }
-
-  if (!amountRegex.test(amount.toString())) {
-    return {
-      error: "Amount must be a positive number with up to 2 decimal places.",
-    };
-  }
-  if (!referenceRegex.test(reference)) {
-    return { error: "Reference must be alphanumeric and up to 50 characters." };
-  }
-  if (fromAccountId === toAccountId) {
-    return { error: "Cannot transfer to the same account." };
-  }
-  if (amount <= 0) {
-    return { error: "Amount must be greater than 0." };
-  }
-
-  try {
-    const user = await prisma.user.findUnique({
-      where: { id: session.userId },
-      select: { id: true, transactionPin: true, isTransferBlocked: true },
-    });
-
-    if (!user) {
-      return { error: "User not found." };
-    }
-
-    if (user.isTransferBlocked) {
-      return { error: "Transfers are currently blocked for this account." };
-    }
-
-    if (!user.transactionPin) {
-      return { error: "Transaction PIN not set." };
-    }
-
-    const isValidPin = await verifyPassword(pin, user.transactionPin);
-    if (!isValidPin) {
-      return { error: "Invalid transaction PIN." };
-    }
-
-    const accounts = (await prisma.account.findMany({
-      where: { userId: user.id, id: { in: [fromAccountId, toAccountId] } },
-      select: { id: true, balance: true, type: true, accountNumber: true },
-    })) as {
-      id: string;
-      balance: number;
-      type: string;
-      accountNumber: string;
-    }[];
-
-    const fromAccount = accounts.find((acc) => acc.id === fromAccountId);
-    const toAccount = accounts.find((acc) => acc.id === toAccountId);
-
-    if (!fromAccount || !toAccount) {
-      return { error: "One or both accounts not found." };
-    }
-
-    if (fromAccount.balance < amount) {
-      return { error: "Insufficient balance in the source account." };
-    }
-
-    const currentDate = new Date();
-
-    await prisma.$transaction([
-      prisma.transaction.create({
-        data: {
-          userId: user.id,
-          accountId: fromAccountId,
-          amount,
-          type: "TRANSFER_INTERNAL",
-          description: `Transfer to ${toAccount.type} account: ${
-            reference || "Internal transfer"
-          }`,
-          reference: reference || null,
-          status: "COMPLETED",
-          date: currentDate,
-          recipientAccount: toAccount.accountNumber,
-          recipientBank: "Belize Bank Inc.",
-          pinVerified: true,
-          category: "Transfer",
-          isFraudSuspected: false,
-          createdAt: currentDate,
-          updatedAt: currentDate,
-        },
-      }),
-      prisma.transaction.create({
-        data: {
-          userId: user.id,
-          accountId: toAccountId,
-          amount,
-          type: "DEPOSIT",
-          description: `Transfer from ${fromAccount.type} account: ${
-            reference || "Internal transfer"
-          }`,
-          reference: reference || null,
-          status: "COMPLETED",
-          date: currentDate,
-          pinVerified: true,
-          category: "Transfer",
-          isFraudSuspected: false,
-          createdAt: currentDate,
-          updatedAt: currentDate,
-        },
-      }),
-      prisma.account.update({
-        where: { id: fromAccountId },
-        data: { balance: fromAccount.balance - amount, updatedAt: currentDate },
-      }),
-      prisma.account.update({
-        where: { id: toAccountId },
-        data: { balance: toAccount.balance + amount, updatedAt: currentDate },
-      }),
-    ]);
-
-    return { success: "Transfer completed successfully!" };
-  } catch (error) {
-    console.error("Transfer error:", error);
-    return { error: `Transfer failed` };
-  }
-};
+import { revalidatePath } from "next/cache";
 
 export const transferToBelizeUser = async ({
   fromAccountId,
@@ -247,7 +105,7 @@ export const transferToBelizeUser = async ({
     }
 
     const recipientAccount = (await prisma.account.findFirst({
-      where: { userId: recipient.id, type: "CHECKING" },
+      where: { userId: recipient.id },
       select: { id: true, accountNumber: true, type: true, balance: true },
     })) as {
       id: string;
@@ -257,7 +115,7 @@ export const transferToBelizeUser = async ({
     } | null;
 
     if (!recipientAccount) {
-      return { error: "Recipient does not have a checking account." };
+      return { error: "Recipient does not have a valid account." };
     }
 
     const currentDate = new Date();
@@ -315,6 +173,8 @@ export const transferToBelizeUser = async ({
         },
       }),
     ]);
+
+    revalidatePath("/dashboard");
 
     return { success: "Transfer completed successfully!" };
   } catch (error) {

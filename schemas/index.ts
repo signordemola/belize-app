@@ -231,3 +231,17 @@ export const UpdateUsernameSchema = z.object({
       message: "Username can only contain letters, numbers, and underscores.",
     }),
 });
+
+export const AddBalanceSchema = z.object({
+  amount: z
+    .string()
+    .min(1, { message: "Amount is required." })
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: "Amount must be a valid number greater than 0.",
+    }),
+  fromAccount: z
+    .string()
+    .min(1, { message: "From Account is required." })
+    .max(100, { message: "From Account cannot exceed 100 characters." }),
+  notes: z.string().max(255).optional(),
+});

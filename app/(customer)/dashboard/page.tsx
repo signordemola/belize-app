@@ -22,8 +22,6 @@ import DeactivatedScreen from "@/components/deactivated-screen";
 const DashboardPage = async () => {
   const isActiveCustomer = await verifyActiveCustomer();
 
-  console.log("Active Customer:", isActiveCustomer);
-
   if (!isActiveCustomer) {
     return <DeactivatedScreen />;
   }
