@@ -3,47 +3,30 @@
 import { prisma } from "@/lib/db";
 import { verifyPassword } from "@/lib/password";
 import { getUserSession } from "@/lib/session";
+import { TransferToBelizeSchema } from "@/schemas";
+import { TransactionStatus, TransactionType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import z from "zod";
 
-export const transferToBelizeUser = async ({
-  fromAccountId,
-  recipientEmail,
-  amount,
-  reference,
-  pin,
-}: {
-  fromAccountId: string;
-  recipientEmail: string;
-  amount: number;
-  reference: string;
-  pin: string;
-}) => {
-  const session = await getUserSession();
-  if (!session) return { error: "No active session." };
-
-  const amountRegex = /^\d+(\.\d{1,2})?$/;
-  const referenceRegex = /^[a-zA-Z0-9\s]{0,50}$/;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const pinRegex = /^\d{4}$/;
-
-  if (!pinRegex.test(pin)) {
-    return { error: "PIN must be exactly 4 digits." };
-  }
-
-  if (!amountRegex.test(amount.toString())) {
+export const transferToBelizeUser = async (
+  values: z.infer<typeof TransferToBelizeSchema>
+) => {
+  const { success, error, data } = TransferToBelizeSchema.safeParse(values);
+  if (!success) {
     return {
-      error: "Amount must be a positive number with up to 2 decimal places.",
+      error: "Invalid fields!",
+      issues: error.issues,
     };
   }
-  if (!referenceRegex.test(reference)) {
-    return { error: "Reference must be alphanumeric and up to 50 characters." };
-  }
-  if (!emailRegex.test(recipientEmail)) {
-    return { error: "Please enter a valid email address." };
-  }
-  if (amount <= 0) {
-    return { error: "Amount must be greater than 0." };
-  }
+
+  const session = await getUserSession();
+  if (!session) return null;
+
+  const { fromAccount, recipientAccount, amount, reference, pin } = data;
+
+  const formattedAmount = Number(amount);
+
+  console.log(formattedAmount);
 
   try {
     const user = await prisma.user.findUnique({
@@ -51,135 +34,131 @@ export const transferToBelizeUser = async ({
       select: {
         id: true,
         email: true,
+        firstName: true,
+        lastName: true,
         transactionPin: true,
         isTransferBlocked: true,
       },
     });
 
-    if (!user) {
-      return { error: "User not found." };
-    }
-
-    if (user.isTransferBlocked) {
-      return { error: "Transfers are currently blocked for this account." };
-    }
-
-    if (!user.transactionPin) {
-      return { error: "Transaction PIN not set." };
-    }
+    if (!user) return { error: "User not found." };
+    if (user.isTransferBlocked) return { error: "Transfers blocked" };
+    if (!user.transactionPin) return { error: "Transaction PIN not set!" };
 
     const isValidPin = await verifyPassword(pin, user.transactionPin);
-    if (!isValidPin) {
-      return { error: "Invalid transaction PIN." };
-    }
+    if (!isValidPin) return { error: "Invalid transaction PIN!" };
 
-    if (user.email === recipientEmail) {
-      return { error: "Cannot transfer to your own account." };
-    }
-
-    const fromAccount = (await prisma.account.findUnique({
-      where: { id: fromAccountId, userId: user.id },
-      select: { id: true, balance: true, type: true, accountNumber: true },
-    })) as {
-      id: string;
-      balance: number;
-      type: string;
-      accountNumber: string;
-    } | null;
-
-    if (!fromAccount) {
-      return { error: "Source account not found." };
-    }
-
-    if (fromAccount.balance < amount) {
-      return { error: "Insufficient balance in the source account." };
-    }
-
-    const recipient = await prisma.user.findUnique({
-      where: { email: recipientEmail },
-      select: { id: true },
+    const fromAcct = await prisma.account.findUnique({
+      where: { id: fromAccount },
+      select: {
+        id: true,
+        userId: true,
+        balance: true,
+        accountNumber: true,
+        type: true,
+      },
     });
 
-    if (!recipient) {
-      return { error: "Recipient user not found." };
+    if (!fromAcct || fromAcct.userId !== user.id) {
+      return { error: "Source account not found!" };
     }
 
-    const recipientAccount = (await prisma.account.findFirst({
-      where: { userId: recipient.id },
-      select: { id: true, accountNumber: true, type: true, balance: true },
-    })) as {
-      id: string;
-      balance: number;
-      type: string;
-      accountNumber: string;
-    } | null;
-
-    if (!recipientAccount) {
-      return { error: "Recipient does not have a valid account." };
+    if (fromAcct.balance < formattedAmount) {
+      return { error: "Insufficient balance" };
     }
 
-    const currentDate = new Date();
+    const recipientAcct = await prisma.account.findUnique({
+      where: { accountNumber: recipientAccount },
+      include: { user: true },
+    });
+
+    console.log("Recipient Input: ", recipientAccount);
+    console.log("Recipient account: ", recipientAcct);
+
+    if (!recipientAcct) {
+      return { error: "Recipient account not found!" };
+    }
+
+    if (recipientAcct.id === fromAcct.id || recipientAcct.userId === user.id) {
+      return { error: "Cannot transfer to the same account!" };
+    }
+
+    const debitDescription = `Outgoing transfer to ${recipientAcct.user.firstName} ${recipientAcct.user.lastName} (Belize Bank)`;
+    const creditDescription = `Incoming transfer from ${user.firstName} ${user.lastName} (Belize Bank)`;
 
     await prisma.$transaction([
       prisma.transaction.create({
         data: {
+          accountId: fromAcct.id,
           userId: user.id,
-          accountId: fromAccountId,
-          amount,
-          type: "TRANSFER_BELIZE",
-          description: `Transfer to Belize user ${recipientEmail}: ${
-            reference || "Belize transfer"
-          }`,
-          reference: reference || null,
-          status: "COMPLETED",
-          date: currentDate,
-          recipientAccount: recipientAccount.accountNumber,
-          recipientBank: "Belize Bank Inc.",
-          pinVerified: true,
+          amount: formattedAmount,
+          type: TransactionType.TRANSFER_BELIZE,
+          description: debitDescription,
+          reference,
+          status: TransactionStatus.COMPLETED,
+          date: new Date(),
           category: "Transfer",
-          isFraudSuspected: false,
-          createdAt: currentDate,
-          updatedAt: currentDate,
+          recipientBank: "Belize Bank Inc.",
         },
       }),
+
       prisma.transaction.create({
         data: {
-          userId: recipient.id,
-          accountId: recipientAccount.id,
-          amount,
-          type: "DEPOSIT",
-          description: `Transfer from ${fromAccount.type} account: ${
-            reference || "Belize transfer"
-          }`,
-          reference: reference || null,
-          status: "COMPLETED",
-          date: currentDate,
-          pinVerified: true,
-          category: "Transfer",
-          isFraudSuspected: false,
-          createdAt: currentDate,
-          updatedAt: currentDate,
+          accountId: recipientAcct.id,
+          userId: recipientAcct.user.id,
+          amount: formattedAmount,
+          type: TransactionType.DEPOSIT,
+          description: creditDescription,
+          reference,
+          status: TransactionStatus.COMPLETED,
+          date: new Date(),
+          category: "Incoming Transfer",
+          recipientBank: fromAccount,
         },
       }),
+
       prisma.account.update({
-        where: { id: fromAccountId },
-        data: { balance: fromAccount.balance - amount, updatedAt: currentDate },
-      }),
-      prisma.account.update({
-        where: { id: recipientAccount.id },
+        where: { id: fromAcct.id },
         data: {
-          balance: recipientAccount.balance + amount,
-          updatedAt: currentDate,
+          balance: { decrement: formattedAmount },
+          updatedAt: new Date(),
+        },
+      }),
+
+      prisma.account.update({
+        where: { id: recipientAcct.id },
+        data: {
+          balance: { increment: formattedAmount },
+          updatedAt: new Date(),
+        },
+      }),
+
+      prisma.notification.create({
+        data: {
+          userId: recipientAcct.user.id,
+          type: "INCOMING TRANSFER",
+          message: `${formattedAmount.toFixed(
+            2
+          )} has been deposited into your account.`,
+          priority: "HIGH",
+        },
+      }),
+
+      prisma.notification.create({
+        data: {
+          userId: user.id,
+          type: "OUTGOING TRANSFER",
+          message: `You made a transfer of ${formattedAmount.toFixed(2)}`,
+          priority: "HIGH",
         },
       }),
     ]);
 
     revalidatePath("/dashboard");
 
-    return { success: "Transfer completed successfully!" };
+    return { success: true };
   } catch (error) {
-    console.error("Transfer error:", error);
-    return { error: "Something went wrong while processing the transfer." };
+    console.log(error);
   }
 };
 

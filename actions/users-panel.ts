@@ -1,9 +1,8 @@
 "use server";
 
-// import { populateUserData } from "@/lib/admin/populate-user-data";
-// import { resetUserData } from "@/lib/admin/reset-user-data";
 import { verifyAdmin } from "@/lib/admin/dal";
 import { populateUserData } from "@/lib/admin/populate-user-data";
+import { resetUserData } from "@/lib/admin/reset-user-data";
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
@@ -93,7 +92,7 @@ export async function runUserScript(userId: string, scriptType: string) {
         result = await populateUserData(userId);
         break;
       case "resetData":
-        // result = await resetUserData(userId);
+        result = await resetUserData(userId);
         break;
       default:
         return { error: "Invalid script type" };

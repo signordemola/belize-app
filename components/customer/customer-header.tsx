@@ -53,7 +53,9 @@ const CustomerHeader = ({ firstName, balance, pending }: HeaderProps) => {
                 <div className="w-full bg-white/20 h-1 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-white rounded-full"
-                    style={{ width: "75%" }}
+                    style={{
+                      width: `${Math.min(balance / 50000, 100)}%`,
+                    }}
                   ></div>
                 </div>
               </div>

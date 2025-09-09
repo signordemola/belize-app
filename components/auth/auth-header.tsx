@@ -33,7 +33,7 @@ const AuthHeader = () => {
           <div className="flex items-center gap-4 text-white">
             <Button
               variant="outline"
-              className="text-primary-600 border-primary-600 hover:bg-primary-600 hover:text-white rounded-none px-6 py-2 cursor-pointer"
+              className="text-primary-600 border-primary-600 hover:bg-primary-600 hover:text-white rounded-md px-6 py-2 cursor-pointer"
             >
               <Link href={`contact`}>Contact Us</Link>
             </Button>
@@ -104,7 +104,7 @@ const AuthHeader = () => {
         <div className="px-6 py-4 flex flex-col space-y-4">
           <Button
             variant="outline"
-            className="text-primary-600 border-red-600 hover:bg-gray-100 hover:text-primary-900 rounded-none px-6 py-2"
+            className="text-primary-600 border-red-600 hover:bg-gray-100 hover:text-primary-900 rounded-md px-6 py-2"
           >
             <Link href="contact">Contact Us</Link>
           </Button>
@@ -112,14 +112,14 @@ const AuthHeader = () => {
           {pathname === "/sign-in" ? (
             <Button
               variant="outline"
-              className="text-primary-600 border-red-600 hover:bg-gray-100 hover:text-primary-900 rounded-none px-6 py-2 w-full"
+              className="text-primary-600 border-red-600 hover:bg-gray-100 hover:text-primary-900 rounded-md px-6 py-2 w-full"
             >
               <Link href="/sign-up">Open an Account</Link>
             </Button>
           ) : (
             <Button
               variant="outline"
-              className="text-primary-600 border-red-600 hover:bg-gray-100 hover:text-primary-900 rounded-none px-6 py-2 w-full"
+              className="text-primary-600 border-red-600 hover:bg-gray-100 hover:text-primary-900 rounded-md px-6 py-2 w-full"
             >
               <Link href="/sign-in">Sign In</Link>
             </Button>

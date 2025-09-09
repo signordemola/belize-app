@@ -56,7 +56,7 @@ const TransferSection = ({ userAccount }: TransferSectionProps) => {
     <div id="transfer-section" className="mb-8 scroll-smooth scroll-mt-30">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-md bg-primary-50 flex items-center justify-center">
             <svg
               className="w-5 h-5 text-primary-600"
               fill="none"
@@ -102,7 +102,7 @@ const TransferSection = ({ userAccount }: TransferSectionProps) => {
                   className="relative flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-200 bg-white hover:cursor-pointer hover:bg-primary-50 data-[state=active]:bg-primary-50 data-[state=active]:text-primary-900 data-[state=active]:border-b-primary-900"
                 >
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent data-[state=active]:bg-primary-600"></div>
-                  <div className="p-3 rounded-xl mb-2 text-primary-600 bg-gray-50 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
+                  <div className="p-3 rounded-md mb-2 text-primary-600 bg-gray-50 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
                     <svg
                       className="w-5 h-5"
                       fill="none"
@@ -126,7 +126,7 @@ const TransferSection = ({ userAccount }: TransferSectionProps) => {
                   className="relative flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-200 bg-white hover:cursor-pointer hover:bg-primary-50 data-[state=active]:bg-primary-50 data-[state=active]:text-primary-900 data-[state=active]:border-b-primary-900"
                 >
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent data-[state=active]:bg-primary-600"></div>
-                  <div className="p-3 rounded-xl mb-2 text-primary-600 bg-gray-50 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
+                  <div className="p-3 rounded-md mb-2 text-primary-600 bg-gray-50 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
                     <svg
                       className="w-5 h-5"
                       fill="none"
@@ -150,7 +150,7 @@ const TransferSection = ({ userAccount }: TransferSectionProps) => {
                   className="relative flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-200 bg-white hover:cursor-pointer hover:bg-primary-50 data-[state=active]:bg-primary-50 data-[state=active]:text-primary-900 data-[state=active]:border-b-primary-900"
                 >
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent data-[state=active]:bg-primary-600"></div>
-                  <div className="p-3 rounded-xl mb-2 text-primary-600 bg-gray-50 transition-colors duration-200 hover:bg-primary-100 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
+                  <div className="p-3 rounded-md mb-2 text-primary-600 bg-gray-50 transition-colors duration-200 hover:bg-primary-100 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
                     <svg
                       className="w-5 h-5"
                       fill="none"

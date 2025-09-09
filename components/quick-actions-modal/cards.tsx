@@ -11,13 +11,13 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-lg sm:max-w-5xl overflow-y-auto max-h-[80vh]">
-        <div className="bg-gray-50/50 rounded-xl p-6">
+        <div className="bg-gray-50/50 rounded-md p-6">
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold text-gray-900 mb-4">
               Card Services
             </DialogTitle>
           </DialogHeader>
-          <div className="flex space-x-2 mb-6 bg-gray-50 p-1 rounded-xl">
+          <div className="flex space-x-2 mb-6 bg-gray-50 p-1 rounded-md">
             <button className="flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all duration-200 bg-white text-gray-900 shadow-sm">
               Overview
             </button>
@@ -68,7 +68,7 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
                       </div>
                     </div>
                     <div className="mt-3 flex space-x-2 transition-all duration-500 transform opacity-0 translate-y-4">
-                      <button className="flex-1 bg-white hover:bg-gray-50 text-gray-900 py-2 px-3 rounded-xl shadow-sm transition-all duration-200 flex items-center justify-center space-x-1 text-sm">
+                      <button className="flex-1 bg-white hover:bg-gray-50 text-gray-900 py-2 px-3 rounded-md shadow-sm transition-all duration-200 flex items-center justify-center space-x-1 text-sm">
                         <svg
                           className="w-3.5 h-3.5"
                           fill="none"
@@ -84,7 +84,7 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
                         </svg>
                         <span>Lock Card</span>
                       </button>
-                      <button className="flex-1 bg-white hover:bg-gray-50 text-gray-900 py-2 px-3 rounded-xl shadow-sm transition-all duration-200 flex items-center justify-center space-x-1 text-sm">
+                      <button className="flex-1 bg-white hover:bg-gray-50 text-gray-900 py-2 px-3 rounded-md shadow-sm transition-all duration-200 flex items-center justify-center space-x-1 text-sm">
                         <svg
                           className="w-3.5 h-3.5"
                           fill="none"
@@ -105,7 +105,7 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
                 </div>
               </div>
               <div className="flex-1 space-y-4">
-                <div className="bg-gray-50 rounded-xl p-4">
+                <div className="bg-gray-50 rounded-md p-4">
                   <h4 className="text-sm font-medium text-gray-900 mb-3">
                     Quick Actions
                   </h4>
@@ -160,7 +160,7 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
                     </button>
                   </div>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-4">
+                <div className="bg-gray-50 rounded-md p-4">
                   <h4 className="text-sm font-medium text-gray-900 mb-3">
                     Recent Transactions
                   </h4>
@@ -250,7 +250,7 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
                       </div>
                     </div>
                     <div className="mt-3 flex space-x-2 transition-all duration-500 transform opacity-0 translate-y-4">
-                      <button className="flex-1 bg-white hover:bg-gray-50 text-gray-900 py-2 px-3 rounded-xl shadow-sm transition-all duration-200 flex items-center justify-center space-x-1 text-sm">
+                      <button className="flex-1 bg-white hover:bg-gray-50 text-gray-900 py-2 px-3 rounded-md shadow-sm transition-all duration-200 flex items-center justify-center space-x-1 text-sm">
                         <svg
                           className="w-3.5 h-3.5"
                           fill="none"
@@ -266,7 +266,7 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
                         </svg>
                         <span>Lock Card</span>
                       </button>
-                      <button className="flex-1 bg-white hover:bg-gray-50 text-gray-900 py-2 px-3 rounded-xl shadow-sm transition-all duration-200 flex items-center justify-center space-x-1 text-sm">
+                      <button className="flex-1 bg-white hover:bg-gray-50 text-gray-900 py-2 px-3 rounded-md shadow-sm transition-all duration-200 flex items-center justify-center space-x-1 text-sm">
                         <svg
                           className="w-3.5 h-3.5"
                           fill="none"
@@ -287,7 +287,7 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
                 </div>
               </div>
               <div className="flex-1 space-y-4">
-                <div className="bg-gray-50 rounded-xl p-4">
+                <div className="bg-gray-50 rounded-md p-4">
                   <h4 className="text-sm font-medium text-gray-900 mb-3">
                     Quick Actions
                   </h4>
@@ -342,7 +342,7 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
                     </button>
                   </div>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-4">
+                <div className="bg-gray-50 rounded-md p-4">
                   <h4 className="text-sm font-medium text-gray-900 mb-3">
                     Recent Transactions
                   </h4>
@@ -382,7 +382,7 @@ const CardsModal = ({ isOpen, onClose }: CardsModalProps) => {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-4">
+                <div className="bg-gray-50 rounded-md p-4">
                   <h4 className="text-sm font-medium text-gray-900 mb-3">
                     Credit Usage
                   </h4>

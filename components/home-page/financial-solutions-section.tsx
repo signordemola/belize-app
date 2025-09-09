@@ -16,7 +16,7 @@ const FinancialSolutionsSection = () => {
           <div className="relative group">
             <div className="absolute inset-0 bg-primary-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             <div className="relative rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-3 bg-primary-100 rounded-xl w-fit mb-6">
+              <div className="p-3 bg-primary-100 rounded-md w-fit mb-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -100,7 +100,7 @@ const FinancialSolutionsSection = () => {
           <div className="relative group">
             <div className="absolute inset-0 bg-primary-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             <div className="relative rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-3 bg-primary-100 rounded-xl w-fit mb-6">
+              <div className="p-3 bg-primary-100 rounded-md w-fit mb-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -178,7 +178,7 @@ const FinancialSolutionsSection = () => {
           <div className="relative group">
             <div className="absolute inset-0 bg-primary-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             <div className="relative rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-3 bg-primary-100 rounded-xl w-fit mb-6">
+              <div className="p-3 bg-primary-100 rounded-md w-fit mb-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

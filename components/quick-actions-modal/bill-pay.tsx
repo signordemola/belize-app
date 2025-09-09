@@ -11,7 +11,7 @@ const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-lg sm:max-w-6xl overflow-y-auto max-h-[80vh]">
-        <div className="bg-gray-50/10 rounded-xl p-6">
+        <div className="bg-gray-50/10 rounded-md p-6">
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold text-gray-900 mb-4">
               Bill Pay
@@ -37,42 +37,42 @@ const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     <button
                       type="button"
-                      className="p-3 rounded-xl text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
+                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
                     >
                       <span className="text-xl mb-1">⚡</span>
                       <span className="text-xs text-center">PG&E Electric</span>
                     </button>
                     <button
                       type="button"
-                      className="p-3 rounded-xl text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
+                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
                     >
                       <span className="text-xl mb-1">💧</span>
                       <span className="text-xs text-center">City Water</span>
                     </button>
                     <button
                       type="button"
-                      className="p-3 rounded-xl text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
+                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
                     >
                       <span className="text-xl mb-1">🌐</span>
                       <span className="text-xs text-center">Xfinity</span>
                     </button>
                     <button
                       type="button"
-                      className="p-3 rounded-xl text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
+                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
                     >
                       <span className="text-xl mb-1">📱</span>
                       <span className="text-xs text-center">T-Mobile</span>
                     </button>
                     <button
                       type="button"
-                      className="p-3 rounded-xl text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
+                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
                     >
                       <span className="text-xl mb-1">🛡️</span>
                       <span className="text-xs text-center">State Farm</span>
                     </button>
                     <button
                       type="button"
-                      className="p-3 rounded-xl text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
+                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
                     >
                       <span className="text-xl mb-1">🎬</span>
                       <span className="text-xs text-center">Netflix</span>
@@ -130,7 +130,7 @@ const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
               </form>
             </div>
             <div className="space-y-6">
-              <div className="bg-gray-50 rounded-xl p-6">
+              <div className="bg-gray-50 rounded-md p-6">
                 <h3 className="text-sm font-medium text-gray-900 mb-4">
                   Upcoming Bills
                 </h3>
@@ -209,7 +209,7 @@ const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 rounded-xl p-6">
+              <div className="bg-gray-50 rounded-md p-6">
                 <h3 className="text-sm font-medium text-gray-900 mb-4">
                   Payment History
                 </h3>

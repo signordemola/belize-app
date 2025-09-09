@@ -123,7 +123,9 @@ const SignUpForm = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {/* Profile Image Upload */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold text-primary-900">Profile Picture</h3>
+              <h3 className="text-xl font-semibold text-primary-900">
+                Profile Picture
+              </h3>
 
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative">
@@ -134,7 +136,7 @@ const SignUpForm = () => {
                         alt="Profile preview"
                         width={120}
                         height={120}
-                        className="rounded-none object-cover border-4 border-primary/20"
+                        className="rounded-md object-cover border-4 border-primary/20"
                       />
                       <button
                         type="button"
@@ -176,7 +178,9 @@ const SignUpForm = () => {
 
             {/* Account Credentials */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold text-primary-900">Account Credentials</h3>
+              <h3 className="text-xl font-semibold text-primary-900">
+                Account Credentials
+              </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <FormField
@@ -191,7 +195,7 @@ const SignUpForm = () => {
                           placeholder="email@example.com"
                           disabled={isPending}
                           {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
+                          className="rounded-md py-5 bg-white autofill:!bg-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -210,7 +214,7 @@ const SignUpForm = () => {
                           placeholder="(555) 123-4567"
                           disabled={isPending}
                           {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
+                          className="rounded-md py-5 bg-white autofill:!bg-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -222,7 +226,9 @@ const SignUpForm = () => {
 
             {/* Personal Information */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold text-primary-900">Personal Information</h3>
+              <h3 className="text-xl font-semibold text-primary-900">
+                Personal Information
+              </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <FormField
@@ -236,7 +242,7 @@ const SignUpForm = () => {
                           placeholder="John"
                           disabled={isPending}
                           {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
+                          className="rounded-md py-5 bg-white autofill:!bg-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -255,7 +261,7 @@ const SignUpForm = () => {
                           placeholder="Doe"
                           disabled={isPending}
                           {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
+                          className="rounded-md py-5 bg-white autofill:!bg-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -277,7 +283,7 @@ const SignUpForm = () => {
                           placeholder="123-45-6789"
                           disabled={isPending}
                           {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
+                          className="rounded-md py-5 bg-white autofill:!bg-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -296,7 +302,7 @@ const SignUpForm = () => {
                           type="date"
                           disabled={isPending}
                           {...field}
-                          className="rounded-none pt-3 pb-7 bg-white autofill:!bg-white"
+                          className="rounded-md pt-3 pb-7 bg-white autofill:!bg-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -308,7 +314,9 @@ const SignUpForm = () => {
 
             {/* Contact Information */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold text-primary-900">Contact Information</h3>
+              <h3 className="text-xl font-semibold text-primary-900">
+                Contact Information
+              </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <FormField
@@ -322,7 +330,7 @@ const SignUpForm = () => {
                           placeholder="123 Main St, Springfield"
                           disabled={isPending}
                           {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
+                          className="rounded-md py-5 bg-white autofill:!bg-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -341,7 +349,7 @@ const SignUpForm = () => {
                           placeholder="90210"
                           disabled={isPending}
                           {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
+                          className="rounded-md py-5 bg-white autofill:!bg-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -362,7 +370,7 @@ const SignUpForm = () => {
                           placeholder="California, Ontario, etc."
                           disabled={isPending}
                           {...field}
-                          className="rounded-none py-5 bg-white autofill:!bg-white"
+                          className="rounded-md py-5 bg-white autofill:!bg-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -382,7 +390,7 @@ const SignUpForm = () => {
                           onValueChange={field.onChange}
                           value={field.value}
                         >
-                          <SelectTrigger className="rounded-none py-5 bg-white autofill:!bg-white w-full">
+                          <SelectTrigger className="rounded-md py-5 bg-white autofill:!bg-white w-full">
                             <SelectValue placeholder="Select a country" />
                           </SelectTrigger>
                           <SelectContent className="max-h-60 overflow-y-auto">
@@ -410,7 +418,9 @@ const SignUpForm = () => {
 
             {/* Account Type */}
             <section className="space-y-6">
-              <h3 className="text-xl font-semibold text-primary-900">Account Type</h3>
+              <h3 className="text-xl font-semibold text-primary-900">
+                Account Type
+              </h3>
 
               <FormField
                 control={form.control}
@@ -424,7 +434,7 @@ const SignUpForm = () => {
                         onValueChange={field.onChange}
                         value={field.value}
                       >
-                        <SelectTrigger className="rounded-none py-5 bg-white autofill:!bg-white w-full">
+                        <SelectTrigger className="rounded-md py-5 bg-white autofill:!bg-white w-full">
                           <SelectValue placeholder="Select an account type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -456,7 +466,7 @@ const SignUpForm = () => {
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full bg-primary-600 py-6 rounded-none text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
+              className="w-full bg-primary-600 py-6 rounded-md text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
             >
               {isPending ? (
                 <svg

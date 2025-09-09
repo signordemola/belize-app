@@ -150,7 +150,7 @@ const OtpForm = () => {
               <Button
                 type="submit"
                 disabled={isPending || isResendPending}
-                className="w-full bg-primary-600 py-6 rounded-none text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
+                className="w-full bg-primary-600 py-6 rounded-md text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
               >
                 {isPending ? (
                   <svg

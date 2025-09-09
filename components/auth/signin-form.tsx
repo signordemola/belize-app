@@ -61,7 +61,9 @@ export const SignInForm = () => {
   return (
     <div className="flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
       <div className="w-full max-w-2xl rounded-sm border border-primary-600/30 bg-white p-16 shadow-md">
-        <h2 className="mt-6 text-3xl font-serif font-bold text-primary-900">Welcome Back</h2>
+        <h2 className="mt-6 text-3xl font-serif font-bold text-primary-900">
+          Welcome Back
+        </h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Sign in to access your account
         </p>
@@ -92,7 +94,7 @@ export const SignInForm = () => {
                           id="accountNumber"
                           type="text"
                           disabled={isPending}
-                          className="pl-10 rounded-none py-6"
+                          className="pl-10 rounded-md py-6"
                         />
                       </div>
                     </FormControl>
@@ -119,7 +121,7 @@ export const SignInForm = () => {
                           type={showPassword ? "text" : "password"}
                           placeholder="••••••••"
                           disabled={isPending}
-                          className="pl-10 rounded-none py-6 bg-white autofill:!bg-white"
+                          className="pl-10 rounded-md py-6 bg-white autofill:!bg-white"
                         />
                         <button
                           type="button"
@@ -175,7 +177,7 @@ export const SignInForm = () => {
               <Button
                 type="submit"
                 disabled={isPending}
-                className="w-full bg-primary-600 py-6 rounded-none text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
+                className="w-full bg-primary-600 py-6 rounded-md text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
               >
                 {isPending ? (
                   <svg

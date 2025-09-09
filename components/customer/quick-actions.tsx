@@ -21,12 +21,12 @@ const QuickActions = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-6">
             <button
               data-action-id="billpay"
-              className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg cursor-pointer"
+              className="group relative overflow-hidden rounded-md transition-all duration-300 hover:shadow-lg cursor-pointer"
               onClick={() => setOpenDialog("billpay")}
             >
               <div className="absolute inset-0 bg-gradient-card-primary opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative p-4 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div className="w-12 h-12 rounded-md bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-2xl">💰</span>
                 </div>
                 <span className="text-sm font-medium text-white group-hover:scale-105 transition-transform duration-300">
@@ -37,12 +37,12 @@ const QuickActions = () => {
             </button>
             <button
               data-action-id="deposit"
-              className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-md transition-all duration-300 hover:shadow-lg"
               onClick={() => setOpenDialog("deposit")}
             >
               <div className="absolute inset-0 bg-gradient-card-secondary opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative p-4 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div className="w-12 h-12 rounded-md bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-2xl">📱</span>
                 </div>
                 <span className="text-sm font-medium text-white group-hover:scale-105 transition-transform duration-300">
@@ -53,12 +53,12 @@ const QuickActions = () => {
             </button>
             <button
               data-action-id="cards"
-              className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-md transition-all duration-300 hover:shadow-lg"
               onClick={() => setOpenDialog("cards")}
             >
               <div className="absolute inset-0 bg-gradient-card-accent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative p-4 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div className="w-12 h-12 rounded-md bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-2xl">💳</span>
                 </div>
                 <span className="text-sm font-medium text-white group-hover:scale-105 transition-transform duration-300">
@@ -69,12 +69,12 @@ const QuickActions = () => {
             </button>
             <button
               data-action-id="statements"
-              className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-md transition-all duration-300 hover:shadow-lg"
               onClick={() => setOpenDialog("statements")}
             >
               <div className="absolute inset-0 bg-gradient-card-primary opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative p-4 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div className="w-12 h-12 rounded-md bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-2xl">📄</span>
                 </div>
                 <span className="text-sm font-medium text-white group-hover:scale-105 transition-transform duration-300">
@@ -85,12 +85,12 @@ const QuickActions = () => {
             </button>
             <button
               data-action-id="zelle"
-              className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-md transition-all duration-300 hover:shadow-lg"
               onClick={() => setOpenDialog("zelle")}
             >
               <div className="absolute inset-0 bg-gradient-card-secondary opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative p-4 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div className="w-12 h-12 rounded-md bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-2xl">⚡</span>
                 </div>
                 <span className="text-sm font-medium text-white group-hover:scale-105 transition-transform duration-300">
@@ -101,12 +101,12 @@ const QuickActions = () => {
             </button>
             <button
               data-action-id="rewards"
-              className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-md transition-all duration-300 hover:shadow-lg"
               onClick={() => setOpenDialog("rewards")}
             >
               <div className="absolute inset-0 bg-gradient-card-accent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative p-4 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div className="w-12 h-12 rounded-md bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-2xl">⭐</span>
                 </div>
                 <span className="text-sm font-medium text-white group-hover:scale-105 transition-transform duration-300">

@@ -139,7 +139,7 @@ export default function HeroBannerSection() {
                   />
                 </svg>
 
-                <div className="absolute top-8 left-12 w-24 h-40 bg-gray-900 rounded-xl shadow-xl">
+                <div className="absolute top-8 left-12 w-24 h-40 bg-gray-900 rounded-md shadow-xl">
                   <div className="absolute top-2 left-2 right-2 bottom-2 bg-white rounded-lg overflow-hidden">
                     <div className="p-3 h-full">
                       <div className="h-1/2 flex items-end justify-center mb-2">

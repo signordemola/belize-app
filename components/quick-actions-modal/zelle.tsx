@@ -11,7 +11,7 @@ const ZelleModal = ({ isOpen, onClose }: ZelleModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-lg sm:max-w-lg overflow-y-auto max-h-[80vh]">
-        <div className="bg-gray-50/50 rounded-xl p-6">
+        <div className="bg-gray-50/50 rounded-md p-6">
           <DialogHeader>
             <DialogTitle className="text-lg font-medium text-gray-900 mb-4">
               Zelle

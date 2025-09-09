@@ -50,7 +50,7 @@ export const addBalanceToUser = async (
           userId,
           amount: numericAmount,
           type: TransactionType.DEPOSIT,
-          description: notes || "Admin balance addition",
+          description: `Incoming transfer from ${fromAccount}`,
           reference,
           status: TransactionStatus.COMPLETED,
           date: transactionDate,
@@ -65,7 +65,7 @@ export const addBalanceToUser = async (
           type: "INCOMING TRANSFER",
           message: `$${numericAmount.toFixed(
             2
-          )} has been added to your account.`,
+          )} has been deposited to your account.`,
           priority: "HIGH",
         },
       });

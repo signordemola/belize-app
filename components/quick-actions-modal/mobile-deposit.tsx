@@ -11,7 +11,7 @@ const MobileDepositModal = ({ isOpen, onClose }: MobileDepositModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-lg sm:max-w-5xl overflow-y-auto max-h-[80vh]">
-        <div className="bg-gray-50/50 rounded-xl p-6">
+        <div className="bg-gray-50/50 rounded-md p-6">
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold text-gray-900 mb-4">
               Mobile Deposit
@@ -23,7 +23,7 @@ const MobileDepositModal = ({ isOpen, onClose }: MobileDepositModalProps) => {
                 Deposit To
               </label>
               <select
-                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 bg-gray-50 hover:bg-white transition-colors duration-200"
+                className="w-full p-3 border border-gray-200 rounded-md focus:ring-emerald-500 focus:border-emerald-500 bg-gray-50 hover:bg-white transition-colors duration-200"
                 required
               >
                 <option value="">Select account</option>
@@ -41,7 +41,7 @@ const MobileDepositModal = ({ isOpen, onClose }: MobileDepositModalProps) => {
                 </span>
                 <input
                   type="number"
-                  className="w-full p-3 pl-8 border border-gray-200 rounded-xl focus:ring-primary-500 focus:border-primary-500 bg-gray-50 hover:bg-white transition-colors duration-200"
+                  className="w-full p-3 pl-8 border border-gray-200 rounded-md focus:ring-primary-500 focus:border-primary-500 bg-gray-50 hover:bg-white transition-colors duration-200"
                   placeholder="0.00"
                   min="0.01"
                   step="0.01"
@@ -59,7 +59,7 @@ const MobileDepositModal = ({ isOpen, onClose }: MobileDepositModalProps) => {
                 />
                 <label
                   htmlFor="front-image"
-                  className="block w-full aspect-video border-2 border-dashed rounded-xl border-gray-300 bg-gray-50 hover:border-emerald-500 hover:bg-emerald-50 transition-colors duration-200 cursor-pointer"
+                  className="block w-full aspect-video border-2 border-dashed rounded-md border-gray-300 bg-gray-50 hover:border-emerald-500 hover:bg-emerald-50 transition-colors duration-200 cursor-pointer"
                 >
                   <div className="flex flex-col items-center justify-center h-full p-6">
                     <span className="text-3xl mb-2">📸</span>
@@ -81,7 +81,7 @@ const MobileDepositModal = ({ isOpen, onClose }: MobileDepositModalProps) => {
                 />
                 <label
                   htmlFor="back-image"
-                  className="block w-full aspect-video border-2 border-dashed rounded-xl border-gray-300 bg-gray-50 hover:border-emerald-500 hover:bg-emerald-50 transition-colors duration-200 cursor-pointer"
+                  className="block w-full aspect-video border-2 border-dashed rounded-md border-gray-300 bg-gray-50 hover:border-emerald-500 hover:bg-emerald-50 transition-colors duration-200 cursor-pointer"
                 >
                   <div className="flex flex-col items-center justify-center h-full p-6">
                     <span className="text-3xl mb-2">📸</span>
@@ -98,11 +98,11 @@ const MobileDepositModal = ({ isOpen, onClose }: MobileDepositModalProps) => {
             <button
               type="submit"
               disabled
-              className="w-full py-3 px-4 rounded-xl text-white font-medium bg-gray-300 cursor-not-allowed transition-colors duration-200"
+              className="w-full py-3 px-4 rounded-md text-white font-medium bg-gray-300 cursor-not-allowed transition-colors duration-200"
             >
               Deposit Check
             </button>
-            <div className="mt-6 bg-gray-50 rounded-xl p-4">
+            <div className="mt-6 bg-gray-50 rounded-md p-4">
               <h3 className="text-sm font-medium text-gray-900 mb-3">
                 Important Notes:
               </h3>

@@ -11,19 +11,18 @@ const CommunityImpactSection = () => {
               Making a Difference in Our Community
             </h2>
             <p className="text-xl mb-8 text-white/90">
-              At Belize Bank Inc., we believe in giving back. Our
-              commitment to community development goes beyond banking -
-              {" we're"}
+              At Belize Bank Inc., we believe in giving back. Our commitment to
+              community development goes beyond banking -{" we're"}
               building a better future together.
             </p>
             <div className="grid grid-cols-2 gap-6 mb-8">
-              <div className="bg-white rounded-xl p-6 shadow-md">
+              <div className="bg-white rounded-md p-6 shadow-md">
                 <div className="text-3xl font-bold text-primary-900 mb-2">
                   $5M+
                 </div>
                 <div className="text-primary-900">Community Investment</div>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-md">
+              <div className="bg-white rounded-md p-6 shadow-md">
                 <div className="text-3xl font-bold text-primary-900 mb-2">
                   10K+
                 </div>

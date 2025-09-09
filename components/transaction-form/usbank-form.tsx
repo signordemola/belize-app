@@ -215,7 +215,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                 contact our support team for assistance.
               </p>
               <div className="mt-4 space-y-3">
-                <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-600">
+                <div className="bg-gray-50 rounded-md p-4 text-sm text-gray-600">
                   <p className="font-medium text-gray-900 mb-1">
                     Contact Support
                   </p>
@@ -224,7 +224,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                 </div>
                 <Button
                   onClick={handleCloseBlockedModal}
-                  className="w-full py-3 px-4 border border-transparent rounded-xl shadow-sm text-white bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transform transition-all duration-200"
+                  className="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transform transition-all duration-200"
                 >
                   Close
                 </Button>
@@ -266,7 +266,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
               <div className="mt-4 space-y-3">
                 <Button
                   onClick={handleCloseSuccessModal}
-                  className="w-full py-3 px-4 border border-transparent rounded-xl shadow-sm text-white bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transform transition-all duration-200"
+                  className="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transform transition-all duration-200"
                 >
                   Close
                 </Button>
@@ -294,7 +294,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                       <FormControl>
                         <select
                           {...field}
-                          className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl 
+                          className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md 
                                     focus:ring-2 focus:ring-primary-500 focus:border-primary-500 
                                     hover:bg-white transition-colors duration-200 
                                     disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
@@ -327,7 +327,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                       <FormControl>
                         <select
                           {...field}
-                          className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+                          className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
                           disabled={isPending}
                         >
                           <option value="">Select bank</option>
@@ -364,7 +364,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                           {...field}
                           type="text"
                           placeholder="Enter account number"
-                          className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+                          className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
                           maxLength={17}
                           disabled={isPending}
                         />
@@ -386,7 +386,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                           {...field}
                           type="text"
                           placeholder="Enter account holder name"
-                          className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+                          className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
                           disabled={isPending}
                         />
                       </FormControl>
@@ -404,7 +404,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                       Amount
                     </FormLabel>
                     <FormControl>
-                      <div className="relative mt-1 rounded-xl shadow-sm">
+                      <div className="relative mt-1 rounded-md shadow-sm">
                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                           <span className="text-gray-500 sm:text-sm">$</span>
                         </div>
@@ -412,7 +412,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                           {...field}
                           type="number"
                           placeholder="0.00"
-                          className="block w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+                          className="block w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
                           min="0.01"
                           step="0.01"
                           disabled={isPending}
@@ -436,7 +436,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                         {...field}
                         type="text"
                         placeholder="What's this transfer for?"
-                        className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+                        className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
                         disabled={isPending}
                       />
                     </FormControl>
@@ -448,7 +448,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                 <Button
                   type="submit"
                   disabled={isPending}
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors duration-200"
+                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors duration-200"
                 >
                   {isPending ? (
                     <svg
@@ -491,7 +491,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            <div className="bg-gray-50 p-4 rounded-xl space-y-3">
+            <div className="bg-gray-50 p-4 rounded-md space-y-3">
               <h3 className="text-sm font-medium text-gray-700">
                 Transfer Summary
               </h3>
@@ -529,7 +529,7 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
               <Input
                 type="password"
                 placeholder="Enter 4-digit transaction PIN"
-                className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+                className="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 hover:bg-white transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
                 maxLength={4}
                 pattern="\d{4}"
                 value={pin}
@@ -542,14 +542,14 @@ export const USBankForm = ({ userAccount }: USBankFormProps) => {
                 type="button"
                 onClick={handleBack}
                 disabled={isPending}
-                className="flex-1 py-3 px-4 border border-gray-200 rounded-xl shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-100 disabled:cursor-not-allowed transition-colors duration-200"
+                className="flex-1 py-3 px-4 border border-gray-200 rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-100 disabled:cursor-not-allowed transition-colors duration-200"
               >
                 Back
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="flex-1 flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors duration-200"
+                className="flex-1 flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors duration-200"
               >
                 {isPending ? (
                   <svg

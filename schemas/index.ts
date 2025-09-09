@@ -242,6 +242,25 @@ export const AddBalanceSchema = z.object({
   fromAccount: z
     .string()
     .min(1, { message: "From Account is required." })
-    .max(100, { message: "From Account cannot exceed 100 characters." }),
-  notes: z.string().max(255).optional(),
+    .max(30, { message: "From Account cannot exceed 30 characters." }),
+  notes: z.string().max(255),
+});
+
+export const TransferToBelizeSchema = z.object({
+  fromAccount: z.string().min(1, { message: "From Account is required." }),
+  recipientAccount: z
+    .string()
+    .min(1, { message: "Destination Account is required." })
+    .max(10, { message: "Account cannot exceed 10 numbers." }),
+  amount: z
+    .string()
+    .min(1, { message: "Amount is required." })
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: "Amount must be a valid number greater than 0.",
+    }),
+  reference: z
+    .string()
+    .min(1, { message: "Reference is required." })
+    .max(255, { message: "Reference cannot exceed 255 characters." }),
+  pin: z.string().regex(/^\d{4}$/, "PIN must be exactly 4 digits"),
 });

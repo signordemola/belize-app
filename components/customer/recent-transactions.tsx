@@ -40,7 +40,7 @@ const RecentTransactions: FC<RecentTransactionsProps> = ({
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center">
                       <span className="text-lg">{txn.icon}</span>
                     </div>
                     <div>
@@ -54,7 +54,7 @@ const RecentTransactions: FC<RecentTransactionsProps> = ({
                     className={`font-medium ${
                       txn.amount.startsWith("+")
                         ? "text-green-600"
-                        : "text-primary-600"
+                        : "text-danger-600"
                     }`}
                   >
                     {txn.amount}

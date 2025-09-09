@@ -67,7 +67,7 @@ const AddBalanceDialog = ({
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-primary-600 text-xl font-semibold">
-            Add Balance {`${fullName}'s`} Account
+            Add Balance To {`${fullName}'s`} Account
           </DialogTitle>
         </DialogHeader>
 

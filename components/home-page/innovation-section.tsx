@@ -18,7 +18,7 @@ const InnovationSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Card 1: Digital Banking */}
           <div className="bg-white backdrop-blur-lg rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1">
-            <div className="p-3 bg-primary-600 rounded-xl w-fit mb-6">
+            <div className="p-3 bg-primary-600 rounded-md w-fit mb-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -48,7 +48,7 @@ const InnovationSection = () => {
 
           {/* Card 2: Smart Investing */}
           <div className="bg-white backdrop-blur-lg rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1">
-            <div className="p-3 bg-primary-600 rounded-xl w-fit mb-6">
+            <div className="p-3 bg-primary-600 rounded-md w-fit mb-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -76,7 +76,7 @@ const InnovationSection = () => {
           </div>
 
           <div className="bg-white backdrop-blur-lg rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1">
-            <div className="p-3 bg-primary-600 rounded-xl w-fit mb-6">
+            <div className="p-3 bg-primary-600 rounded-md w-fit mb-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

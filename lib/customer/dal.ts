@@ -79,7 +79,7 @@ export const getRecentTransactions = cache(async () => {
         date: true,
       },
       orderBy: { date: "desc" },
-      take: 10,
+      take: 15,
     });
 
     return transactions.map((txn) => ({
@@ -108,8 +108,7 @@ export const getRecentTransactions = cache(async () => {
           ? "📱"
           : txn.type === TransactionType.TRANSFER_US_BANK ||
             txn.type === TransactionType.TRANSFER_INTERNATIONAL ||
-            txn.type === TransactionType.TRANSFER_BELIZE ||
-            txn.type === TransactionType.TRANSFER_INTERNAL
+            txn.type === TransactionType.TRANSFER_BELIZE 
           ? "↔️"
           : "💳",
     }));
@@ -161,7 +160,7 @@ export const getUserAccount = cache(async () => {
   }
 });
 
-export const getNotifications = cache(async () => {
+export const getNotifications = async () => {
   const session = await getUserSession();
   if (!session) return [];
 
@@ -191,7 +190,7 @@ export const getNotifications = cache(async () => {
     console.error("Error fetching notifications:", error);
     return [];
   }
-});
+};
 
 export const getUserBeneficiaries = cache(async () => {
   const session = await getUserSession();

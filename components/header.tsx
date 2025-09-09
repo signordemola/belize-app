@@ -55,7 +55,7 @@ const Header = () => {
             </Link>
             <Button
               variant="outline"
-              className="text-primary-600 border-primary-600 hover:bg-primary-800 hover:text-white rounded-none px-6 py-2 cursor-pointer"
+              className="text-primary-600 border-primary-600 hover:bg-primary-800 hover:text-white rounded-md px-6 py-2 cursor-pointer"
             >
               <Link href={`/sign-in`}>Sign In</Link>
             </Button>
