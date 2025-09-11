@@ -11,6 +11,11 @@ const MonthlySummary = ({
   outgoing,
   outgoingCount,
 }: MonthlySummaryProps) => {
+  const currentDate = new Date();
+  const options: Intl.DateTimeFormatOptions = { month: "long" };
+  const currentMonthName = currentDate.toLocaleDateString("en-US", options);
+
+  console.log(currentMonthName);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
       <div className="group bg-white rounded-md p-6 shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden">
@@ -35,7 +40,7 @@ const MonthlySummary = ({
             </div>
             <div>
               <p className="text-sm font-medium text-green-600">
-                Monthly Income
+                {`${currentMonthName}'s Total Income`}
               </p>
               <p className="text-2xl font-semibold text-gray-900 mt-1">
                 $
@@ -83,7 +88,7 @@ const MonthlySummary = ({
             </div>
             <div>
               <p className="text-sm font-medium text-danger-600">
-                Monthly Outgoing
+                {`${currentMonthName}'s Total Outgoing`}
               </p>
               <p className="text-2xl font-semibold text-gray-900 mt-1">
                 $

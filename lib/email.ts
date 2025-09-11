@@ -118,53 +118,23 @@ const generateTransactionReceiptHtml = (
   });
 
   return `
-    <div style="background-color: #f9fafb; font-family: 'Segoe UI', Arial, sans-serif; padding: 40px 20px;">
-      <div style="background-color: #ffffff; margin: 0 auto; max-width: 600px; border: 1px solid #e0effe; border-radius: 6px; overflow: hidden;">
-        <div style="background-color: #3385ff; padding: 20px; text-align: center;">
-          <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 600;">
-            Belize Bank Inc.
-          </h1>
-        </div>
-        <div style="padding: 30px;">
-          <h2 style="color: #3385ff; margin: 0 0 20px; font-size: 18px; font-weight: 600;">
-            Transaction Receipt
-          </h2>
-          <p style="color: #333333; line-height: 1.6; font-size: 14px;">
-            This is a confirmation of your recent ${transactionType.toLowerCase()}.
-          </p>
-          <div style="background-color: #f0f7ff; border: 1px solid #3385ff; border-radius: 4px; padding: 20px; margin: 20px 0;">
-            <p style="margin: 0 0 8px; font-size: 14px; color: #333333;">
-              <strong>Transaction Type:</strong> ${transactionType}
-            </p>
-            <p style="margin: 0 0 8px; font-size: 14px; color: #333333;">
-              <strong>Amount:</strong> ${formattedAmount}
-            </p>
-            <p style="margin: 0 0 8px; font-size: 14px; color: #333333;">
-              <strong>Reference:</strong> ${reference}
-            </p>
-            <p style="margin: 0 0 8px; font-size: 14px; color: #333333;">
-              <strong>Date:</strong> ${date.toLocaleString("en-US", {
-                dateStyle: "medium",
-                timeStyle: "short",
-              })}
-            </p>
-            <p style="margin: 0 0 8px; font-size: 14px; color: #333333;">
-              <strong>Notes:</strong> ${notes}
-            </p>
-            <p style="margin: 0; font-size: 14px; color: #333333;">
-              <strong>Balance After:</strong> ${formattedBalance}
-            </p>
-          </div>
-          <p style="color: #6b7280; font-size: 12px; margin: 20px 0 0;">
-            If you did not authorize this transaction, please contact Belize Bank Support immediately.
-          </p>
-        </div>
-        <div style="background-color: #f9fafb; padding: 15px 30px; border-top: 1px solid #e0e0e0;">
-          <p style="color: #6b7280; font-size: 12px; margin: 0; line-height: 1.4;">
-            © 2025 Belize Bank Inc. All rights reserved.
-          </p>
-        </div>
-      </div>
+    <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
+      <h2 style="margin-bottom: 10px;">Transaction Receipt</h2>
+      <p>This is a confirmation of your recent ${transactionType.toLowerCase()}.</p>
+      <ul style="padding-left: 20px; line-height: 1.6;">
+        <li><strong>Type:</strong> ${transactionType}</li>
+        <li><strong>Amount:</strong> ${formattedAmount}</li>
+        <li><strong>Reference:</strong> ${reference}</li>
+        <li><strong>Date:</strong> ${date.toLocaleString("en-US", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        })}</li>
+        <li><strong>Notes:</strong> ${notes}</li>
+        <li><strong>Balance After:</strong> ${formattedBalance}</li>
+      </ul>
+      <p style="font-size: 12px; color: #666;">
+        Thank you for banking with us.
+      </p>
     </div>
   `;
 };

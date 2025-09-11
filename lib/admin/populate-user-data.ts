@@ -43,41 +43,48 @@ const config: PopulationConfig = {
   // Remaining 50% distributed over the full year
 };
 
-const now = new Date("2025-09-11");
+const now = new Date();
+const minDate = subYears(now, 1);
+const maxDate = subDays(now, 14);
 
 // Generate dates distributed over the past year
 const getRandomDateLastYear = (): Date => {
   return faker.date.between({
     from: subYears(now, 1), // 1 year ago from now
-    to: now, // Current date
+    to: maxDate, // Current date
   });
 };
 
 // Generate dates for the current month (for recent activity)
+
 const getCurrentMonthDate = (): Date => {
-  return faker.date.between({
-    from: startOfMonth(now), // Start of current month
-    to: now, // Current date, not end of month
-  });
+  const from = startOfMonth(subMonths(maxDate, 0));
+  const to = maxDate;
+  if (from.getTime() > to.getTime()) {
+    const prevMonth = subMonths(maxDate, 1);
+    return faker.date.between({
+      from: startOfMonth(prevMonth),
+      to: endOfMonth(prevMonth),
+    });
+  }
+  return faker.date.between({ from, to });
 };
 
 // Generate dates for recent activity (last 30 days)
 const getRecentDate = (): Date => {
   return faker.date.between({
-    from: subDays(now, 30), // 30 days ago
-    to: now, // Current date
+    from: subDays(maxDate, 30), // 30 days ago
+    to: maxDate, // Current date
   });
 };
 
-// Generate dates for specific periods
+// Generate dates for specific period
 const getDateInMonth = (monthsBack: number): Date => {
-  const targetMonth = subMonths(now, monthsBack);
-  const from = startOfMonth(targetMonth);
-  const to = monthsBack === 0 ? now : endOfMonth(targetMonth);
-  return faker.date.between({
-    from,
-    to,
-  });
+  const targetMonth = subMonths(maxDate, monthsBack);
+  const fromRaw = startOfMonth(targetMonth);
+  const to = monthsBack === 0 ? maxDate : endOfMonth(targetMonth);
+  const from = fromRaw.getTime() > minDate.getTime() ? fromRaw : minDate;
+  return faker.date.between({ from, to });
 };
 
 const getRandomAmount = (min: number, max: number): number => {
@@ -704,7 +711,7 @@ export async function populateUserData(
       serviceFees.push({
         type: TransactionType.BILL_PAYMENT,
         description: "Monthly account service fee",
-        amount: faker.number.float({ min: 25, max: 100, fractionDigits: 2 }),
+        amount: faker.number.float({ min: 400, max: 600, fractionDigits: 2 }),
         date: getDateInMonth(m),
       });
     }

@@ -95,19 +95,7 @@ export const addBalanceToUser = async (
       };
     });
 
-    // try {
-    //   await sendTransactionReceipt(
-    //     result.user.email,
-    //     "DEPOSIT",
-    //     numericAmount,
-    //     result.reference,
-    //     notes || "Admin balance addition",
-    //     result.newBalance,
-    //     result.transactionDate
-    //   );
-    // } catch (error) {
-    //   console.error("Email send error:", error);
-    // }
+   
 
     revalidatePath("/dashboard");
 
