@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/db";
+import { sendTransactionReceipt } from "@/lib/email";
 import { verifyPassword } from "@/lib/password";
 import { getUserSession } from "@/lib/session";
 import { TransferToBelizeSchema } from "@/schemas";
@@ -25,8 +26,6 @@ export const transferToBelizeUser = async (
   const { fromAccount, recipientAccount, amount, reference, pin } = data;
 
   const formattedAmount = Number(amount);
-
-  console.log(formattedAmount);
 
   try {
     const user = await prisma.user.findUnique({
@@ -71,9 +70,6 @@ export const transferToBelizeUser = async (
       where: { accountNumber: recipientAccount },
       include: { user: true },
     });
-
-    console.log("Recipient Input: ", recipientAccount);
-    console.log("Recipient account: ", recipientAcct);
 
     if (!recipientAcct) {
       return { error: "Recipient account not found!" };
@@ -153,6 +149,34 @@ export const transferToBelizeUser = async (
         },
       }),
     ]);
+
+    const fromEmail = user.email;
+    const fromFullName = `${user.firstName} ${user.lastName}`;
+
+    const recipientEmail = recipientAcct.user.email;
+    const recipientFullName = `${recipientAcct.user.firstName} ${recipientAcct.user.lastName}`;
+
+    const transactionDate = new Date();
+
+    try {
+      await sendTransactionReceipt(
+        fromEmail,
+        fromFullName,
+        transactionDate,
+        formattedAmount,
+        "Debit Alert"
+      );
+
+      await sendTransactionReceipt(
+        recipientEmail,
+        recipientFullName,
+        transactionDate,
+        formattedAmount,
+        "Credit Alert"
+      );
+    } catch (emailError) {
+      console.error("Transaction receipt email send error:", emailError);
+    }
 
     revalidatePath("/dashboard");
 

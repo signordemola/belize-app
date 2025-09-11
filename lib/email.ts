@@ -1,5 +1,33 @@
 import nodemailer from "nodemailer";
 
+const createTransporter = async () => {
+  const ports = [
+    Number(process.env.ZOHO_PORT),
+    Number(process.env.ZOHO_PORT_2),
+  ];
+
+  for (const port of ports) {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: process.env.ZOHO_HOST,
+        port: port,
+        secure: port === 465,
+        auth: {
+          user: process.env.ZOHO_USER,
+          pass: process.env.ZOHO_PASS,
+        },
+      });
+
+      await transporter.verify();
+      return transporter;
+    } catch (error) {
+      console.log(`Port ${port} failed, trying next...${error}`);
+    }
+  }
+
+  throw new Error("All email ports failed");
+};
+
 const generateOtpEmailHtml = (otp: string) => {
   return `
     <div style="background-color: #f9fafb; font-family: 'Segoe UI', Arial, sans-serif; padding: 40px 20px;">
@@ -31,6 +59,19 @@ const generateOtpEmailHtml = (otp: string) => {
   `;
 };
 
+export const sendOtpEmail = async (to: string, otp: string) => {
+  const transporter = await createTransporter();
+  const emailHtml = generateOtpEmailHtml(otp);
+
+  await transporter.sendMail({
+    from: `"Belize Bank Inc. Security" <${process.env.ZOHO_USER}>`,
+    to,
+    subject: "New Login PIN - Belize Bank Inc.",
+    html: emailHtml,
+  });
+};
+
+// Welcome Email Template & Sender
 const generateWelcomeEmailHtml = (
   accountType: string,
   accountNumber: string,
@@ -100,121 +141,6 @@ Account Officer
   `;
 };
 
-const generateTransactionReceiptHtml = (
-  transactionType: "DEPOSIT" | "WITHDRAWAL" | "TRANSFER",
-  amount: number,
-  reference: string,
-  notes: string,
-  balanceAfter: number,
-  date: Date
-) => {
-  const formattedAmount = amount.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-  const formattedBalance = balanceAfter.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-
-  return `
-    <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
-      <h2 style="margin-bottom: 10px;">Transaction Receipt</h2>
-      <p>This is a confirmation of your recent ${transactionType.toLowerCase()}.</p>
-      <ul style="padding-left: 20px; line-height: 1.6;">
-        <li><strong>Type:</strong> ${transactionType}</li>
-        <li><strong>Amount:</strong> ${formattedAmount}</li>
-        <li><strong>Reference:</strong> ${reference}</li>
-        <li><strong>Date:</strong> ${date.toLocaleString("en-US", {
-          dateStyle: "medium",
-          timeStyle: "short",
-        })}</li>
-        <li><strong>Notes:</strong> ${notes}</li>
-        <li><strong>Balance After:</strong> ${formattedBalance}</li>
-      </ul>
-      <p style="font-size: 12px; color: #666;">
-        Thank you for banking with us.
-      </p>
-    </div>
-  `;
-};
-
-const generateTransactionReceiptText = (
-  transactionType: "DEPOSIT" | "WITHDRAWAL" | "TRANSFER",
-  amount: number,
-  reference: string,
-  notes: string,
-  balanceAfter: number,
-  date: Date
-) => {
-  const formattedAmount = amount.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-  const formattedBalance = balanceAfter.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-
-  return `
-Transaction Receipt - Belize Bank Inc.
-
-Transaction Type: ${transactionType}
-Amount: ${formattedAmount}
-Reference: ${reference}
-Date: ${date.toLocaleString("en-US", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  })}
-Notes: ${notes}
-Balance After: ${formattedBalance}
-
-If you did not authorize this transaction, please contact Belize Bank Support immediately.
-
-© 2025 Belize Bank Inc. All rights reserved.
-  `;
-};
-
-const createTransporter = async () => {
-  const ports = [
-    Number(process.env.ZOHO_PORT),
-    Number(process.env.ZOHO_PORT_2),
-  ];
-
-  for (const port of ports) {
-    try {
-      const transporter = nodemailer.createTransport({
-        host: process.env.ZOHO_HOST,
-        port: port,
-        secure: port === 465,
-        auth: {
-          user: process.env.ZOHO_USER,
-          pass: process.env.ZOHO_PASS,
-        },
-      });
-
-      await transporter.verify();
-      return transporter;
-    } catch (error) {
-      console.log(`Port ${port} failed, trying next...${error}`);
-    }
-  }
-
-  throw new Error("All email ports failed");
-};
-
-export const sendOtpEmail = async (to: string, otp: string) => {
-  const transporter = await createTransporter();
-  const emailHtml = generateOtpEmailHtml(otp);
-
-  await transporter.sendMail({
-    from: `"Belize Bank Inc. Security" <${process.env.ZOHO_USER}>`,
-    to,
-    subject: "New Login PIN - Belize Bank Inc.",
-    html: emailHtml,
-  });
-};
-
 export const sendWelcomeEmail = async (
   to: string,
   accountType: string,
@@ -244,45 +170,114 @@ export const sendWelcomeEmail = async (
     text: emailText,
   });
 };
+// Transaction Email Receipt Template & Sender
+const generateTransactionReceiptHtml = (
+  fullName?: string,
+  date?: Date,
+  amount?: number,
+  transactionType?: string
+): string => {
+  const formattedAmount =
+    amount !== undefined
+      ? amount.toLocaleString("en-US", { style: "currency", currency: "USD" })
+      : "N/A";
+
+  const formattedDate = date
+    ? date.toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })
+    : "N/A";
+
+  return `
+    <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
+      <h2 style="margin-bottom: 10px;">Transaction Confirmation</h2>
+      <p>Hello ${fullName || "Valued Customer"},</p>
+      <p>This is a confirmation of your recent ${
+        transactionType?.toLowerCase() || "transaction"
+      }.</p>
+      <ul style="padding-left: 20px; line-height: 1.6;">
+        ${
+          transactionType
+            ? `<li><strong>Type:</strong> ${transactionType}</li>`
+            : ""
+        }
+        ${
+          amount !== undefined
+            ? `<li><strong>Amount:</strong> ${formattedAmount}</li>`
+            : ""
+        }
+        ${date ? `<li><strong>Date:</strong> ${formattedDate}</li>` : ""}
+      </ul>
+      <p style="font-size: 12px; color: #666;">
+        Thank you for banking with us. Contact support at (800) 555-1234 or support@belizebank.com.
+        <br>&copy; 2025 Belize Bank Inc. All rights reserved.
+        <br><a href="https://belizebank.com/unsubscribe">Unsubscribe</a>
+      </p>
+    </div>
+  `;
+};
+
+const generateTransactionReceiptText = (
+  fullName?: string,
+  date?: Date,
+  amount?: number,
+  transactionType?: string
+): string => {
+  const formattedAmount =
+    amount !== undefined
+      ? amount.toLocaleString("en-US", { style: "currency", currency: "USD" })
+      : "N/A";
+
+  const formattedDate = date
+    ? date.toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })
+    : "N/A";
+
+  return `
+Transaction Confirmation - Belize Bank Inc.
+
+Hello ${fullName},
+
+${transactionType ? `Transaction Type: ${transactionType}` : ""}
+${amount !== undefined ? `Amount: ${formattedAmount}` : ""}
+${date ? `Date: ${formattedDate}` : ""}
+
+If you have any questions, contact Belize Bank Support at (800) 555-1234 or support@belizebank.com.
+
+© 2025 Belize Bank Inc. All rights reserved.
+Unsubscribe: https://belizebank.com/unsubscribe
+  `.trim();
+};
 
 export const sendTransactionReceipt = async (
   to: string,
-  transactionType: "DEPOSIT" | "WITHDRAWAL" | "TRANSFER",
+  fullName: string,
+  date: Date,
   amount: number,
-  reference: string,
-  notes: string,
-  balanceAfter: number,
-  date: Date
+  transactionType: string
 ) => {
   const transporter = await createTransporter();
 
+  if (!to) {
+    throw new Error("Recipient email address is required");
+  }
+
   const emailHtml = generateTransactionReceiptHtml(
-    transactionType,
+    fullName,
+    date,
     amount,
-    reference,
-    notes,
-    balanceAfter,
-    date
+    transactionType
   );
 
   const emailText = generateTransactionReceiptText(
-    transactionType,
+    fullName,
+    date,
     amount,
-    reference,
-    notes,
-    balanceAfter,
-    date
+    transactionType
   );
 
   await transporter.sendMail({
-    from: `"Belize Bank Inc. Transactions" <${process.env.ZOHO_USER}>`,
+    from: `"Belize Bank New Transaction" <${process.env.ZOHO_USER}>`,
     to,
-    subject: `Transaction Receipt - ${transactionType} ${amount.toLocaleString(
-      "en-US",
-      { style: "currency", currency: "USD" }
-    )}`,
+    subject: `Transaction Confirmation`,
     html: emailHtml,
     text: emailText,
-    replyTo: "support@belizebank.com",
   });
 };

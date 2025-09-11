@@ -41,6 +41,11 @@ export const addBalanceToUser = async (
         throw new Error("Account not found!");
       }
 
+      // Check if debit amount exceeds balance
+      if (type === "DEBIT" && numericAmount > account.balance) {
+        throw new Error("Insufficient funds!");
+      }
+
       // Update balance and get new balance
       const updatedAccount = await tx.account.update({
         where: { id: account.id },
@@ -54,6 +59,10 @@ export const addBalanceToUser = async (
 
       const reference = `BALANCE_${type}_${Date.now()}`;
       const transactionDate = new Date(date);
+      const description =
+        type === "CREDIT"
+          ? `Deposit from ${fromAccount}`
+          : `Payment to ${fromAccount}`;
 
       await tx.transaction.create({
         data: {
@@ -61,10 +70,8 @@ export const addBalanceToUser = async (
           userId,
           amount: numericAmount,
           type: normalizedType,
-          description:
-            type === "CREDIT"
-              ? `Deposit from ${fromAccount}`
-              : `Withdrawal to ${fromAccount}`,
+          description: description,
+
           reference,
           status: TransactionStatus.COMPLETED,
           date: transactionDate,
@@ -88,14 +95,25 @@ export const addBalanceToUser = async (
       });
 
       return {
-        user: account.user,
+        fullName: `${account.user.firstName} ${account.user.lastName}`,
+        email: account.user.email,
         newBalance: updatedAccount.balance,
         reference,
         transactionDate,
       };
     });
 
-   
+    try {
+      await sendTransactionReceipt(
+        result.email,
+        result.fullName,
+        result.transactionDate,
+        numericAmount,
+        normalizedType
+      );
+    } catch (emailError) {
+      console.error("Transaction receipt email send error:", emailError);
+    }
 
     revalidatePath("/dashboard");
 
