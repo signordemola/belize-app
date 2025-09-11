@@ -5,11 +5,11 @@ import CustomerNavBar from "@/components/customer/customer-navbar";
 import {
   getUserAccount,
   getMonthlySummary,
-  getNotifications,
   getRecentTransactions,
   getUserBeneficiaries,
   getUserProfile,
   verifyActiveCustomer,
+  getUnreadNotificationCount,
 } from "@/lib/customer/dal";
 import CustomerHeader from "@/components/customer/customer-header";
 import MonthlySummary from "@/components/customer/monthly-sumarry";
@@ -28,14 +28,14 @@ const DashboardPage = async () => {
 
   const [
     profile,
-    notifications,
+    unreadCount,
     beneficiariesResult,
     userAccount,
     monthlySummary,
     recentTransactions,
   ] = await Promise.all([
     getUserProfile(),
-    getNotifications(),
+    getUnreadNotificationCount(),
     getUserBeneficiaries(),
     getUserAccount(),
     getMonthlySummary(),
@@ -48,14 +48,14 @@ const DashboardPage = async () => {
 
   const hasPin = !!profile.transactionPin;
 
-  const beneficiaries = beneficiariesResult?.beneficiaries || [];
+  const beneficiaries = beneficiariesResult?.beneficiaries || []
 
   return (
     <section>
       <CustomerNavBar
         profile={profile}
         hasPin={hasPin}
-        initialNotifications={notifications}
+        unreadCount={unreadCount}
         userBeneficiaries={beneficiaries}
       />
       <CustomerHeader

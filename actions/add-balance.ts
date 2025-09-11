@@ -115,7 +115,7 @@ export const addBalanceToUser = async (
       console.error("Transaction receipt email send error:", emailError);
     }
 
-    revalidatePath("/dashboard");
+    revalidatePath("/admin-panel");
 
     return { success: true };
   } catch (err) {

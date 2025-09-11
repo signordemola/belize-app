@@ -26,15 +26,6 @@ import SecuritySettingsModal from "../modals/security-settings";
 import AccountManagementModal from "../modals/account-management";
 import { NotificationsModal } from "../modals/notifications";
 
-interface Notification {
-  id: string;
-  type: string;
-  message: string;
-  read: boolean;
-  createdAt: Date;
-  priority: string;
-}
-
 interface CustomerNavBarProps {
   profile: {
     email: string;
@@ -44,7 +35,7 @@ interface CustomerNavBarProps {
     imageUrl: string | null;
   };
   hasPin: boolean;
-  initialNotifications: Notification[];
+  unreadCount: number;
   userBeneficiaries: {
     id: string;
     name: string;
@@ -63,24 +54,15 @@ const navItems = [
 const CustomerNavBar = ({
   profile: { email, firstName, lastName, username, imageUrl },
   hasPin,
-  initialNotifications,
+  unreadCount,
   userBeneficiaries,
 }: CustomerNavBarProps) => {
-  const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [notifications] = useState<Notification[]>(initialNotifications);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isSecurityModalOpen, setIsSecurityModalOpen] = useState(false);
   const [isAccountManagementModalOpen, setIsAccountManagementModalOpen] =
     useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [currentUnreadCount, setCurrentUnreadCount] = useState(unreadCount);
 
   useEffect(() => {
     if (!hasPin) {
@@ -96,11 +78,13 @@ const CustomerNavBar = ({
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const updateUnreadCount = (newCount: number) => {
+    setCurrentUnreadCount(newCount);
+  };
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 transition-all duration-200 ${
-        scrolled ? "shadow-md" : ""
-      }`}
+      className={`fixed top-0 left-0 right-0 bg-white border-b border-gray-100 shadow-sm z-50 transition-all duration-200`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-24 md:h-28">
@@ -134,13 +118,13 @@ const CustomerNavBar = ({
             {/* Notifications button */}
             <Button
               variant="ghost"
-              className="p-2 text-gray-500 hover:text-gray-600 hover:bg-gray-50 relative"
+              className="p-2 text-primary-600 bg-primary-50 hover:text-gray-600 hover:bg-primary-100 relative"
               onClick={() => setIsNotificationsOpen(true)}
             >
               <Bell className="w-6 h-6" />
-              {notifications.length > 0 && (
+              {currentUnreadCount > 0 && (
                 <span className="absolute -top-1.5 -right-2 px-1.5 py-0.5 text-[10px] font-bold text-white bg-red-500 rounded-full shadow">
-                  new
+                  {currentUnreadCount}
                 </span>
               )}
             </Button>
@@ -150,7 +134,7 @@ const CustomerNavBar = ({
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center space-x-3 px-4 py-8 text-gray-700 bg-primary-50 hover:bg-primary-100"
+                  className="flex items-center space-x-3 px-4 py-8 text-primary-600 bg-primary-50 hover:bg-primary-100 hover:text-gray-600"
                 >
                   <Image
                     loading="lazy"
@@ -241,9 +225,9 @@ const CustomerNavBar = ({
 
       {/* Modals */}
       <NotificationsModal
-        notifications={notifications}
         open={isNotificationsOpen}
         onOpenChange={setIsNotificationsOpen}
+        onUnreadCountChange={updateUnreadCount}
       />
       <SecuritySettingsModal
         isOpen={isSecurityModalOpen}

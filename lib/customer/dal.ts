@@ -108,7 +108,7 @@ export const getRecentTransactions = cache(async () => {
           ? "📱"
           : txn.type === TransactionType.TRANSFER_US_BANK ||
             txn.type === TransactionType.TRANSFER_INTERNATIONAL ||
-            txn.type === TransactionType.TRANSFER_BELIZE 
+            txn.type === TransactionType.TRANSFER_BELIZE
           ? "↔️"
           : "💳",
     }));
@@ -174,7 +174,7 @@ export const getNotifications = async () => {
       orderBy: {
         createdAt: "desc",
       },
-      take: 5,
+      take: 10,
       select: {
         id: true,
         type: true,
@@ -190,6 +190,41 @@ export const getNotifications = async () => {
     console.error("Error fetching notifications:", error);
     return [];
   }
+};
+
+export const getUnreadNotificationCount = async () => {
+  const session = await getUserSession();
+  if (!session) return 0;
+
+  const userId = session.userId;
+
+  try {
+    const unreadCount = await prisma.notification.count({
+      where: { userId, read: false },
+    });
+
+    return unreadCount;
+  } catch (error: unknown) {
+    console.error("Error fetching notifications count:", error);
+    return 0;
+  }
+};
+
+export const markNotificationAsRead = async (notificationId: string) => {
+  return prisma.notification.update({
+    where: { id: notificationId },
+    data: { read: true },
+  });
+};
+
+export const markAllNotificationsAsRead = async () => {
+  const session = await getUserSession();
+  if (!session) return null;
+
+  return prisma.notification.updateMany({
+    where: { userId: session?.userId },
+    data: { read: true },
+  });
 };
 
 export const getUserBeneficiaries = cache(async () => {

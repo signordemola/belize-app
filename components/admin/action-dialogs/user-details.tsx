@@ -131,7 +131,10 @@ export function UserDetailDialog({
                   />
                   <DetailItem
                     label="Balance"
-                    value={`$${user.account.balance.toFixed(2)}`}
+                    value={`${user.account.balance.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })}`}
                   />
                   <DetailItem label="Type" value={user.account.type} />
                   <DetailItem label="Status" value={user.account.status} />
