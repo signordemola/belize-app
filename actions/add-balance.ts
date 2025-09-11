@@ -19,8 +19,16 @@ export const addBalanceToUser = async (
     };
   }
 
-  const { amount, fromAccount, notes } = parsed.data;
+  const { amount, fromAccount, type, date } = parsed.data;
   const numericAmount = Number(amount);
+
+  const mapCreditDebitToTransactionType = (type: string): TransactionType => {
+    if (type === "CREDIT") return TransactionType.DEPOSIT;
+    if (type === "DEBIT") return TransactionType.WITHDRAWAL;
+    throw new Error("Invalid transaction type");
+  };
+
+  const normalizedType = mapCreditDebitToTransactionType(values.type);
 
   try {
     const result = await prisma.$transaction(async (tx) => {
@@ -37,24 +45,33 @@ export const addBalanceToUser = async (
       const updatedAccount = await tx.account.update({
         where: { id: account.id },
         data: {
-          balance: { increment: numericAmount },
+          balance:
+            type === "CREDIT"
+              ? { increment: numericAmount }
+              : { decrement: numericAmount },
         },
       });
 
-      const reference = `BAL_ADD_${Date.now()}`;
-      const transactionDate = new Date();
+      const reference = `BALANCE_${type}_${Date.now()}`;
+      const transactionDate = new Date(date);
 
       await tx.transaction.create({
         data: {
           accountId: account.id,
           userId,
           amount: numericAmount,
-          type: TransactionType.DEPOSIT,
-          description: `Incoming transfer from ${fromAccount}`,
+          type: normalizedType,
+          description:
+            type === "CREDIT"
+              ? `Incoming transfer from ${fromAccount}`
+              : `Outgoing transfer to ${fromAccount}`,
           reference,
           status: TransactionStatus.COMPLETED,
           date: transactionDate,
-          category: "Admin Balance Addition",
+          category:
+            type === "CREDIT"
+              ? "Admin Balance Addition"
+              : "Admin Balance Deduction",
           recipientBank: fromAccount,
         },
       });
@@ -62,10 +79,10 @@ export const addBalanceToUser = async (
       await tx.notification.create({
         data: {
           userId,
-          type: "INCOMING TRANSFER",
-          message: `$${numericAmount.toFixed(
-            2
-          )} has been deposited to your account.`,
+          type: type === "CREDIT" ? "INCOMING TRANSFER" : "OUTGOING TRANSFER",
+          message: `$${numericAmount.toFixed(2)} has been ${
+            type === "CREDIT" ? "credited to" : "debited from"
+          } your account.`,
           priority: "HIGH",
         },
       });
@@ -78,19 +95,19 @@ export const addBalanceToUser = async (
       };
     });
 
-    try {
-      await sendTransactionReceipt(
-        result.user.email,
-        "DEPOSIT",
-        numericAmount,
-        result.reference,
-        notes || "Admin balance addition",
-        result.newBalance,
-        result.transactionDate
-      );
-    } catch (error) {
-      console.error("Email send error:", error);
-    }
+    // try {
+    //   await sendTransactionReceipt(
+    //     result.user.email,
+    //     "DEPOSIT",
+    //     numericAmount,
+    //     result.reference,
+    //     notes || "Admin balance addition",
+    //     result.newBalance,
+    //     result.transactionDate
+    //   );
+    // } catch (error) {
+    //   console.error("Email send error:", error);
+    // }
 
     revalidatePath("/dashboard");
 

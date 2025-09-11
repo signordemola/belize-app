@@ -17,7 +17,6 @@ enum TransactionStatus {
 }
 
 enum TransactionType {
-  TRANSFER_INTERNAL
   TRANSFER_BELIZE
   TRANSFER_US_BANK
   TRANSFER_INTERNATIONAL

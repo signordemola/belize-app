@@ -44,7 +44,8 @@ const AddBalanceDialog = ({
     defaultValues: {
       amount: "",
       fromAccount: "",
-      notes: "",
+      type: "",
+      date: "",
     },
   });
 
@@ -124,15 +125,38 @@ const AddBalanceDialog = ({
 
                   <FormField
                     control={form.control}
-                    name="notes"
+                    name="type"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Notes</FormLabel>
+                        <FormLabel>Transaction Type</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Reason for adding balance"
+                          <select
                             disabled={isPending}
                             {...field}
+                            className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white"
+                          >
+                            <option value="">Select type</option>
+                            <option value="CREDIT">Credit</option>
+                            <option value="DEBIT">Debit</option>
+                          </select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Date</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="date"
+                            disabled={isPending}
+                            {...field}
+                            className="rounded-md pt-3 pb-7 bg-white autofill:!bg-white"
                           />
                         </FormControl>
                         <FormMessage />

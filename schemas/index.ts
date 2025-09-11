@@ -243,7 +243,11 @@ export const AddBalanceSchema = z.object({
     .string()
     .min(1, { message: "From Account is required." })
     .max(30, { message: "From Account cannot exceed 30 characters." }),
-  notes: z.string().max(255),
+  type: z
+    .string()
+    .min(2, { message: "Transaction type is required." })
+    .max(100, { message: "Transaction type cannot exceed 100 characters." }),
+  date: z.string().min(1, { message: "Date is required." }),
 });
 
 export const TransferToBelizeSchema = z.object({
