@@ -33,7 +33,7 @@ interface PopulationConfig {
 }
 
 const config: PopulationConfig = {
-  numTransactionsPerAccount: 100, // Increased for more data
+  numTransactionsPerAccount: 60, // Increased for more data
   numCardsPerAccount: 1,
   numBillPaymentsPerUser: 5,
   numNotificationsPerUser: 15, // Increased for year-long notifications
@@ -182,6 +182,62 @@ const generateRealisticDescription = (accountType: AccountType): string => {
   }
 };
 
+const getAmountRangeForDescription = (
+  description: string,
+  accountType: AccountType
+): { min: number; max: number } => {
+  const baseRanges: Record<string, { min: number; max: number }> = {
+    "ATM Withdrawal": { min: 1000, max: 10000 },
+    "Online Purchase": { min: 5000, max: 50000 },
+    "Grocery Store Payment": { min: 50, max: 5000 },
+    "Gas Station Payment": { min: 20, max: 1000 },
+    "Restaurant Payment": { min: 300, max: 20000 },
+    "Vendor Payment": { min: 1000, max: 100000 },
+    "Office Supplies": { min: 1000, max: 10000 },
+    "Business Insurance": { min: 5000, max: 50000 },
+    "Software Subscription": { min: 1000, max: 10000 },
+    "Equipment Purchase": { min: 500, max: 5000 },
+    "Fine Dining Experience": { min: 500, max: 20000 },
+    "Luxury Hotel Stay": { min: 5000, max: 50000 },
+    "Private Event Catering": { min: 10000, max: 100000 },
+    "Art Gallery Purchase": { min: 10000, max: 500000 },
+    "Jewelry Store Payment": { min: 5000, max: 100000 },
+  };
+
+  let scale = 1;
+  switch (accountType) {
+    case AccountType.BUSINESS:
+      scale = 5;
+      break;
+    case AccountType.INVESTMENT:
+      scale = 10;
+      break;
+    case AccountType.PRESTIGE:
+      scale = 20;
+      break;
+  }
+
+  const commonKeys = [
+    "ATM Withdrawal",
+    "Online Purchase",
+    "Grocery Store Payment",
+    "Gas Station Payment",
+    "Restaurant Payment",
+  ];
+  const isCommon = commonKeys.includes(description);
+
+  // For common descriptions, apply minimal scaling to keep realistic (e.g., gas station max $200 even for prestige)
+  if (isCommon) {
+    scale = Math.min(scale, 2); // Slight increase for high earners
+  }
+
+  const baseRange = baseRanges[description] || { min: 100, max: 1000 };
+  return {
+    min: baseRange.min * scale,
+    max: baseRange.max * scale,
+  };
+};
+
 const addSeasonalVariation = (
   amount: number,
   date: Date,
@@ -255,12 +311,48 @@ const generateRealisticNotificationMessage = (type: string): string => {
       "Card transaction authorized",
       "International transfer confirmed",
     ],
+    "New Feature": [
+      "Introducing our new mobile banking app",
+      "New security features added to your account",
+      "Explore our updated investment tools",
+      "New bill pay options now available",
+    ],
+    "Promotional Offer": [
+      "Limited time cashback offer on purchases",
+      "Special interest rate for new deposits",
+      "Earn bonus rewards on travel spending",
+      "Exclusive discount for premium members",
+    ],
+    "High Balance Alert": [
+      "Your account balance has exceeded your set threshold",
+      "High balance notification: consider investment options",
+      "Account balance alert triggered",
+      "Monitor your growing balance with our tools",
+    ],
+    "Card Transaction Alert": [
+      "Recent card transaction at merchant",
+      "Card used for online purchase",
+      "International card transaction detected",
+      "Card transaction confirmation",
+    ],
+    "Account Statement Available": [
+      "Your monthly account statement is ready",
+      "Quarterly statement now available for download",
+      "Annual summary statement prepared",
+      "View your latest account activity statement",
+    ],
+    "Interest Payment Posted": [
+      "Interest has been credited to your account",
+      "Monthly interest payment applied",
+      "Quarterly interest earnings posted",
+      "Annual interest compounded and added",
+    ],
   };
 
   const typeMessages = messages[type as keyof typeof messages];
   return typeMessages
     ? faker.helpers.arrayElement(typeMessages)
-    : faker.lorem.sentence({ min: 5, max: 12 });
+    : "General account update: please check your account for details.";
 };
 
 // Account type specific configurations
@@ -887,13 +979,15 @@ export async function populateUserData(
             const transactionTypes = getTransactionTypesForAccount(
               account.type
             );
+            const description = generateRealisticDescription(account.type);
+            const amountRange = getAmountRangeForDescription(
+              description,
+              account.type
+            );
             txn = {
               type: faker.helpers.arrayElement(transactionTypes),
-              description: generateRealisticDescription(account.type),
-              amount: getRandomAmount(
-                accountConfig.transactionAmountRange.min,
-                accountConfig.transactionAmountRange.max
-              ),
+              description,
+              amount: getRandomAmount(amountRange.min, amountRange.max),
             };
           }
 
@@ -1061,13 +1155,12 @@ export async function populateUserData(
 
         for (let i = 0; i < notificationsThisMonth; i++) {
           const notificationDate = getDateInMonth(monthsBack);
+          const notifType = faker.helpers.arrayElement(notificationTypes);
 
           notifications.push({
             userId: user.id,
-            type: faker.helpers.arrayElement(notificationTypes),
-            message: generateRealisticNotificationMessage(
-              faker.helpers.arrayElement(notificationTypes)
-            ),
+            type: notifType,
+            message: generateRealisticNotificationMessage(notifType),
             read:
               monthsBack === 0
                 ? faker.datatype.boolean({ probability: 0.3 })

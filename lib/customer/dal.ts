@@ -79,7 +79,7 @@ export const getRecentTransactions = cache(async () => {
         date: true,
       },
       orderBy: { date: "desc" },
-      take: 15,
+      take: 25,
     });
 
     return transactions.map((txn) => ({
