@@ -53,6 +53,7 @@ const CommunityImpactSection = () => {
           <div className="relative">
             <div className="absolute -inset-4 shadow-2xs rounded-3xl blur-2xl opacity-30"></div>
             <Image
+              loading="lazy"
               src="/images/community.webp"
               alt="Community Impact"
               width={600}

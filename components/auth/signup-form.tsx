@@ -132,6 +132,7 @@ const SignUpForm = () => {
                   {imagePreview ? (
                     <div className="relative">
                       <Image
+                        loading="lazy"
                         src={imagePreview}
                         alt="Profile preview"
                         width={120}

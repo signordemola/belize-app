@@ -18,6 +18,7 @@ const AuthHeader = () => {
       >
         <Link href="/" className="flex items-center">
           {/* <Image
+          loading="lazy"
             src="/images/logo.png"
             alt="Belize Bank Inc. Logo"
             width={30}

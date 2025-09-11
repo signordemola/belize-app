@@ -185,6 +185,7 @@ const AccountOverview: FC<AccountOverviewProps> = ({
               <div className="flex-1 flex justify-center">
                 <div className="w-48 h-48 relative">
                   <Image
+                    loading="lazy"
                     src={imageUrl}
                     alt="Account Illustration"
                     fill

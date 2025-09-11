@@ -33,7 +33,7 @@ interface PopulationConfig {
 }
 
 const config: PopulationConfig = {
-  numTransactionsPerAccount: 50, // Increased for more realistic yearly data
+  numTransactionsPerAccount: 100, // Increased for more data
   numCardsPerAccount: 1,
   numBillPaymentsPerUser: 5,
   numNotificationsPerUser: 15, // Increased for year-long notifications
@@ -43,9 +43,10 @@ const config: PopulationConfig = {
   // Remaining 50% distributed over the full year
 };
 
+const now = new Date("2025-09-11");
+
 // Generate dates distributed over the past year
 const getRandomDateLastYear = (): Date => {
-  const now = new Date();
   return faker.date.between({
     from: subYears(now, 1), // 1 year ago from now
     to: now, // Current date
@@ -54,16 +55,14 @@ const getRandomDateLastYear = (): Date => {
 
 // Generate dates for the current month (for recent activity)
 const getCurrentMonthDate = (): Date => {
-  const now = new Date();
   return faker.date.between({
     from: startOfMonth(now), // Start of current month
-    to: endOfMonth(now), // End of current month
+    to: now, // Current date, not end of month
   });
 };
 
 // Generate dates for recent activity (last 30 days)
 const getRecentDate = (): Date => {
-  const now = new Date();
   return faker.date.between({
     from: subDays(now, 30), // 30 days ago
     to: now, // Current date
@@ -72,16 +71,17 @@ const getRecentDate = (): Date => {
 
 // Generate dates for specific periods
 const getDateInMonth = (monthsBack: number): Date => {
-  const now = new Date();
   const targetMonth = subMonths(now, monthsBack);
+  const from = startOfMonth(targetMonth);
+  const to = monthsBack === 0 ? now : endOfMonth(targetMonth);
   return faker.date.between({
-    from: startOfMonth(targetMonth),
-    to: endOfMonth(targetMonth),
+    from,
+    to,
   });
 };
 
 const getRandomAmount = (min: number, max: number): number => {
-  return faker.number.int({ min, max });
+  return faker.number.float({ min, max, fractionDigits: 2 });
 };
 
 const validateAccountNumber = (accountNumber: string): string => {
@@ -193,10 +193,18 @@ const addSeasonalVariation = (
     // Higher utility bills in summer (AC) and winter (heating)
     if (month >= 5 && month <= 8) {
       // Summer months
-      return Math.floor(amount * faker.number.float({ min: 1.1, max: 1.4 }));
+      return faker.number.float({
+        min: amount * 1.1,
+        max: amount * 1.4,
+        fractionDigits: 2,
+      });
     } else if (month >= 11 || month <= 2) {
       // Winter months
-      return Math.floor(amount * faker.number.float({ min: 1.2, max: 1.5 }));
+      return faker.number.float({
+        min: amount * 1.2,
+        max: amount * 1.5,
+        fractionDigits: 2,
+      });
     }
   }
 
@@ -298,7 +306,7 @@ const getAccountConfig = (accountType: AccountType) => {
       };
     case AccountType.INVESTMENT:
       return {
-        targetBalance: 10000000,
+        targetBalance: 5000000, // Capped at 5M
         interestRate: faker.number.float({
           min: 0.02,
           max: 0.08,
@@ -312,7 +320,7 @@ const getAccountConfig = (accountType: AccountType) => {
       };
     case AccountType.PRESTIGE:
       return {
-        targetBalance: 25000000,
+        targetBalance: 5000000, // Capped at 5M
         interestRate: faker.number.float({
           min: 0.03,
           max: 0.1,
@@ -357,7 +365,7 @@ const getSpecificTransactions = (accountType: AccountType) => {
     {
       type: TransactionType.DEPOSIT,
       description: "Salary/Business income deposit",
-      amount: 100000,
+      amount: 100000, // Adjusted for realism
     },
     {
       type: TransactionType.BILL_PAYMENT,
@@ -423,17 +431,17 @@ const getSpecificTransactions = (accountType: AccountType) => {
         {
           type: TransactionType.DEPOSIT,
           description: "Portfolio dividend payment",
-          amount: 2000000,
+          amount: 2000000, // Adjusted
         },
         {
           type: TransactionType.TRANSFER_US_BANK,
           description: "Investment purchase - Blue chip stocks",
-          amount: 1500000,
+          amount: 1500000, // Adjusted
         },
         {
           type: TransactionType.TRANSFER_INTERNATIONAL,
           description: "International investment transfer",
-          amount: 800000,
+          amount: 800000, // Adjusted
         },
       ];
     case AccountType.PRESTIGE:
@@ -441,7 +449,7 @@ const getSpecificTransactions = (accountType: AccountType) => {
         {
           type: TransactionType.DEPOSIT,
           description: "Private equity distribution",
-          amount: 5000000,
+          amount: 2000000, // Adjusted for cap
         },
         {
           type: TransactionType.BILL_PAYMENT,
@@ -475,6 +483,13 @@ const getSpecificTransactions = (accountType: AccountType) => {
     default:
       return baseTransactions;
   }
+};
+
+type SpecificTransaction = {
+  type: TransactionType;
+  description: string;
+  amount: number;
+  date?: Date;
 };
 
 export async function populateUserData(
@@ -529,30 +544,111 @@ export async function populateUserData(
 
     const account = user.account;
     const accountConfig = getAccountConfig(account.type);
-    const specificTransactions = getSpecificTransactions(account.type);
+    let specificTransactions: SpecificTransaction[] = getSpecificTransactions(
+      account.type
+    );
+
+    // Add custom debit transactions
+    const customDebits: SpecificTransaction[] = [
+      {
+        type: TransactionType.BILL_PAYMENT,
+        description: "Payment to Ceylon Master Gems",
+        amount: 1297889.0,
+      },
+      {
+        type: TransactionType.BILL_PAYMENT,
+        description: "Payment to Mukhlis Gemstone Gemstore",
+        amount: 732379.0,
+      },
+      {
+        type: TransactionType.BILL_PAYMENT,
+        description: "Payment to Ananda Miners Private Ltd",
+        amount: 2037000.0,
+      },
+      {
+        type: TransactionType.BILL_PAYMENT,
+        description: "Payment to Beruwalage Moonstone Mine",
+        amount: 390800.0,
+      },
+      {
+        type: TransactionType.BILL_PAYMENT,
+        description: "Payment to The Gem World Holdings (pvt) Ltd",
+        amount: 476333.0,
+      },
+    ];
+
+    // Add custom credit transactions
+    const customCredits: SpecificTransaction[] = [
+      {
+        type: TransactionType.DEPOSIT,
+        description: "Deposit from Chic Jewelry Wholesalers and Importers",
+        amount: 483000.0,
+      },
+      {
+        type: TransactionType.DEPOSIT,
+        description: "Deposit from A&A Jewelry Manufacturing LLC",
+        amount: 76891.0,
+      },
+      {
+        type: TransactionType.DEPOSIT,
+        description: "Deposit from The Italian Jewelery company",
+        amount: 108980.23,
+      },
+      {
+        type: TransactionType.DEPOSIT,
+        description: "Deposit from Goldenet Australia",
+        amount: 1327000.0,
+      },
+      {
+        type: TransactionType.DEPOSIT,
+        description: "Deposit from Simon West Fine Jewellery",
+        amount: 920080.0,
+      },
+    ];
+
+    // Add monthly service fees (one per month, with specific dates)
+    const serviceFees: SpecificTransaction[] = [];
+    for (let m = 0; m < 12; m++) {
+      serviceFees.push({
+        type: TransactionType.BILL_PAYMENT,
+        description: "Monthly account service fee",
+        amount: faker.number.float({ min: 25, max: 100, fractionDigits: 2 }),
+        date: getDateInMonth(m),
+      });
+    }
+
+    // Add higher monthly income deposits (one per month, with specific dates)
+    const monthlyIncomes: SpecificTransaction[] = [];
+    for (let m = 0; m < 12; m++) {
+      monthlyIncomes.push({
+        type: TransactionType.DEPOSIT,
+        description: "Monthly business income",
+        amount: faker.number.float({
+          min: 100000,
+          max: 500000,
+          fractionDigits: 2,
+        }), // Adjusted for realism
+        date: getDateInMonth(m),
+      });
+    }
+
+    // Combine all specific/custom transactions
+    specificTransactions = [
+      ...specificTransactions,
+      ...customDebits,
+      ...customCredits,
+      ...serviceFees,
+      ...monthlyIncomes,
+    ];
 
     const billIds: string[] = [];
-    const transactions: Prisma.TransactionCreateManyInput[] = [];
+    let transactions: Prisma.TransactionCreateManyInput[] = [];
     const cards: Prisma.CardCreateManyInput[] = [];
     const notifications: Prisma.NotificationCreateManyInput[] = [];
 
     await prisma.$transaction(async (tx) => {
-      // Update account with appropriate balance and interest rate
-      await tx.account.update({
-        where: { id: account.id },
-        data: {
-          balance: accountConfig.targetBalance,
-          interestRate: accountConfig.interestRate,
-          updatedAt: new Date(),
-        },
-      });
-
-      logger.debug(
-        `Updated ${account.type} account balance to ${accountConfig.targetBalance}`
-      );
-
       // Create bills with realistic recurring patterns
-      const currentDate = new Date();
+      const currentDate = now;
       const billPayments = [];
 
       if (
@@ -697,7 +793,7 @@ export async function populateUserData(
               accountNumber: validateAccountNumber(
                 faker.finance.accountNumber(8)
               ),
-              amount: getRandomAmount(25000, 100000),
+              amount: getRandomAmount(25000, 100000), // Adjusted
               dueDate: quarterDate,
               status: "PAID",
               paymentDate: addDays(
@@ -727,7 +823,6 @@ export async function populateUserData(
       }
 
       // Generate transactions with realistic time distribution
-      let currentBalance = accountConfig.targetBalance;
       const usedReferences = new Set<string>();
 
       const generateUniqueReference = (): string => {
@@ -775,11 +870,15 @@ export async function populateUserData(
       ];
 
       let transactionIndex = 0;
+      transactions = []; // Reset to build list
       for (const batch of transactionBatches) {
         for (let i = 0; i < batch.count; i++) {
           const isSpecific = transactionIndex < specificTransactions.length;
-          let txn;
-          const transactionDate = batch.dateFunction();
+          let txn: SpecificTransaction;
+          const transactionDate = isSpecific
+            ? specificTransactions[transactionIndex].date ??
+              batch.dateFunction()
+            : batch.dateFunction();
 
           if (isSpecific) {
             txn = specificTransactions[transactionIndex];
@@ -798,18 +897,11 @@ export async function populateUserData(
             };
           }
 
-          const isDeposit =
-            txn.type === TransactionType.DEPOSIT ||
-            txn.type === TransactionType.MOBILE_DEPOSIT;
-
-          const amount = faker.number.int({
-            min: Math.floor(txn.amount * 0.8),
-            max: Math.floor(txn.amount * 1.2),
+          const amount = faker.number.float({
+            min: txn.amount * 0.8,
+            max: txn.amount * 1.2,
+            fractionDigits: 2,
           });
-
-          if (!isDeposit && currentBalance - amount < 0) {
-            continue;
-          }
 
           // Add seasonal variation for certain transaction types
           const seasonalAmount = addSeasonalVariation(
@@ -817,9 +909,6 @@ export async function populateUserData(
             transactionDate,
             txn.type
           );
-          currentBalance = isDeposit
-            ? currentBalance + seasonalAmount
-            : currentBalance - seasonalAmount;
 
           // Determine transaction status based on recency
           let status: TransactionStatus;
@@ -875,13 +964,48 @@ export async function populateUserData(
         }
       }
 
-      await tx.transaction.createMany({ data: transactions });
+      // Sort transactions by date ascending for realistic balance calculation
+      transactions.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+
+      // Calculate balance by simulating transactions from initial 0, skipping outflows that would make negative
+      let currentBalance = 0;
+      const adjustedTransactions: Prisma.TransactionCreateManyInput[] = [];
+      for (const txn of transactions) {
+        const isDeposit =
+          txn.type === TransactionType.DEPOSIT ||
+          txn.type === TransactionType.MOBILE_DEPOSIT;
+        const amount = txn.amount;
+        if (!isDeposit && currentBalance - amount < 0) {
+          continue; // Skip outflow to avoid negative balance
+        }
+        adjustedTransactions.push(txn);
+        currentBalance += isDeposit ? amount : -amount;
+      }
+
+      // Create transactions
+      await tx.transaction.createMany({ data: adjustedTransactions });
       logger.debug(
-        `Created ${transactions.length} transactions for account ${account.accountNumber}`
+        `Created ${adjustedTransactions.length} transactions for account ${account.accountNumber}`
+      );
+
+      // Update account with computed balance and interest rate
+      await tx.account.update({
+        where: { id: account.id },
+        data: {
+          balance: currentBalance,
+          interestRate: accountConfig.interestRate,
+          updatedAt: new Date(),
+        },
+      });
+
+      logger.debug(
+        `Updated ${account.type} account balance to ${currentBalance}`
       );
 
       // Create card based on account type
-      const currentDate2 = new Date();
+      const currentDate2 = now;
       const cardData = {
         userId: user.id,
         accountId: account.id,

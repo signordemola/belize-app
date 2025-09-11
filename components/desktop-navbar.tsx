@@ -8,11 +8,11 @@ const DesktopNavbar = () => {
 
   return (
     <nav
-      className=" bg-foreground/70 flex items-center justify-between px-6 py-3"
+      className=" bg-foreground/80 hidden lg:flex items-center justify-between px-6 py-3"
       aria-label="Primary Header Navigation"
     >
       <div className="fdic-insured relative">
-        <span className="pl-6 text-xs italic text-background/90 font-[0.8rem]">
+        <span className="pl-6 text-xs italic text-background/90 font-[0.7rem]">
           FDIC-Insured - Backed by the full faith and credit of the U.S.
           Government
         </span>
@@ -46,7 +46,7 @@ const DesktopNavbar = () => {
             <li key={index}>
               <Link
                 href={item.href}
-                className={`px-4 py-3 font-semibold transition-colors duration-300 ${
+                className={`px-4 py-3 transition-colors duration-300 ${
                   pathname === item.href ? "bg-danger-800" : "hover:underline"
                 }`}
               >

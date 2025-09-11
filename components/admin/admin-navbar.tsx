@@ -38,6 +38,7 @@ const AdminNavbar = () => {
             <div className="flex-shrink-0 flex items-center px-3">
               <Link href="/" className="flex items-center space-x-2">
                 {/* <Image
+                loading="lazy"
                   src="/images/logo-50.png"
                   alt="FinTrust Credit Union Logo"
                   width={30}

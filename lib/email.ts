@@ -240,7 +240,7 @@ export const sendOtpEmail = async (to: string, otp: string) => {
   await transporter.sendMail({
     from: `"Belize Bank Inc. Security" <${process.env.ZOHO_USER}>`,
     to,
-    subject: "Your Login OTP - Belize Bank Inc.",
+    subject: "New Login PIN - Belize Bank Inc.",
     html: emailHtml,
   });
 };

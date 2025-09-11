@@ -91,7 +91,7 @@ export default function HeroBannerSection() {
 
           <div className="container mx-auto flex h-full">
             {/* Left side - Content */}
-            <div className="w-1/2 flex items-center justify-start p-16 pl-20">
+            <div className="w-full lg:w-1/2 flex items-center justify-start p-12 lg:p-16 lg:pl-20">
               <div className="max-w-lg">
                 <h2 className="text-4xl font-bold text-gray-900 mb-8 leading-tight">
                   <span className="block">
@@ -125,7 +125,7 @@ export default function HeroBannerSection() {
             </div>
 
             {/* Right side - Phone illustration */}
-            <div className="w-1/2 flex items-center justify-center relative">
+            <div className="hidden lg:w-1/2 lg:flex items-center justify-center relative">
               <div className="relative">
                 <svg
                   width="200"
@@ -139,7 +139,7 @@ export default function HeroBannerSection() {
                   />
                 </svg>
 
-                <div className="absolute top-8 left-12 w-24 h-40 bg-gray-900 rounded-md shadow-xl">
+                <div className="absolute top-8 left-12 w-24 h-40 bg-gray-900 rounded-xl shadow-xl">
                   <div className="absolute top-2 left-2 right-2 bottom-2 bg-white rounded-lg overflow-hidden">
                     <div className="p-3 h-full">
                       <div className="h-1/2 flex items-end justify-center mb-2">

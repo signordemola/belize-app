@@ -153,6 +153,7 @@ const CustomerNavBar = ({
                   className="flex items-center space-x-3 px-4 py-8 text-gray-700 bg-primary-50 hover:bg-primary-100"
                 >
                   <Image
+                    loading="lazy"
                     src={imageUrl || "/images/default-avatar.png"}
                     alt={`${firstName} ${lastName}`}
                     width={1000}

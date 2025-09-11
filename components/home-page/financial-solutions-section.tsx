@@ -11,9 +11,9 @@ const FinancialSolutionsSection = () => {
             journey at every step
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Card 1: Personal Banking */}
-          <div className="relative group">
+          <div className="relative group border rounded-md">
             <div className="absolute inset-0 bg-primary-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             <div className="relative rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="p-3 bg-primary-100 rounded-md w-fit mb-6">
@@ -97,7 +97,7 @@ const FinancialSolutionsSection = () => {
           </div>
 
           {/* Card 2: Business Solutions */}
-          <div className="relative group">
+          <div className="relative group border rounded-md">
             <div className="absolute inset-0 bg-primary-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             <div className="relative rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="p-3 bg-primary-100 rounded-md w-fit mb-6">
@@ -175,7 +175,7 @@ const FinancialSolutionsSection = () => {
           </div>
 
           {/* Card 3: Wealth Management */}
-          <div className="relative group">
+          <div className="relative group  border rounded-md">
             <div className="absolute inset-0 bg-primary-100 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
             <div className="relative rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="p-3 bg-primary-100 rounded-md w-fit mb-6">
