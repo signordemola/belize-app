@@ -49,6 +49,14 @@ const AddBalanceDialog = ({
     },
   });
 
+  const selectedType = form.watch("type");
+  const buttonLabel =
+    selectedType === "CREDIT"
+      ? "Top Up Balance"
+      : selectedType === "DEBIT"
+      ? "Debit From Balance"
+      : "Add To Balance";
+
   const onSubmit = (values: z.infer<typeof AddBalanceSchema>) => {
     startTransition(() => {
       addBalanceToUser(values, userId).then((data) => {
@@ -191,7 +199,7 @@ const AddBalanceDialog = ({
                         ></path>
                       </svg>
                     ) : (
-                      "Add Balance"
+                      buttonLabel
                     )}
                   </Button>
                 </form>

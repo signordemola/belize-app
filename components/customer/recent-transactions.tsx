@@ -44,7 +44,13 @@ const RecentTransactions: FC<RecentTransactionsProps> = ({
                       <span className="text-lg">{txn.icon}</span>
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">
+                      <p
+                        className={`font-medium capitalize ${
+                          txn.amount.startsWith("+")
+                            ? "text-green-600"
+                            : "text-danger-600"
+                        }`}
+                      >
                         {txn.description}
                       </p>
                       <p className="text-sm text-gray-500">{txn.date}</p>

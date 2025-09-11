@@ -63,8 +63,8 @@ export const addBalanceToUser = async (
           type: normalizedType,
           description:
             type === "CREDIT"
-              ? `Incoming transfer from ${fromAccount}`
-              : `Outgoing transfer to ${fromAccount}`,
+              ? `Deposit from ${fromAccount}`
+              : `Withdrawal to ${fromAccount}`,
           reference,
           status: TransactionStatus.COMPLETED,
           date: transactionDate,

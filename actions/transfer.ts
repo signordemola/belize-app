@@ -83,8 +83,8 @@ export const transferToBelizeUser = async (
       return { error: "Cannot transfer to the same account!" };
     }
 
-    const debitDescription = `Outgoing transfer to ${recipientAcct.user.firstName} ${recipientAcct.user.lastName} (Belize Bank)`;
-    const creditDescription = `Incoming transfer from ${user.firstName} ${user.lastName} (Belize Bank)`;
+    const debitDescription = `Payment to ${recipientAcct.user.firstName} ${recipientAcct.user.lastName} (Belize Bank)`;
+    const creditDescription = `Deposit from ${user.firstName} ${user.lastName} (Belize Bank)`;
 
     await prisma.$transaction([
       prisma.transaction.create({

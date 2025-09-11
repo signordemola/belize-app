@@ -15,7 +15,6 @@ const MonthlySummary = ({
   const options: Intl.DateTimeFormatOptions = { month: "long" };
   const currentMonthName = currentDate.toLocaleDateString("en-US", options);
 
-  console.log(currentMonthName);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
       <div className="group bg-white rounded-md p-6 shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden">
