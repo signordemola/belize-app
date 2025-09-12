@@ -754,73 +754,114 @@ export async function populateUserData(
         account.type === AccountType.CHECKING ||
         account.type === AccountType.BUSINESS
       ) {
-        // Generate monthly recurring bills for the past year
-        const monthlyBills = [
+        // Full list of providers
+        const allProviders = [
           {
-            provider: "Florida Power & Light (FPL)",
+            provider: "PG&E Electric",
             baseAmount: 800,
-            variation: 300, // ±$300 seasonal variation
+            variation: 300,
           },
           {
-            provider: "T-Mobile Wireless",
+            provider: "City Water",
+            baseAmount: 250,
+            variation: 50,
+          },
+          {
+            provider: "Xfinity",
+            baseAmount: 450,
+            variation: 100,
+          },
+          {
+            provider: "T-Mobile",
             baseAmount: 350,
             variation: 50,
           },
           {
-            provider: "Comcast Xfinity",
-            baseAmount: 450,
-            variation: 100,
+            provider: "State Farm",
+            baseAmount: 1200,
+            variation: 200,
+          },
+          {
+            provider: "Netflix",
+            baseAmount: 150,
+            variation: 20,
           },
         ];
 
-        // Generate bills for each month of the past year
-        for (let monthsBack = 0; monthsBack < 12; monthsBack++) {
-          for (const bill of monthlyBills) {
-            const billMonth = subMonths(currentDate, monthsBack);
-            const dueDate = new Date(
-              billMonth.getFullYear(),
-              billMonth.getMonth(),
-              15
-            ); // 15th of each month
-            const paymentDate = faker.date.between({
-              from: dueDate,
-              to: addDays(dueDate, 10), // Paid within 10 days of due date
-            });
+        // Pick 4 random providers and assign consistent account numbers
+        const monthlyBills = faker.helpers
+          .arrayElements(allProviders, 4)
+          .map((bill) => ({
+            ...bill,
+            accountNumber: validateAccountNumber(
+              faker.finance.accountNumber(8)
+            ),
+          }));
 
-            billPayments.push({
-              accountId: account.id,
-              userId: user.id,
-              provider: bill.provider,
-              accountNumber: validateAccountNumber(
-                faker.finance.accountNumber(8)
-              ),
-              amount:
-                bill.baseAmount +
-                faker.number.int({ min: -bill.variation, max: bill.variation }),
-              dueDate,
-              status:
-                monthsBack <= 1
-                  ? "PAID"
-                  : faker.helpers.arrayElement([
-                      "PAID",
-                      "PAID",
-                      "PAID",
-                      "OVERDUE",
-                    ]), // Mostly paid, some overdue for older bills
-              paymentDate:
-                monthsBack <= 1
-                  ? paymentDate
-                  : Math.random() > 0.1
-                  ? paymentDate
-                  : null,
-              confirmationNo: faker.string.uuid(),
-              isRecurring: true,
-              recurringFreq: "MONTHLY",
-              recurringEndDate: addMonths(currentDate, 12),
-              createdAt: subDays(dueDate, 30), // Created 30 days before due date
-              updatedAt: paymentDate || dueDate,
-            });
-          }
+        // Generate one bill per provider for the past year (12 months back)
+        for (const bill of monthlyBills) {
+          const billMonth = subMonths(currentDate, 12);
+          const dueDate = new Date(
+            billMonth.getFullYear(),
+            billMonth.getMonth(),
+            15
+          );
+          const paymentDate = faker.date.between({
+            from: dueDate,
+            to: addDays(dueDate, 10),
+          });
+
+          // Historical bill (PAID)
+          billPayments.push({
+            accountId: account.id,
+            userId: user.id,
+            provider: bill.provider,
+            accountNumber: bill.accountNumber,
+            amount:
+              bill.baseAmount +
+              faker.number.int({
+                min: -bill.variation,
+                max: bill.variation,
+              }),
+            dueDate,
+            status: faker.helpers.arrayElement([
+              "PAID",
+              "PAID",
+              "PAID",
+              "OVERDUE",
+            ]),
+            paymentDate: Math.random() > 0.1 ? paymentDate : null,
+            confirmationNo: Math.random() > 0.1 ? faker.string.uuid() : null,
+            isRecurring: true,
+            recurringFreq: "MONTHLY",
+            recurringEndDate: addMonths(currentDate, 12),
+            createdAt: subDays(dueDate, 30),
+            updatedAt: paymentDate || dueDate,
+          });
+
+          // Upcoming bill (PENDING) - exactly 12 months from the paid bill
+          const upcomingDueDate = addMonths(dueDate, 12);
+          billPayments.push({
+            accountId: account.id,
+            userId: user.id,
+            provider: bill.provider,
+            accountNumber: bill.accountNumber,
+            amount:
+              bill.baseAmount +
+              faker.number.int({
+                min: -bill.variation,
+                max: bill.variation,
+              }),
+            dueDate: upcomingDueDate,
+            status: "PENDING",
+            paymentDate: null,
+            confirmationNo: null,
+            isRecurring: true,
+            recurringFreq: "MONTHLY",
+            recurringEndDate: addMonths(currentDate, 24),
+            createdAt: subDays(upcomingDueDate, 30),
+            updatedAt: upcomingDueDate,
+          });
         }
       }
 

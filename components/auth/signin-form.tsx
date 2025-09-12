@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   Form,
   FormControl,
@@ -165,13 +164,6 @@ export const SignInForm = () => {
                     </FormItem>
                   )}
                 />
-
-                <Link
-                  href="#"
-                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Forgot your password?
-                </Link>
               </div>
 
               <Button

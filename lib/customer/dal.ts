@@ -320,3 +320,57 @@ export const getMonthlySummary = cache(async () => {
     return { income: 0, incomeCount: 0, outgoing: 0, outgoingCount: 0 };
   }
 });
+
+export const getUserCards = cache(async () => {
+  const session = await getUserSession();
+  if (!session) return [];
+
+  const userId = session.userId;
+
+  try {
+    const cards = await prisma.card.findMany({
+      where: { userId: userId },
+      select: {
+        id: true,
+        type: true,
+        cardNumber: true,
+        expiryDate: true,
+        status: true,
+      },
+    });
+
+    return cards;
+  } catch (error: unknown) {
+    console.error("Error fetching user cards:", error);
+    return [];
+  }
+});
+
+export const getUserBills = cache(async () => {
+  const session = await getUserSession();
+  if (!session) return [];
+
+  const userId = session.userId;
+
+  try {
+    const bills = await prisma.bill.findMany({
+      where: { userId: userId },
+      select: {
+        id: true,
+        provider: true,
+        accountNumber: true,
+        amount: true,
+        dueDate: true,
+        status: true,
+        paymentDate: true,
+        confirmationNo: true,
+      },
+      orderBy: { dueDate: "asc" },
+    });
+
+    return bills;
+  } catch (error: unknown) {
+    console.error("Error fetching user bills:", error);
+    return [];
+  }
+});

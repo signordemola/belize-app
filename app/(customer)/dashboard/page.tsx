@@ -10,6 +10,7 @@ import {
   getUserProfile,
   verifyActiveCustomer,
   getUnreadNotificationCount,
+  getUserCards,
 } from "@/lib/customer/dal";
 import CustomerHeader from "@/components/customer/customer-header";
 import MonthlySummary from "@/components/customer/monthly-sumarry";
@@ -40,6 +41,7 @@ const DashboardPage = async () => {
     getUserAccount(),
     getMonthlySummary(),
     getRecentTransactions(),
+    getUserCards()
   ]);
 
   if (!profile) return null;

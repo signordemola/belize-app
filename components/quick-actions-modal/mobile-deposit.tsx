@@ -1,6 +1,15 @@
 "use client";
 
+import { AccountType } from "@prisma/client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { useEffect, useState } from "react";
+import { getUserAccount } from "@/lib/customer/dal";
+
+interface Account {
+  id: string;
+  type: AccountType;
+  balance: number;
+}
 
 interface MobileDepositModalProps {
   isOpen: boolean;
@@ -8,6 +17,45 @@ interface MobileDepositModalProps {
 }
 
 const MobileDepositModal = ({ isOpen, onClose }: MobileDepositModalProps) => {
+  const [account, setAccount] = useState<Account | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const accountData = await getUserAccount();
+      setAccount(accountData);
+    } catch (err) {
+      console.error("Failed to fetch data", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    fetchData();
+  }, [isOpen]);
+
+  const getAccountDisplayName = (type: AccountType): string => {
+    switch (type) {
+      case AccountType.CHECKING:
+        return "Checking Account";
+      case AccountType.SAVINGS:
+        return "Savings Account";
+      case AccountType.FIXED_DEPOSIT:
+        return "Fixed Deposit Account";
+      case AccountType.PRESTIGE:
+        return "Prestige Account";
+      case AccountType.BUSINESS:
+        return "Business Account";
+      case AccountType.INVESTMENT:
+        return "Investment Account";
+      default:
+        return "Unknown Account";
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-lg sm:max-w-5xl overflow-y-auto max-h-[80vh]">
@@ -27,8 +75,16 @@ const MobileDepositModal = ({ isOpen, onClose }: MobileDepositModalProps) => {
                 required
               >
                 <option value="">Select account</option>
-                <option value="Checking">Checking (*4544) - $719,725</option>
-                <option value="Savings">Savings (*4490) - $5,704,583</option>
+                {isLoading ? (
+                  <option value={``}>Loading...</option>
+                ) : account ? (
+                  <option value={account.id}>
+                    {getAccountDisplayName(account.type)} - $
+                    {account.balance.toLocaleString()}
+                  </option>
+                ) : (
+                  <option disabled>No account found</option>
+                )}
               </select>
             </div>
             <div>

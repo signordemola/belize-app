@@ -1,6 +1,27 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { formatDistanceToNow } from "date-fns";
+import { getUserAccount, getUserBills } from "@/lib/customer/dal";
+import { AccountType } from "@prisma/client";
+
+interface Account {
+  id: string;
+  type: AccountType;
+  balance: number;
+}
+
+interface Bill {
+  id: string;
+  provider: string;
+  accountNumber: string;
+  amount: number;
+  dueDate: Date;
+  status: string;
+  paymentDate: Date | null;
+  confirmationNo: string | null;
+}
 
 interface BillPayModalProps {
   isOpen: boolean;
@@ -8,6 +29,81 @@ interface BillPayModalProps {
 }
 
 const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
+  const [account, setAccount] = useState<Account | null>(null);
+  const [upcomingBills, setUpcomingBills] = useState<Bill[]>([]);
+  const [paymentHistory, setPaymentHistory] = useState<Bill[]>([]);
+  const [selectedProvider, setSelectedProvider] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const providerIcons: { [key: string]: string } = {
+    "Pacific Gas & Electric": "⚡",
+    "Municipal Water Services": "💧",
+    "Comcast Internet": "🌐",
+    Xfinity: "🌐",
+    "T-Mobile": "📱",
+    "State Farm": "🛡️",
+    Netflix: "🎬",
+    "PG&E Electric": "⚡",
+    "City Water": "💧",
+  };
+
+  const commonProviders = [
+    { icon: "⚡", name: "PG&E Electric" },
+    { icon: "💧", name: "City Water" },
+    { icon: "🌐", name: "Xfinity" },
+    { icon: "📱", name: "T-Mobile" },
+    { icon: "🛡️", name: "State Farm" },
+    { icon: "🎬", name: "Netflix" },
+  ];
+
+  const getAccountDisplayName = (type: AccountType): string => {
+    switch (type) {
+      case AccountType.CHECKING:
+        return "Checking Account";
+      case AccountType.SAVINGS:
+        return "Savings Account";
+      case AccountType.FIXED_DEPOSIT:
+        return "Fixed Deposit Account";
+      case AccountType.PRESTIGE:
+        return "Prestige Account";
+      case AccountType.BUSINESS:
+        return "Business Account";
+      case AccountType.INVESTMENT:
+        return "Investment Account";
+      default:
+        return "Unknown Account";
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const [accountData, billsData] = await Promise.all([
+        getUserAccount(),
+        getUserBills(),
+      ]);
+      setAccount(accountData);
+      console.log(accountData);
+      const upcoming = billsData.filter(
+        (bill: Bill) =>
+          bill.status === "PENDING" && new Date(bill.dueDate) > new Date()
+      );
+      const history = billsData.filter((bill: Bill) => bill.status === "PAID");
+      console.log(history);
+      setUpcomingBills(upcoming);
+      setPaymentHistory(history);
+    } catch (err) {
+      console.error("Failed to fetch data", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    fetchData();
+  }, [isOpen]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-lg sm:max-w-6xl overflow-y-auto max-h-[80vh]">
@@ -26,8 +122,16 @@ const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
                   </label>
                   <select className="w-full p-2 border border-gray-300 rounded focus:ring-primary-500 focus:border-primary-500">
                     <option value="">Select account</option>
-                    <option value="Checking">Checking - $719,725.00</option>
-                    <option value="Savings">Savings - $5,704,583.00</option>
+                    {isLoading ? (
+                      <option disabled>Loading...</option>
+                    ) : account ? (
+                      <option value={account.id}>
+                        {getAccountDisplayName(account.type)} - $
+                        {account.balance.toLocaleString()}
+                      </option>
+                    ) : (
+                      <option disabled>No account found</option>
+                    )}
                   </select>
                 </div>
                 <div>
@@ -35,49 +139,32 @@ const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
                     Common Providers
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    <button
-                      type="button"
-                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
-                    >
-                      <span className="text-xl mb-1">⚡</span>
-                      <span className="text-xs text-center">PG&E Electric</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
-                    >
-                      <span className="text-xl mb-1">💧</span>
-                      <span className="text-xs text-center">City Water</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
-                    >
-                      <span className="text-xl mb-1">🌐</span>
-                      <span className="text-xs text-center">Xfinity</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
-                    >
-                      <span className="text-xl mb-1">📱</span>
-                      <span className="text-xs text-center">T-Mobile</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
-                    >
-                      <span className="text-xl mb-1">🛡️</span>
-                      <span className="text-xs text-center">State Farm</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
-                    >
-                      <span className="text-xl mb-1">🎬</span>
-                      <span className="text-xs text-center">Netflix</span>
-                    </button>
+                    {commonProviders.map((provider) => (
+                      <button
+                        key={provider.name}
+                        type="button"
+                        onClick={() => setSelectedProvider(provider.name)}
+                        className="p-3 rounded-md text-sm font-medium transition-all duration-200 flex flex-col items-center justify-center bg-gray-50 text-gray-700 hover:bg-emerald-50"
+                      >
+                        <span className="text-xl mb-1">{provider.icon}</span>
+                        <span className="text-xs text-center">
+                          {provider.name}
+                        </span>
+                      </button>
+                    ))}
                   </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Provider
+                  </label>
+                  <input
+                    type="text"
+                    value={selectedProvider}
+                    onChange={(e) => setSelectedProvider(e.target.value)}
+                    placeholder="Select from common or enter custom"
+                    className="w-full p-2 border border-gray-300 rounded focus:ring-primary-500 focus:border-primary-500"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -108,7 +195,7 @@ const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
                   <input
                     type="date"
                     className="w-full p-2 border border-gray-300 rounded focus:ring-primary-500 focus:border-primary-500"
-                    min="2025-07-20"
+                    min={new Date().toISOString().split("T")[0]}
                   />
                 </div>
                 <div>
@@ -135,78 +222,50 @@ const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
                   Upcoming Bills
                 </h3>
                 <div className="space-y-3">
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                          <span className="text-lg">⚡</span>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-900">
-                            Pacific Gas & Electric
-                          </p>
-                          <div className="flex items-center text-sm space-x-2">
-                            <span className="text-emerald-600">
-                              Due in 3 days
-                            </span>
-                            <span className="text-gray-400">•</span>
-                            <span className="text-gray-500">
-                              Acct: ****2345
-                            </span>
+                  {isLoading ? (
+                    <p className="text-gray-500 text-sm text-center">
+                      Loading...
+                    </p>
+                  ) : upcomingBills.length > 0 ? (
+                    upcomingBills.map((bill) => (
+                      <div
+                        key={bill.id}
+                        className="bg-white p-4 rounded-lg shadow-sm"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                              <span className="text-lg">
+                                {providerIcons[bill.provider] || "📄"}
+                              </span>
+                            </div>
+                            <div>
+                              <p className="font-medium text-gray-900">
+                                {bill.provider}
+                              </p>
+                              <div className="flex items-center text-sm space-x-2">
+                                <span className="text-emerald-600">
+                                  Due in{" "}
+                                  {formatDistanceToNow(new Date(bill.dueDate))}
+                                </span>
+                                <span className="text-gray-400">•</span>
+                                <span className="text-gray-500">
+                                  Acct: ****{bill.accountNumber.slice(-4)}
+                                </span>
+                              </div>
+                            </div>
                           </div>
+                          <span className="font-medium text-gray-900">
+                            ${bill.amount.toFixed(2)}
+                          </span>
                         </div>
                       </div>
-                      <span className="font-medium text-gray-900">$84.99</span>
-                    </div>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                          <span className="text-lg">💧</span>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-900">
-                            Municipal Water Services
-                          </p>
-                          <div className="flex items-center text-sm space-x-2">
-                            <span className="text-emerald-600">
-                              Due in 5 days
-                            </span>
-                            <span className="text-gray-400">•</span>
-                            <span className="text-gray-500">
-                              Acct: ****7890
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <span className="font-medium text-gray-900">$45.50</span>
-                    </div>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                          <span className="text-lg">🌐</span>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-900">
-                            Comcast Internet
-                          </p>
-                          <div className="flex items-center text-sm space-x-2">
-                            <span className="text-emerald-600">
-                              Due in 7 days
-                            </span>
-                            <span className="text-gray-400">•</span>
-                            <span className="text-gray-500">
-                              Acct: ****4321
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <span className="font-medium text-gray-900">$79.99</span>
-                    </div>
-                  </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500 text-sm text-center">
+                      No upcoming bills.
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="bg-gray-50 rounded-md p-6">
@@ -214,54 +273,39 @@ const BillPayModal = ({ isOpen, onClose }: BillPayModalProps) => {
                   Payment History
                 </h3>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm p-2 hover:bg-white rounded-lg transition-colors duration-200">
-                    <div className="flex flex-col">
-                      <span className="text-gray-900 font-medium">
-                        Pacific Gas & Electric
-                      </span>
-                      <span className="text-gray-500 text-xs">
-                        Conf: PGE123456
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-gray-900">$84.99</span>
-                      <span className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs">
-                        Paid
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-sm p-2 hover:bg-white rounded-lg transition-colors duration-200">
-                    <div className="flex flex-col">
-                      <span className="text-gray-900 font-medium">
-                        T-Mobile Wireless
-                      </span>
-                      <span className="text-gray-500 text-xs">
-                        Conf: TMO789012
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-gray-900">$75.00</span>
-                      <span className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs">
-                        Paid
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-sm p-2 hover:bg-white rounded-lg transition-colors duration-200">
-                    <div className="flex flex-col">
-                      <span className="text-gray-900 font-medium">
-                        Comcast Internet
-                      </span>
-                      <span className="text-gray-500 text-xs">
-                        Conf: XFN345678
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-gray-900">$79.99</span>
-                      <span className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs">
-                        Paid
-                      </span>
-                    </div>
-                  </div>
+                  {isLoading ? (
+                    <p className="text-gray-500 text-sm text-center">
+                      Loading...
+                    </p>
+                  ) : paymentHistory.length > 0 ? (
+                    paymentHistory.map((bill) => (
+                      <div
+                        key={bill.id}
+                        className="flex items-center justify-between text-sm p-2 hover:bg-white rounded-lg transition-colors duration-200"
+                      >
+                        <div className="flex flex-col">
+                          <span className="text-gray-900 font-medium">
+                            {bill.provider}
+                          </span>
+                          <span className="text-gray-500 text-xs">
+                            Conf: {bill.confirmationNo || "N/A"}
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <span className="text-gray-900">
+                            ${bill.amount.toFixed(2)}
+                          </span>
+                          <span className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs">
+                            Paid
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500 text-sm text-center">
+                      No payment history.
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
