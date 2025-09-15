@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   title: "Belize Bank Inc. | Your Financial Family Since 1973",
   description:
     "Belize Bank Inc. - Your trusted financial partner since 1973. We offer personal and business banking solutions designed around your life and goals.",
-  // icons: {
-  //   icon: "/logo.ico",
-  // },
+  icons: {
+    icon: "/logo.ico",
+  },
 };
 
 export default function RootLayout({
