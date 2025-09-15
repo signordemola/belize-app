@@ -11,7 +11,7 @@ const CustomerHeader = ({ firstName, balance, pending }: HeaderProps) => {
   const { date, time } = getFormattedDateTime();
 
   return (
-    <header className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white rounded-md mb-8 relative overflow-hidden scroll-smooth scroll-mt-60">
+    <header className="bg-gradient-to-br from-primary-500 via-primary-600 to-primary-800 text-white rounded-md mb-8 relative overflow-hidden scroll-smooth scroll-mt-60">
       <div className="absolute inset-0 opacity-10">
         <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-white/20 blur-3xl transform rotate-12"></div>
         <div className="absolute -left-20 -bottom-20 w-96 h-96 rounded-full bg-white/20 blur-3xl"></div>

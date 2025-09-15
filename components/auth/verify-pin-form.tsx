@@ -18,14 +18,14 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { VerifyOTPSchema } from "@/schemas";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Alert, AlertDescription } from "../ui/alert";
-import { verifyOTP } from "@/actions/verify-otp";
-import { resendOTP } from "@/actions/resend-otp";
+import { VerifyPinSchema } from "@/schemas";
+import { resendPin } from "@/actions/resend-pin";
+import { verifyPin } from "@/actions/verify-pin";
 
-const OtpForm = () => {
+const VerifyPinForm = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email") ?? "";
   const rememberMe = searchParams.get("rememberMe") === "true";
@@ -36,19 +36,19 @@ const OtpForm = () => {
   const [isPending, startTransition] = useTransition();
   const [isResendPending, startResendTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof VerifyOTPSchema>>({
-    resolver: zodResolver(VerifyOTPSchema),
+  const form = useForm<z.infer<typeof VerifyPinSchema>>({
+    resolver: zodResolver(VerifyPinSchema),
     defaultValues: {
-      otp: "",
+      pin: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof VerifyOTPSchema>) => {
+  const onSubmit = async (values: z.infer<typeof VerifyPinSchema>) => {
     setError("");
     setSuccess("");
 
     startTransition(() => {
-      verifyOTP(values, email, rememberMe).then((result) => {
+      verifyPin(values, email, rememberMe).then((result) => {
         if (result?.error) {
           setError(result.error);
         } else {
@@ -60,12 +60,12 @@ const OtpForm = () => {
     });
   };
 
-  const handleResendOTP = () => {
+  const handleResendPin = () => {
     setError("");
     setSuccess("");
 
     startResendTransition(() => {
-      resendOTP(email).then((result) => {
+      resendPin(email).then((result) => {
         if (result?.error) {
           setError(result.error);
         } else if (result?.success) {
@@ -101,7 +101,7 @@ const OtpForm = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="otp"
+                name="pin"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -150,7 +150,7 @@ const OtpForm = () => {
               <Button
                 type="submit"
                 disabled={isPending || isResendPending}
-                className="w-full bg-primary-600 py-6 rounded-md text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
+                className="w-full bg-secondary-600 py-5 rounded-md text-lg hover:bg-secondary-800 focus:bg-secondary-800 cursor-pointer"
               >
                 {isPending ? (
                   <svg
@@ -180,7 +180,7 @@ const OtpForm = () => {
               <Button
                 variant="outline"
                 type="button"
-                onClick={handleResendOTP}
+                onClick={handleResendPin}
                 disabled={isPending || isResendPending}
                 className="flex items-center gap-2 mt-4 border-gray-900 ml-auto cursor-pointer"
               >
@@ -231,4 +231,4 @@ const OtpForm = () => {
   );
 };
 
-export default OtpForm;
+export default VerifyPinForm;

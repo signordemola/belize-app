@@ -5,8 +5,9 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import CustomButton from "./custom-button";
 import DesktopNavbar from "./desktop-navbar";
-import { mobileNavItems } from "@/constants";
 import { usePathname } from "next/navigation";
+import { fullNavItems } from "@/constants";
+import { BelizeBankLogo } from "./logo";
 
 interface HeaderProps {
   session: {
@@ -42,29 +43,27 @@ const Header = ({ session }: HeaderProps) => {
               className="flex items-center space-x-"
               onClick={closeMobileMenu}
             >
-              {/* <Image
-              loading="lazy"
-            src="/images/logo.png"
-            alt="Belize Bank Inc. Logo"
-            width={30}
-            height={30}
-            className="rounded-full"
-          /> */}
-              <span className="text-primary-600 text-xl font-bold uppercase -ml-1 font-sans">
-                BelizeBank
-              </span>
+              <BelizeBankLogo />
             </Link>
 
             <div className="hidden lg:flex space-x-8 items-center">
               <Link
                 href="/locations"
-                className="text-primary-600 hover:text-primary-500 transition-colors duration-200"
+                className={`text-gray-800 hover:underline hover:underline-offset-4 transition-colors duration-200 ${
+                  pathname === "/locations"
+                    ? "underline underline-offset-4 text-lg text-primary-800"
+                    : ""
+                }`}
               >
                 Locations
               </Link>
               <Link
                 href="/contact"
-                className="text-primary-600 hover:text-primary-500 transition-colors duration-200"
+                className={`text-gray-800 hover:underline hover:underline-offset-4 transition-colors duration-200 ${
+                  pathname === "/contact"
+                    ? "underline underline-offset-4 text-lg text-primary-800"
+                    : ""
+                }`}
               >
                 Contact Us
               </Link>
@@ -80,7 +79,7 @@ const Header = ({ session }: HeaderProps) => {
                 <>
                   <Button
                     variant="outline"
-                    className="text-primary-600 border-primary-600 hover:bg-primary-800 hover:text-white rounded-none px-6 py-2 cursor-pointer"
+                    className="text-primary-600 border-primary-600 hover:bg-primary-800 hover:text-white rounded-none px-6 py-3 cursor-pointer"
                   >
                     <Link href={`/sign-in`}>Sign In</Link>
                   </Button>
@@ -125,25 +124,25 @@ const Header = ({ session }: HeaderProps) => {
 
           <div
             className={`lg:hidden fixed w-full h-full top-26 bg-gradient-to-br from-gray-50 to-white bg-opacity-95 z-[999] 
-    transition-all duration-500 ease-in-out
-    ${
-      isMobileMenuOpen
-        ? "opacity-100 translate-y-0"
-        : "opacity-0 -translate-y-4"
-    }
-  `}
+                          transition-all duration-500 ease-in-out
+                          ${
+                            isMobileMenuOpen
+                              ? "opacity-100 translate-y-0"
+                              : "opacity-0 -translate-y-4"
+                          }
+                        `}
           >
             {/* Main menu links */}
             <div className="flex flex-col items-center justify-center pb-32 h-full transition-opacity duration-500 ease-in-out">
               <ul className="flex flex-col items-center gap-12 text-black/95">
-                {mobileNavItems?.map((item, index) => (
+                {fullNavItems?.map((item, index) => (
                   <li key={index}>
                     <Link
                       href={item.href}
                       className={`px-12 py-3 transition-colors duration-300 ${
                         pathname === item.href
-                          ? "bg-danger-800 text-white"
-                          : "hover:underline"
+                          ? "underline underline-offset-4 text-xl text-red-900"
+                          : "hover:underline hover:underline-offset-4"
                       }`}
                     >
                       {item.label}

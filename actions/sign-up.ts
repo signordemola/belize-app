@@ -7,12 +7,12 @@ import {
 } from "@/lib/customer/create-account";
 import { prisma } from "@/lib/db";
 import { sendWelcomeEmail } from "@/lib/email";
-import { generateOtp } from "@/lib/otp";
 import {
   encryptPassword,
   generatePassword,
   hashPassword,
 } from "@/lib/password";
+import { generatePin } from "@/lib/pin";
 import { SignUpSchema } from "@/schemas";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { revalidatePath } from "next/cache";
@@ -71,8 +71,8 @@ export const signUp = async (
     const password = generatePassword();
     const hashedPassword = await hashPassword(password);
     const encryptedPassword = encryptPassword(password);
-    const otp = generateOtp();
-    const hashedOTP = await hashPassword(otp);
+    const pin = generatePin();
+    const hashedPin = await hashPassword(pin);
     const accountData = generateAccountData(accountType, accountNumber);
 
     const result = await prisma.$transaction(
@@ -93,7 +93,7 @@ export const signUp = async (
             country,
             imageUrl: secure_url,
             selectedAcctType: accountType,
-            otpSecret: hashedOTP,
+            otpSecret: hashedPin,
             isActive: false,
             iv: encryptedPassword.iv,
             tag: encryptedPassword.tag,
@@ -112,7 +112,7 @@ export const signUp = async (
     );
 
     try {
-      await sendWelcomeEmail(email, accountType, accountNumber, password, otp);
+      await sendWelcomeEmail(email, accountType, accountNumber, password, pin);
     } catch (emailError) {
       console.error("Email send error:", emailError);
 
@@ -130,7 +130,7 @@ export const signUp = async (
     }
 
     revalidatePath("/admin-panel");
-    
+
     return {
       success: `Account created successfully!`,
       redirect: "/sign-in",

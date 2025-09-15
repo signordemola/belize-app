@@ -1,3 +1,4 @@
+import MainFooter from "@/components/footer";
 import Header from "@/components/header";
 import CommunityImpactSection from "@/components/home-page/community-impact-section";
 import FinancialSolutionsSection from "@/components/home-page/financial-solutions-section";
@@ -30,6 +31,7 @@ export default async function Home() {
       <InnovationSection />
       <TestimonialsSection />
       <CommunityImpactSection />
+      <MainFooter />
     </>
   );
 }

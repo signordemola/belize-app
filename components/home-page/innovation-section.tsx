@@ -2,7 +2,7 @@ const InnovationSection = () => {
   return (
     <section
       id="innovation"
-      className="py-24 bg-primary-600 text-primary-800 relative overflow-hidden"
+      className="py-24 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-800 text-primary-800 relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       <div className="container mx-auto px-4 relative z-10">

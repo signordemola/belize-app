@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import CustomButton from "../custom-button";
 import { Menu, X } from "lucide-react";
+import { BelizeBankLogo } from "../logo";
 
 const AuthHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,17 +18,7 @@ const AuthHeader = () => {
         aria-label="Primary Header Navigation"
       >
         <Link href="/" className="flex items-center">
-          {/* <Image
-          loading="lazy"
-            src="/images/logo.png"
-            alt="Belize Bank Inc. Logo"
-            width={30}
-            height={30}
-            className="rounded-full"
-          /> */}
-          <span className="text-primary-600 text-xl font-bold uppercase -ml-1 font-sans">
-            BelizeBank
-          </span>
+          <BelizeBankLogo />
         </Link>
 
         <div className="hidden md:block pr-8">

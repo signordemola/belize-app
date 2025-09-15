@@ -5,12 +5,12 @@ import { useState, useEffect } from "react";
 import { Button } from ".././ui/button";
 import { logout } from "@/actions/logout";
 import { getFormattedDateTime } from "@/lib/utils";
+import { BelizeBankLogo } from "../logo";
 
 const AdminNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   const { date } = getFormattedDateTime();
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,17 +37,7 @@ const AdminNavbar = () => {
           <div className="flex">
             <div className="flex-shrink-0 flex items-center px-3">
               <Link href="/" className="flex items-center space-x-2">
-                {/* <Image
-                loading="lazy"
-                  src="/images/logo-50.png"
-                  alt="FinTrust Credit Union Logo"
-                  width={30}
-                  height={30}
-                  className="rounded-full"
-                /> */}
-                <span className="text-primary-600 text-xl font-bold uppercase -ml-1 font-sans">
-                  BELIZEBANK
-                </span>
+                <BelizeBankLogo variant="icon-only" size="lg" />
               </Link>
             </div>
           </div>

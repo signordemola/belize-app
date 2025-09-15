@@ -31,7 +31,7 @@ export const signIn = async (values: z.infer<typeof SignInSchema>) => {
       return { error: "Invalid credentials!" };
     }
 
-    const redirectUrl = `/verify-otp?email=${encodeURIComponent(
+    const redirectUrl = `/verify-pin?email=${encodeURIComponent(
       account.user.email
     )}${rememberMe ? `&rememberMe=${rememberMe}` : ""}`;
 

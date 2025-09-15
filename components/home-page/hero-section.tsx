@@ -87,7 +87,7 @@ export default function HeroBannerSection() {
       return (
         <div className="bg-white h-full flex relative">
           {/* Red accent line */}
-          <div className="absolute top-0 left-0 w-16 h-1 bg-danger-600"></div>
+          <div className="absolute top-0 left-0 w-16 h-2 bg-danger-600"></div>
 
           <div className="container mx-auto flex h-full">
             {/* Left side - Content */}
@@ -179,7 +179,7 @@ export default function HeroBannerSection() {
         }}
       >
         {/* Red accent line */}
-        <div className="absolute top-0 left-0 w-16 h-1 bg-danger-600"></div>
+        <div className="absolute top-0 left-0 w-16 h-2 bg-danger-600"></div>
 
         <div className="container mx-auto px-8 lg:px-16">
           <div className="max-w-2xl text-white">
@@ -306,7 +306,7 @@ export default function HeroBannerSection() {
             className={`flex-1 border-b-[1px] lg:border-r-[1px] lg:border-b-0 border-white px-8 py-10 cursor-pointer text-sm font-medium transition-all duration-200 relative ${
               currentSlide === index
                 ? "text-white bg-primary-600 text-lg"
-                : "text-gray-700 bg-primary-600/40 hover:bg-primary-600 hover:text-white"
+                : "text-gray-900 bg-primary-600/30 hover:bg-primary-600 hover:text-white"
             }`}
             aria-label={slide.label}
             role="tab"
@@ -314,9 +314,6 @@ export default function HeroBannerSection() {
             aria-current={currentSlide === index ? "true" : undefined}
           >
             <span className="relative z-10">{slide.label}</span>
-            {currentSlide === index && (
-              <div className="absolute -bottom-1 left-0 w-full h-1 bg-danger-800"></div>
-            )}
           </button>
         ))}
       </div>

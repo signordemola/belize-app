@@ -2,11 +2,11 @@
 
 import { prisma } from "@/lib/db";
 import { sendOtpEmail } from "@/lib/email";
-import { generateOtp } from "@/lib/otp";
 import { hashPassword } from "@/lib/password";
+import { generatePin } from "@/lib/pin";
 
-export const resendOTP = async (email: string) => {
-  const otp = generateOtp();
+export const resendPin = async (email: string) => {
+  const otp = generatePin();
   const hashedOTP = await hashPassword(otp);
 
   try {
@@ -14,7 +14,7 @@ export const resendOTP = async (email: string) => {
       where: { email },
       data: { otpSecret: hashedOTP },
     });
-    
+
     await sendOtpEmail(email, otp);
   } catch (error) {
     console.log(error);

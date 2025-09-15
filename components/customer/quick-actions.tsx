@@ -24,7 +24,7 @@ const QuickActions = () => {
               className="group relative overflow-hidden rounded-md transition-all duration-300 hover:shadow-lg cursor-pointer"
               onClick={() => setOpenDialog("billpay")}
             >
-              <div className="absolute inset-0 bg-gradient-card-primary opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-rose-500 opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative p-4 flex flex-col items-center">
                 <div className="w-12 h-12 rounded-md bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-2xl">💰</span>
@@ -72,7 +72,7 @@ const QuickActions = () => {
               className="group relative overflow-hidden rounded-md transition-all duration-300 hover:shadow-lg"
               onClick={() => setOpenDialog("statements")}
             >
-              <div className="absolute inset-0 bg-gradient-card-primary opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-rose-500 opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative p-4 flex flex-col items-center">
                 <div className="w-12 h-12 rounded-md bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-2xl">📄</span>

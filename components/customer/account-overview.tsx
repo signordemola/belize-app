@@ -77,8 +77,8 @@ const AccountOverview: FC<AccountOverviewProps> = ({
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-gradient-to-r from-primary-50 to-primary-100 rounded-md p-6">
-              <p className="text-sm font-medium text-primary-600 mb-1">
+            <div className="bg-gray-100/90 rounded-md p-6">
+              <p className="text-sm font-medium text-secondary-600 mb-1">
                 Available Balance
               </p>
               <p className="text-3xl font-semibold text-gray-900">
@@ -88,16 +88,16 @@ const AccountOverview: FC<AccountOverviewProps> = ({
                 })}
               </p>
               <div className="mt-4 flex items-center">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-white text-gray-900">
                   {getAccountDisplayName(account.type)}
                 </span>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-r from-primary-50 to-primary-100/50 rounded-md p-4">
+              <div className="bg-gray-100/90 rounded-md p-4">
                 <p className="text-sm text-gray-900 mb-1">Account Number</p>
                 <div className="flex items-center justify-between">
-                  <p className="font-mono text-lg text-gray-900">
+                  <p className="font-mono text-lg text-gray-900 bg-white px-2.5 py-0.5 rounded-md">
                     {formatAccountNumber(account.accountNumber)}
                   </p>
                   <button
@@ -118,11 +118,11 @@ const AccountOverview: FC<AccountOverviewProps> = ({
                   </button>
                 </div>
               </div>
-              <div className="bg-gradient-to-r from-primary-50 to-primary-100/50 rounded-md p-4">
+              <div className="bg-gray-100/90 rounded-md p-4">
                 <p className="text-sm text-gray-900 mb-1">Routing Number</p>
                 <div className="flex items-center justify-between">
-                  <p className="font-mono text-lg text-gray-900">
-                    {account.routingNumber}
+                  <p className="font-mono text-lg text-gray-900 bg-white px-2.5 py-0.5 rounded-md">
+                    {formatAccountNumber(account.routingNumber)}
                   </p>
                   <button
                     className="p-2 cursor-pointer rounded-full hover:bg-primary-100 transition-colors duration-200"
@@ -144,8 +144,8 @@ const AccountOverview: FC<AccountOverviewProps> = ({
               </div>
             </div>
           </div>
-          <div className="bg-gradient-to-r from-primary-50 to-primary-100/50 rounded-md p-6">
-            <h3 className="text-lg font-medium text-primary-600 mb-6">
+          <div className="bg-gray-100/90 rounded-md p-6">
+            <h3 className="text-xl font-medium text-gray-900 mb-6">
               Account Information
             </h3>
 
@@ -153,30 +153,32 @@ const AccountOverview: FC<AccountOverviewProps> = ({
               <div className="flex-1">
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm text-gray-900">Account Holder</p>
-                    <p className="text-base font-medium text-gray-900">
-                      {account.holder}
+                    <p className="text-sm font-medium text-gray-900">
+                      Account Holder:
                     </p>
+                    <p className="text-secondary-600">{account.holder}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-900">Account Type</p>
-                    <p className="text-base font-medium text-gray-900">
+                    <p className="text-sm font-medium text-gray-900">
+                      Account Type:
+                    </p>
+                    <p className="text-secondary-600">
                       {getAccountDisplayName(account.type)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-900">Account Status</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      Account Status:
+                    </p>
                     <div className="flex items-center mt-1">
                       <div
                         className={`w-2 h-2 rounded-full mr-2 ${
                           account.status === "ACTIVE"
                             ? "bg-green-500"
-                            : "bg-gradient-to-r from-primary-50 to-primary-100/500"
+                            : "bg-gray-100/900"
                         }`}
                       ></div>
-                      <p className="text-base font-medium text-gray-900">
-                        {account.status}
-                      </p>
+                      <p className="text-secondary-600">{account.status}</p>
                     </div>
                   </div>
                 </div>

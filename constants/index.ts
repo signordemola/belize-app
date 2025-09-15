@@ -5,11 +5,11 @@ export const navItems = [
   { href: "/careers", label: "Careers" },
 ];
 
-export const mobileNavItems = [
+export const fullNavItems = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "About Us" },
-  { href: "/location", label: "Location" },
+  { href: "/locations", label: "Locations" },
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact Us" },
 ];

@@ -1,12 +1,12 @@
 const FinancialSolutionsSection = () => {
   return (
-    <section id="financial-solutions" className="pt-8 pb-16">
+    <section id="financial-solutions" className="pt-12 pb-16">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-primary-600 mb-4">
             Comprehensive Financial Solutions
           </h2>
-          <p className="text-lg text-primary-600">
+          <p className="text-lg text-gray-900">
             Discover our range of services designed to support your financial
             journey at every step
           </p>

@@ -25,6 +25,7 @@ import { Button } from "../ui/button";
 import SecuritySettingsModal from "../modals/security-settings";
 import AccountManagementModal from "../modals/account-management";
 import { NotificationsModal } from "../modals/notifications";
+import { BelizeBankLogo } from "../logo";
 
 interface CustomerNavBarProps {
   profile: {
@@ -90,11 +91,9 @@ const CustomerNavBar = ({
         <div className="flex justify-between h-24 md:h-28">
           {/* Left side */}
           <div className="flex">
-            <div className="flex-shrink-0 flex items-center px-3">
+            <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="flex items-center space-x-2">
-                <span className="text-primary-600 text-xl font-bold uppercase -ml-1 font-sans">
-                  Belize Bank Inc.
-                </span>
+                <BelizeBankLogo variant="icon-only" size="lg" />
               </Link>
             </div>
             <div className="hidden lg:ml-12 lg:flex lg:items-center lg:space-x-1">
@@ -118,12 +117,12 @@ const CustomerNavBar = ({
             {/* Notifications button */}
             <Button
               variant="ghost"
-              className="p-2 text-primary-600 bg-primary-50 hover:text-gray-600 hover:bg-primary-100 relative"
+              className="p-2 text-gray-800 bg-gray-50 border hover:text-gray-600 hover:bg-gray-100 relative"
               onClick={() => setIsNotificationsOpen(true)}
             >
               <Bell className="w-6 h-6" />
               {currentUnreadCount > 0 && (
-                <span className="absolute -top-1.5 -right-2 px-1.5 py-0.5 text-[10px] font-bold text-white bg-red-500 rounded-full shadow">
+                <span className="absolute -top-1.5 -right-2 px-1.5 py-0.5 text-[10px] font-bold text-white bg-danger-600 rounded-full shadow">
                   {currentUnreadCount}
                 </span>
               )}
@@ -134,7 +133,7 @@ const CustomerNavBar = ({
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center space-x-3 px-4 py-8 text-primary-600 bg-primary-50 hover:bg-primary-100 hover:text-gray-600"
+                  className="flex items-center space-x-3 px-4 py-8 border text-gray-800 bg-gray-50 hover:bg-gray-100 hover:text-gray-600"
                 >
                   <Image
                     loading="lazy"

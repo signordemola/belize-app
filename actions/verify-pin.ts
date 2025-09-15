@@ -4,14 +4,14 @@ import { verifyPassword } from "@/lib/password";
 import { prisma } from "@/lib/db";
 import { UserRoleEnum } from "@prisma/client";
 import { createUserSession } from "@/lib/session";
-import { VerifyOTPSchema } from "@/schemas";
+import { VerifyPinSchema } from "@/schemas";
 
-export const verifyOTP = async (
-  values: z.infer<typeof VerifyOTPSchema>,
+export const verifyPin = async (
+  values: z.infer<typeof VerifyPinSchema>,
   email: string,
   rememberMe: boolean | string
 ) => {
-  const { error, success, data } = VerifyOTPSchema.safeParse(values);
+  const { error, success, data } = VerifyPinSchema.safeParse(values);
 
   if (!success) {
     return {
@@ -29,7 +29,7 @@ export const verifyOTP = async (
       ? rememberMe === "true"
       : Boolean(rememberMe);
 
-  const { otp } = data;
+  const { pin } = data;
 
   try {
     const user = await prisma.user.findUnique({
@@ -52,7 +52,7 @@ export const verifyOTP = async (
       };
     }
 
-    const isValid = await verifyPassword(otp, user.otpSecret);
+    const isValid = await verifyPassword(pin, user.otpSecret);
 
     if (!isValid) {
       return { error: "Incorrect PIN entered!" };

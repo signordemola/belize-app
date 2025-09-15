@@ -169,7 +169,7 @@ export const SignInForm = () => {
               <Button
                 type="submit"
                 disabled={isPending}
-                className="w-full bg-primary-600 py-6 rounded-md text-lg hover:bg-primary-800 focus:bg-primary-800 cursor-pointer"
+                className="w-full bg-secondary-600 py-5 rounded-md text-lg hover:bg-secondary-800 focus:bg-secondary-800 cursor-pointer"
               >
                 {isPending ? (
                   <svg

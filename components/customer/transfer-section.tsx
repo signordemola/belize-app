@@ -56,9 +56,9 @@ const TransferSection = ({ userAccount }: TransferSectionProps) => {
     <div id="transfer-section" className="mb-8 scroll-smooth scroll-mt-30">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-md bg-primary-50 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-md bg-secondary-50 flex items-center justify-center">
             <svg
-              className="w-5 h-5 text-primary-600"
+              className="w-5 h-5 text-secondary-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -99,10 +99,10 @@ const TransferSection = ({ userAccount }: TransferSectionProps) => {
               <TabsList className="grid grid-cols-1 sm:grid-cols-3 mb-16 w-full">
                 <TabsTrigger
                   value="belize-user"
-                  className="relative flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-200 bg-white hover:cursor-pointer hover:bg-primary-50 data-[state=active]:bg-primary-50 data-[state=active]:text-primary-900 data-[state=active]:border-b-primary-900"
+                  className="relative flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-200 bg-white hover:cursor-pointer hover:bg-secondary-50 data-[state=active]:bg-secondary-50 data-[state=active]:text-secondary-900 data-[state=active]:border-b-secondary-900"
                 >
-                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent data-[state=active]:bg-primary-600"></div>
-                  <div className="p-3 rounded-md mb-2 text-primary-600 bg-gray-50 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent data-[state=active]:bg-secondary-600"></div>
+                  <div className="p-3 rounded-md mb-2 text-secondary-600 bg-gray-50 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
                     <svg
                       className="w-5 h-5"
                       fill="none"
@@ -117,16 +117,16 @@ const TransferSection = ({ userAccount }: TransferSectionProps) => {
                       />
                     </svg>
                   </div>
-                  <span className="text-sm font-medium text-primary-600 hover:text-primary-900 data-[state=active]:text-primary-900">
+                  <span className="text-sm font-medium text-secondary-600 hover:text-secondary-900 data-[state=active]:text-secondary-900">
                     To Belize User
                   </span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="us-bank"
-                  className="relative flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-200 bg-white hover:cursor-pointer hover:bg-primary-50 data-[state=active]:bg-primary-50 data-[state=active]:text-primary-900 data-[state=active]:border-b-primary-900"
+                  className="relative flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-200 bg-white hover:cursor-pointer hover:bg-secondary-50 data-[state=active]:bg-secondary-50 data-[state=active]:text-secondary-900 data-[state=active]:border-b-secondary-900"
                 >
-                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent data-[state=active]:bg-primary-600"></div>
-                  <div className="p-3 rounded-md mb-2 text-primary-600 bg-gray-50 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent data-[state=active]:bg-secondary-600"></div>
+                  <div className="p-3 rounded-md mb-2 text-secondary-600 bg-gray-50 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
                     <svg
                       className="w-5 h-5"
                       fill="none"
@@ -141,16 +141,16 @@ const TransferSection = ({ userAccount }: TransferSectionProps) => {
                       />
                     </svg>
                   </div>
-                  <span className="text-sm font-medium text-primary-600 hover:text-primary-900 data-[state=active]:text-primary-900">
+                  <span className="text-sm font-medium text-secondary-600 hover:text-secondary-900 data-[state=active]:text-secondary-900">
                     To US Bank
                   </span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="international"
-                  className="relative flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-200 bg-white hover:cursor-pointer hover:bg-primary-50 data-[state=active]:bg-primary-50 data-[state=active]:text-primary-900 data-[state=active]:border-b-primary-900"
+                  className="relative flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-200 bg-white hover:cursor-pointer hover:bg-secondary-50 data-[state=active]:bg-secondary-50 data-[state=active]:text-secondary-900 data-[state=active]:border-b-secondary-900"
                 >
-                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent data-[state=active]:bg-primary-600"></div>
-                  <div className="p-3 rounded-md mb-2 text-primary-600 bg-gray-50 transition-colors duration-200 hover:bg-primary-100 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent data-[state=active]:bg-secondary-600"></div>
+                  <div className="p-3 rounded-md mb-2 text-secondary-600 bg-gray-50 transition-colors duration-200 hover:bg-secondary-100 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-600">
                     <svg
                       className="w-5 h-5"
                       fill="none"
@@ -165,13 +165,13 @@ const TransferSection = ({ userAccount }: TransferSectionProps) => {
                       />
                     </svg>
                   </div>
-                  <span className="text-sm font-medium text-primary-600 hover:text-primary-900 data-[state=active]:text-primary-900">
+                  <span className="text-sm font-medium text-secondary-600 hover:text-secondary-900 data-[state=active]:text-secondary-900">
                     International
                   </span>
                 </TabsTrigger>
               </TabsList>
               <div className="mt-56 sm:mt-6">
-                <div className="border-b border-primary-600 sm:border-none"></div>
+                <div className="border-b border-secondary-600 sm:border-none"></div>
                 <TabsContent value="belize-user" className="max-w-4xl mx-auto">
                   <BelizeUerForm userAccount={formattedAccount} />
                 </TabsContent>
