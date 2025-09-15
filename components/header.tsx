@@ -47,26 +47,6 @@ const Header = ({ session }: HeaderProps) => {
             </Link>
 
             <div className="hidden lg:flex space-x-8 items-center">
-              <Link
-                href="/locations"
-                className={`text-gray-800 hover:underline hover:underline-offset-4 transition-colors duration-200 ${
-                  pathname === "/locations"
-                    ? "underline underline-offset-4 text-lg text-primary-800"
-                    : ""
-                }`}
-              >
-                Locations
-              </Link>
-              <Link
-                href="/contact"
-                className={`text-gray-800 hover:underline hover:underline-offset-4 transition-colors duration-200 ${
-                  pathname === "/contact"
-                    ? "underline underline-offset-4 text-lg text-primary-800"
-                    : ""
-                }`}
-              >
-                Contact Us
-              </Link>
               {isLoggedIn && customerUser ? (
                 <Link href={`/dashboard`}>
                   <CustomButton text="My Portal" />

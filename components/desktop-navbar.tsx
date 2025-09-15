@@ -1,4 +1,4 @@
-import { navItems } from "@/constants";
+import { fullNavItems } from "@/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -42,7 +42,7 @@ const DesktopNavbar = () => {
 
       <div className="pr-8">
         <ul className="flex items-center gap-4 text-white">
-          {navItems?.map((item, index) => (
+          {fullNavItems?.map((item, index) => (
             <li key={index}>
               <Link
                 href={item.href}
