@@ -19,7 +19,6 @@ import TransferSection from "@/components/customer/transfer-section";
 import QuickActions from "@/components/customer/quick-actions";
 import RecentTransactions from "@/components/customer/recent-transactions";
 import DeactivatedScreen from "@/components/deactivated-screen";
-
 const DashboardPage = async () => {
   const isActiveCustomer = await verifyActiveCustomer();
 
@@ -41,7 +40,7 @@ const DashboardPage = async () => {
     getUserAccount(),
     getMonthlySummary(),
     getRecentTransactions(),
-    getUserCards()
+    getUserCards(),
   ]);
 
   if (!profile) return null;
@@ -50,7 +49,7 @@ const DashboardPage = async () => {
 
   const hasPin = !!profile.transactionPin;
 
-  const beneficiaries = beneficiariesResult?.beneficiaries || []
+  const beneficiaries = beneficiariesResult?.beneficiaries || [];
 
   return (
     <section>

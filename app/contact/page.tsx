@@ -9,8 +9,13 @@ import {
   Monitor,
   Phone,
 } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Contact Us",
+};
 
 const ContactPage = async () => {
   const session = await getUserSession();

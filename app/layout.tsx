@@ -17,7 +17,10 @@ const plexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Belize Bank Inc. | Your Financial Family Since 1973",
+  title: {
+    default: "Belize Bank Inc. | Your Financial Family Since 1973",
+    template: "%s | Belize Bank Inc.",
+  },
   description:
     "Belize Bank Inc. - Your trusted financial partner since 1973. We offer personal and business banking solutions designed around your life and goals.",
   icons: {

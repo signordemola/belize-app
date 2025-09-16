@@ -137,7 +137,7 @@ const CustomerNavBar = ({
                 >
                   <Image
                     loading="lazy"
-                    src={imageUrl || "/images/default-avatar.png"}
+                    src={imageUrl || "/images/placeholder.svg"}
                     alt={`${firstName} ${lastName}`}
                     width={1000}
                     height={1000}

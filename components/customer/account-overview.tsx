@@ -188,7 +188,7 @@ const AccountOverview: FC<AccountOverviewProps> = ({
                 <div className="w-48 h-48 relative">
                   <Image
                     loading="lazy"
-                    src={imageUrl}
+                    src={imageUrl || "/images/placeholder.svg"}
                     alt="Account Illustration"
                     fill
                     className="rounded-full object-cover"

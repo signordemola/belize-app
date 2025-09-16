@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      {
+        protocol: "https",
+        hostname: "coin-images.coingecko.com",
+      },
     ],
   },
   experimental: {
@@ -17,3 +21,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+

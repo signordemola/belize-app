@@ -26,7 +26,6 @@ export default async function Home() {
         <br />
         <br />
       </div>
-
       <FinancialSolutionsSection />
       <InnovationSection />
       <TestimonialsSection />

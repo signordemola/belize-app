@@ -1,5 +1,10 @@
 import VerifyPinForm from "@/components/auth/verify-pin-form";
+import { Metadata } from "next";
 import React, { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "Verify PIN",
+};
 
 const VerifyPinPage = () => {
   return (

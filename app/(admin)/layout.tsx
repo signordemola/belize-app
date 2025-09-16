@@ -1,4 +1,9 @@
 import AdminNavbar from "@/components/admin/admin-navbar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Admin Panel",
+};
 
 export default function ControlPanelLayout({
   children,
