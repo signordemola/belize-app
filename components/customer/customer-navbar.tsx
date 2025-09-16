@@ -117,7 +117,7 @@ const CustomerNavBar = ({
             {/* Notifications button */}
             <Button
               variant="ghost"
-              className="p-2 text-gray-800 bg-gray-50 border hover:text-gray-600 hover:bg-gray-100 relative"
+              className="p-2 text-gray-800 bg-gray-50 hover:text-gray-600 hover:bg-gray-100 relative"
               onClick={() => setIsNotificationsOpen(true)}
             >
               <Bell className="w-6 h-6" />
@@ -133,7 +133,7 @@ const CustomerNavBar = ({
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center space-x-3 px-4 py-8 border text-gray-800 bg-gray-50 hover:bg-gray-100 hover:text-gray-600"
+                  className="flex items-center space-x-3 px-4 py-6 text-gray-800 bg-gray-50 hover:bg-gray-100 hover:text-gray-600"
                 >
                   <Image
                     loading="lazy"
