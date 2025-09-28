@@ -128,7 +128,7 @@ export function BelizeBankLogo({
           <h1
             className={`font-bold tracking-tight text-gray-800 ${textSizeClasses[size]}`}
           >
-            Belize Bank
+            Belize Valley
           </h1>
           <p className="text-xs text-gray-600 font-medium tracking-wide">
             TRUSTED SINCE 1985
@@ -145,7 +145,7 @@ export function BelizeBankLogo({
         <h1
           className={`font-bold tracking-tight text-gray-800 leading-none ${textSizeClasses[size]}`}
         >
-          Belize Bank
+          Belize Valley
         </h1>
         <p className="text-xs text-gray-600 font-medium tracking-wide mt-1">
           TRUSTED SINCE 1985

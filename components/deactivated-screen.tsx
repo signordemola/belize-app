@@ -47,7 +47,7 @@ const DeactivatedScreen = () => {
           </button>
 
           <Link
-            href="mailto:support@belizebank.com?subject=Account%20Deactivated"
+            href="mailto:support@belizevalley.com?subject=Account%20Deactivated"
             className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium bg-gray-900 text-white hover:bg-black transition"
           >
             <Mail className="h-4 w-4" />

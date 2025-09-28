@@ -29,7 +29,7 @@ const ContactPage = async () => {
         <div className="flex flex-col justify-center items-center gap-3 mt-12 border-b pb-6">
           <h3 className="text-4xl text-danger-600">We’re Here to Help</h3>
           <p className="text-xl">
-            Belize Bank Inc. Customer Service and Support
+            Belize Valley Inc. Customer Service and Support
           </p>
         </div>
 

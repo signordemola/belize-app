@@ -3,7 +3,10 @@ import Image from "next/image";
 
 const CommunityImpactSection = () => {
   return (
-    <section id="community-impact" className="py-24 text-white bg-gradient-to-br from-primary-500 via-primary-600 to-primary-800">
+    <section
+      id="community-impact"
+      className="py-24 text-white bg-gradient-to-br from-primary-500 via-primary-600 to-primary-800"
+    >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -11,8 +14,8 @@ const CommunityImpactSection = () => {
               Making a Difference in Our Community
             </h2>
             <p className="text-xl mb-8 text-white/90">
-              At Belize Bank Inc., we believe in giving back. Our commitment to
-              community development goes beyond banking -{" we're"}
+              At Belize Valley Inc., we believe in giving back. Our commitment
+              to community development goes beyond banking -{" we're"}
               building a better future together.
             </p>
             <div className="grid grid-cols-2 gap-6 mb-8">

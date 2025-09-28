@@ -308,7 +308,7 @@ const ServicesPage = async () => {
               Ready to Get Started?
             </h2>
             <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-              Join thousands of satisfied customers who trust Belize Bank with
+              Join thousands of satisfied customers who trust Belize Valley with
               their financial future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -37,7 +37,7 @@ const TransferBlocked = ({
         <div className="mt-4 space-y-6">
           <div className="bg-red-100 rounded-md p-4 text-sm text-gray-600">
             <p className="font-medium text-gray-900 mb-1">Contact Support</p>
-            <p>📧 support@belizebank.com</p>
+            <p>📧 support@belizevalley.com</p>
             <p>🕒 Monday - Friday: 8AM - 8PM EST</p>
           </div>
           <Button

@@ -36,7 +36,7 @@ const milestones = [
     year: "1985",
     title: "Founded",
     description:
-      "Belize Bank was established with a mission to serve the local community with integrity and trust.",
+      "Belize Valley was established with a mission to serve the local community with integrity and trust.",
   },
   {
     year: "1992",
@@ -138,7 +138,7 @@ const AboutPage = async () => {
               </h1>
               <p className="text-xl md:text-2xl text-gray-300 mb-8">
                 {
-                  "  For nearly four decades, Belize Bank has been a trusted partner                in our community's financial journey, combining traditional                values with innovative solutions."
+                  "  For nearly four decades, Belize Valley has been a trusted partner                in our community's financial journey, combining traditional                values with innovative solutions."
                 }
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
@@ -339,11 +339,11 @@ const AboutPage = async () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    info@belizebank.com
+                    info@belizevalley.com
                     <br />
-                    support@belizebank.com
+                    support@belizevalley.com
                     <br />
-                    careers@belizebank.com
+                    careers@belizevalley.com
                   </p>
                 </CardContent>
               </Card>

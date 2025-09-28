@@ -244,7 +244,7 @@ const CareersPage = async () => {
         <section className="bg-primary mt-12 py-16 rounded-md">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Build Your Career with Belize Bank
+              Build Your Career with Belize Valley
             </h1>
             <p className="text-xl px-2 text-primary-foreground/90 mb-8 max-w-3xl mx-auto">
               Join a team that values innovation, integrity, and growth.

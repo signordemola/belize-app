@@ -34,7 +34,7 @@ const generateOtpEmailHtml = (otp: string) => {
       <div style="background-color: #ffffff; margin: 0 auto; max-width: 600px; border: 1px solid #e0effe; border-radius: 6px; overflow: hidden;">
         <div style="background-color: #0066cc; padding: 20px; text-align: center;">
           <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 600;">
-            Belize Bank Inc.
+            Belize Valley Inc.
           </h1>
         </div>
         <div style="padding: 30px;">
@@ -51,7 +51,7 @@ const generateOtpEmailHtml = (otp: string) => {
         </div>
         <div style="background-color: #f9fafb; padding: 15px 30px; border-top: 1px solid #e0e0e0;">
           <p style="color: #6b7280; font-size: 12px; margin: 0; line-height: 1.4;">
-            © 2025 Belize Bank Inc. All rights reserved.
+            © 2025 Belize Valley Inc. All rights reserved.
           </p>
         </div>
       </div>
@@ -64,9 +64,9 @@ export const sendOtpEmail = async (to: string, otp: string) => {
   const emailHtml = generateOtpEmailHtml(otp);
 
   await transporter.sendMail({
-    from: `"Belize Bank Inc. Security" <${process.env.ZOHO_USER}>`,
+    from: `"Belize Valley Inc. Security" <${process.env.ZOHO_USER}>`,
     to,
-    subject: "New Login PIN - Belize Bank Inc.",
+    subject: "New Login PIN - Belize Valley Inc.",
     html: emailHtml,
   });
 };
@@ -83,12 +83,12 @@ const generateWelcomeEmailHtml = (
       <div style="background-color: #ffffff; margin: 0 auto; max-width: 600px; border: 1px solid #e0effe; border-radius: 6px; overflow: hidden;">
         <div style="background-color: #0066cc; padding: 20px; text-align: center;">
           <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 600;">
-            Belize Bank Inc.
+            Belize Valley Inc.
           </h1>
         </div>
         <div style="padding: 30px;">
           <h2 style="color: #0066cc; margin: 0 0 20px; font-size: 18px; font-weight: 600;">
-            Welcome to Belize Bank
+            Welcome to Belize Valley
           </h2>
           <p style="color: #333333; line-height: 1.6; margin: 0 0 20px; font-size: 14px;">
             Thank you for confirming your account. Below are your account details. Please keep this information safe and never share it with anyone.
@@ -111,7 +111,7 @@ const generateWelcomeEmailHtml = (
         </div>
         <div style="background-color: #f9fafb; padding: 15px 30px; border-top: 1px solid #e0e0e0;">
           <p style="color: #6b7280; font-size: 12px; margin: 0; line-height: 1.4;">
-            © 2025 Belize Bank Inc. All rights reserved.
+            © 2025 Belize Valley Inc. All rights reserved.
           </p>
         </div>
       </div>
@@ -126,7 +126,7 @@ const generateWelcomeEmailText = (
   otp: string
 ) => {
   return `
-Your Account Details - Belize Bank Inc.
+Your Account Details - Belize Valley Inc.
 
 Thank you for confirming your account. Please do not share your password or PIN with a third party in any case.
 
@@ -137,7 +137,7 @@ PIN: ${otp}
 Regards,
 Account Officer
 
-© 2025 Belize Bank Inc. All rights reserved.
+© 2025 Belize Valley Inc. All rights reserved.
   `;
 };
 
@@ -163,9 +163,9 @@ export const sendWelcomeEmail = async (
   );
 
   await transporter.sendMail({
-    from: `"Belize Bank Inc." <${process.env.ZOHO_USER}>`,
+    from: `"Belize Valley Inc." <${process.env.ZOHO_USER}>`,
     to,
-    subject: "Welcome to Belize Bank Inc. - Your Account is Ready",
+    subject: "Welcome to Belize Valley Inc. - Your Account is Ready",
     html: emailHtml,
     text: emailText,
   });
@@ -207,9 +207,9 @@ const generateTransactionReceiptHtml = (
         ${date ? `<li><strong>Date:</strong> ${formattedDate}</li>` : ""}
       </ul>
       <p style="font-size: 12px; color: #666;">
-        Thank you for banking with us. Contact support at (800) 555-1234 or support@belizebank.com.
-        <br>&copy; 2025 Belize Bank Inc. All rights reserved.
-        <br><a href="https://belizebank.com/unsubscribe">Unsubscribe</a>
+        Thank you for banking with us. Contact support at (800) 555-1234 or support@belizevalley.com.
+        <br>&copy; 2025 Belize Valley Inc. All rights reserved.
+        <br><a href="https://belizevalley.com/unsubscribe">Unsubscribe</a>
       </p>
     </div>
   `;
@@ -231,7 +231,7 @@ const generateTransactionReceiptText = (
     : "N/A";
 
   return `
-Transaction Confirmation - Belize Bank Inc.
+Transaction Confirmation - Belize Valley Inc.
 
 Hello ${fullName},
 
@@ -239,10 +239,10 @@ ${transactionType ? `Transaction Type: ${transactionType}` : ""}
 ${amount !== undefined ? `Amount: ${formattedAmount}` : ""}
 ${date ? `Date: ${formattedDate}` : ""}
 
-If you have any questions, contact Belize Bank Support at (800) 555-1234 or support@belizebank.com.
+If you have any questions, contact Belize Valley Support at (800) 555-1234 or support@belizevalley.com.
 
-© 2025 Belize Bank Inc. All rights reserved.
-Unsubscribe: https://belizebank.com/unsubscribe
+© 2025 Belize Valley Inc. All rights reserved.
+Unsubscribe: https://belizevalley.com/unsubscribe
   `.trim();
 };
 
@@ -274,7 +274,7 @@ export const sendTransactionReceipt = async (
   );
 
   await transporter.sendMail({
-    from: `"Belize Bank New Transaction" <${process.env.ZOHO_USER}>`,
+    from: `"Belize Valley New Transaction" <${process.env.ZOHO_USER}>`,
     to,
     subject: `Transaction Confirmation`,
     html: emailHtml,
